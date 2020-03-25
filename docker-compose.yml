@@ -9,8 +9,7 @@ services:
     environment:
       MYSQL_DATABASE: 'db'
       MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: 'password'
     # ports to map, YOU CANNOT RUN ANYTHING ELSE ON PORT 3306
     ports:
       - 3306:3306
