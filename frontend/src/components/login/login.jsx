@@ -12,6 +12,7 @@ class Login extends React.Component {
     }
 
     render() {
+        return <>
         <div className='login-container'>
             <div className='login-container-box' id='login-box'>
                 <form className='login-form'>
@@ -19,11 +20,12 @@ class Login extends React.Component {
                         <h1>Log In!</h1>
                     </div>
                     <div>
-                        
+
                     </div>
                 </form>
             </div>
         </div>
+        </>;
     }
 }
 
