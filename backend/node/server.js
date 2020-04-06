@@ -74,6 +74,80 @@ app.get('/pharmacy/:id', (req,  res) => {
 	})
 })
 
+//get appointments for a patient
+app.get('/appointments/patient/:id', (req,  res) => {
+	var query = "select * from Appointments where patientID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointments Found For Specified Patient");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+//get appointments for a doctor
+app.get('/appointments/doctor/:id', (req,  res) => {
+	var query = "select * from Appointments where docID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointments Found For Specified Doctor");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+//get prescriptions to be picked up given a patient
+app.get('/prescriptions/pickup/:id', (req,  res) => {
+	var query = "select * from PrescriptionDetails where readyForPickup=1 and patientID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Prescriptions Ready For Pickup For Specified Patient");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+//get prescriptions given a patient
+app.get('/prescriptions/patient/:id', (req,  res) => {
+	var query = "select * from PrescriptionDetails where patientID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Prescriptions For Specified Patient");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+//get options for directions of prescriptions
+app.get('/prescriptions/directions', (req,  res) => {
+	var query = "select * from Directions;";
+	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
+	})
+})
+
 ////////
 //POST//
 ////////
@@ -199,6 +273,25 @@ app.post('/login', (req, res) => {
 			res.status(200).send(result2);
 		})
 	})
+})
+
+//get options for directions of prescriptions
+app.post('/prescriptions/directions', (req,  res) => {
+	var query = "insert into Directions(directions) values(\""+req.body.directions+"\");";
+	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
+	})
+})
+
+///////
+//PUT//
+///////
+
+//update prescription details
+app.put('/prescriptions/update/:id', (req, res) => {
+	
 })
 
 //connecting the express object to listen on a particular port as defined in the config object.
