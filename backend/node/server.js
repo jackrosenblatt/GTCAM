@@ -23,54 +23,188 @@ const config = {
 //create the express.js object
 const app = express();
 
-//create a logger object.  Using logger is preferable to simply writing to the console.
-const logger = log({ console: true, file: false, label: config.name });
-
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-app.use(cors({origin: '*'}));
-app.use(ExpressAPILogMiddleware(logger, { request: true }));
 
 //Attempting to connect to the database.
 connection.connect(function (err) {
   if (err)
-	logger.error("Cannot connect to DB!");
-  logger.info("Connected to the DB!");
+	console.log("Cannot connect to DB!");
+  console.log("Connected to the DB!");
 });
 
 /////////////////
 //END POINTS/////
 /////////////////
 
-//GET /
+///////
+//GET//
+///////
+
+//verification of connection
 app.get('/', (req, res) => {
   res.status(200).send('Hello World');
 });
 
-//POST /register
-app.post('/register', (req, res) => {
-	var query = "insert into Users (name, password, email, type) values(\""+req.body.name+"\", \""+req.body.password+"\", \""+
-	req.body.email+"\", \""+req.body.type+"\");";
-	res.send(query);
-	console.log(req)
+//get pharmacies
+app.get('/pharmacies', (req, res) => {
+	var query = "select * from Pharmacies";
+	
 	connection.query(query, function(err, result, fields){
-		res.send("Now Here")
-		res.end(JSON.stringify(result));
-		//res.send(err);
-		if(!err)
-			res.status(200).send('Added the user');
+		res.status(200).send(result);
+	})
+})
+
+//get specific pharmacyPref
+app.get('/pharmacy/:id', (req,  res) => {
+	var query = "select * from Pharmacies where ID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Pharmacy Found With Specified ID");
+				return;
+			case 1:
+				res.status(200).send(result[0]);
+				return;
+			default:
+				res.status(401).send("Too Many Pharmacies Found");
+				return;
+		}
+	})
+})
+
+////////
+//POST//
+////////
+
+//register
+app.post('/register', (req, res) => {
+	if(!(req.body.name && req.body.name && req.body.password && req.body.email && req.body.type)){
+		res.status(400).send("Missing User Information");
+		return;
+	}
+	
+	var query = "insert into Users (name, password, email, type) values(\""+req.body.name+"\", \""+
+				req.body.password+"\", \""+ req.body.email+"\", \""+req.body.type+"\");";
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to create user");
+			return;
+		}
+		
+		var shouldDelete = false;
+		var status;
+		var message;
+		
+		switch(parseInt(req.body.type)){
+			case 1:
+				if(!(req.body.notificationPref && req.body.pharmacyPref && req.body.ssn)){
+					shouldDelete = true;
+					message = "Missing Patient Info";
+					status = 401;
+				}
+					
+				var query2 = "insert into Patients (notificationPref, pharmac"+
+							 "yPref, ssn, userID) values(\""+req.body.notificationPref+
+							 "\", \""+req.body.pharmacyPref+"\", \""+
+							 req.body.ssn+"\", \""+result.insertId+"\");";
+				break;
+			case 2:					
+				var query2 = "insert into Doctors (userID) values(\""+result.insertId+"\");";
+				
+				break;
+			case 3:
+				if(!req.body.pharmID){
+					shouldDelete = true;
+					message = "Missing Pharmacist Info";
+					status = 402;
+				}
+					
+				var query2 = "insert into Pharmacists (pharmID, userID) values(\""+
+							 req.body.pharmID+"\", \""+result.insertId+"\");";
+				
+				break;
+		}
+		
+		if(!shouldDelete){
+			connection.query(query2, function(err2, result2, fields2){
+				if(err2){
+					shouldDelete = true;
+					message = "Failed to Create Typed User";
+					status = 501;
+				} else{
+					res.status(200).send("Success of Registration");
+				}
+			})
+		}
+		
+		if(shouldDelete){
+			var query3 = "delete from Users where ID="+result.insertId+";";
+							 
+			connection.query(query3, function(err3, result3, fields3){
+				res.status(status).send(message);
+			})
+		}
 	})
 });
 
-
-
-
-
-
+//login
+app.post('/login', (req, res) => {
+	if(!(req.body.email && req.body.password)){
+		res.status(400).send("Missing email or password");
+	}
+	
+	var query = "select * from Users where email=\""+req.body.email+"\" and p"+
+				"assword=\""+req.body.password+"\"";
+				
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed SQL Query");
+		}
+		
+		switch(result.length){
+			case 0:
+				res.status(401).send("No Users Found");
+				return;
+			case 1:
+				break;
+			default:
+				res.status(402).send("Too Many Users Found");
+				return;
+		}
+		
+		var query2;
+		
+		switch(result[0].type){
+			case 1:
+				query2 = "select * from Users u join Patients p on u.ID=p.use"+
+				"rID where email=\""+result[0].email+"\" and password=\""+
+				result[0].password+"\"";
+				break;
+			case 2:
+				query2 = "select * from Users u join Doctors d on u.ID=d.use"+
+				"rID where email=\""+result[0].email+"\" and password=\""+
+				result[0].password+"\"";
+				break;
+			case 3:
+				query2 = "select * from Users u join Pharmacists p on u.ID=p.use"+
+				"rID where email=\""+result[0].email+"\" and password=\""+
+				result[0].password+"\"";
+				break;
+		}
+		
+		connection.query(query2, function(err2, result2, fields2){
+			res.status(200).send(result2);
+		})
+	})
+})
 
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
   if (e) {
     throw new Error('Internal Server Error');
   }
-  logger.info(`${config.name} running on ${config.host}:${config.port}`);
+  console.log(`${config.name} running on ${config.host}:${config.port}`);
 });
