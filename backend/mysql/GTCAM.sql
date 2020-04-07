@@ -18,7 +18,7 @@
 --
 -- Table structure for table `Allergies`
 --
-use db;
+
 DROP TABLE IF EXISTS `Allergies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -105,7 +105,7 @@ CREATE TABLE `Doctors` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `userID` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +211,7 @@ DROP TABLE IF EXISTS `Patients`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Patients` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `notificationPref` varchar(255) DEFAULT NULL,
+  `notificationPref` tinyint(1) DEFAULT NULL,
   `pharmacyPref` int DEFAULT NULL,
   `ssn` varchar(9) DEFAULT NULL,
   `userID` int DEFAULT NULL,
@@ -219,7 +219,7 @@ CREATE TABLE `Patients` (
   UNIQUE KEY `ssn` (`ssn`),
   KEY `pharmacyPref` (`pharmacyPref`),
   CONSTRAINT `Patients_ibfk_1` FOREIGN KEY (`pharmacyPref`) REFERENCES `Pharmacies` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +228,7 @@ CREATE TABLE `Patients` (
 
 LOCK TABLES `Patients` WRITE;
 /*!40000 ALTER TABLE `Patients` DISABLE KEYS */;
-INSERT INTO `Patients` VALUES (1,'Yes',1,'123456789',1),(2,'No',4,'987654321',2),(3,'Yes',3,'456123789',3),(4,'Yes',2,'789456132',4);
+INSERT INTO `Patients` VALUES (1,1,1,'123456789',1),(2,0,4,'987654321',2),(3,1,3,'456123789',3),(4,1,2,'789456132',4),(6,1,1,'654321987',27);
 /*!40000 ALTER TABLE `Patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,6 +243,8 @@ CREATE TABLE `Pharmacies` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `pharmName` varchar(255) DEFAULT NULL,
   `pharmHours` varchar(2000) DEFAULT NULL,
+  `address` varchar(300) DEFAULT NULL,
+  `phoneNumber` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -253,7 +255,7 @@ CREATE TABLE `Pharmacies` (
 
 LOCK TABLES `Pharmacies` WRITE;
 /*!40000 ALTER TABLE `Pharmacies` DISABLE KEYS */;
-INSERT INTO `Pharmacies` VALUES (1,'Walgreens','9am-8pm'),(2,'CVS','10am-9pm'),(3,'Kroger','9:30am-9:30pm'),(4,'Walgreens','24hr');
+INSERT INTO `Pharmacies` VALUES (1,'Walgreens','9am-8pm','111 example road','2149536487'),(2,'CVS','10am-9pm','222 example road','2147624953'),(3,'Kroger','9:30am-9:30pm','333 example road','2101596487'),(4,'Walgreens','24hr','444 example road','5123469852');
 /*!40000 ALTER TABLE `Pharmacies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,6 +332,34 @@ INSERT INTO `PrescriptionDetails` VALUES (1,1,1,1,1,1,0,'Mary Washington',0,'202
 UNLOCK TABLES;
 
 --
+-- Table structure for table `PrescriptionPickupHistory`
+--
+
+DROP TABLE IF EXISTS `PrescriptionPickupHistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `PrescriptionPickupHistory` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `prescriptionID` int DEFAULT NULL,
+  `timePickedUp` datetime DEFAULT NULL,
+  `whoPickedUp` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `prescriptionID` (`prescriptionID`),
+  CONSTRAINT `PrescriptionPickupHistory_ibfk_1` FOREIGN KEY (`prescriptionID`) REFERENCES `PrescriptionDetails` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PrescriptionPickupHistory`
+--
+
+LOCK TABLES `PrescriptionPickupHistory` WRITE;
+/*!40000 ALTER TABLE `PrescriptionPickupHistory` DISABLE KEYS */;
+INSERT INTO `PrescriptionPickupHistory` VALUES (1,1,'2020-05-14 00:00:00','George Washington'),(2,2,'2020-05-07 00:00:00','Mary Washington'),(3,3,'2020-04-18 00:00:00','John Adams'),(4,4,'2020-05-03 00:00:00','Anna Jefferson');
+/*!40000 ALTER TABLE `PrescriptionPickupHistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `RefillOccurence`
 --
 
@@ -385,15 +415,16 @@ DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Users` (
-  `ID` int NOT NULL DEFAULT '0',
+  `ID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `type` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
+  UNIQUE KEY `UC_User` (`email`),
   KEY `type` (`type`),
   CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`type`) REFERENCES `UserTypes` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -402,11 +433,17 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'George Washington','password','example@example.com',1),(2,'John Adams','password','example1@example.com',1),(3,'Thomas Jefferson','password','example2@example.com',1),(4,'James Madison','password','example3@example.com',1),(5,'John Smith','password','example4@example.com',2),(6,'Bob Jones','password','example5@example.com',2),(7,'Eric Johnson','password','example6@example.com',2),(8,'Kyle Adams','password','example7@example.com',2),(9,'Jakob Harmon','password','example8@example.com',3),(10,'Abigail Lozano','password','example9@example.com',3),(11,'Maxim Clarke','password','example10@example.com',3),(12,'Shane Coleman','password','example12@example.com',3);
+INSERT INTO `Users` VALUES (1,'George Washington','password','example@example.com',1),(2,'John Adams','password','example1@example.com',1),(3,'Thomas Jefferson','password','example2@example.com',1),(4,'James Madison','password','example3@example.com',1),(5,'John Smith','password','example4@example.com',2),(6,'Bob Jones','password','example5@example.com',2),(7,'Eric Johnson','password','example6@example.com',2),(8,'Kyle Adams','password','example7@example.com',2),(9,'Jakob Harmon','password','example8@example.com',3),(10,'Abigail Lozano','password','example9@example.com',3),(11,'Maxim Clarke','password','example10@example.com',3),(12,'Shane Coleman','password','example12@example.com',3),(27,'Jack','password','ex@example.com',1);
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-create user 'user'@'%' IDENTIFIED BY 'Password';
-GRANT ALL PRIVILEGES ON db.* TO 'user'@'%';
-ALTER USER 'user'@'%' INDENTIFIED WITH MYSQL_NATIVE_PASSWORD BY 'Password';
-FLUSH PRIVILEGES;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-04-05 21:01:16
