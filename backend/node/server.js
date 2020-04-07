@@ -43,7 +43,8 @@ connection.connect(function (err) {
 
 //verification of connection
 app.get('/', (req, res) => {
-  res.status(200).send('Hello World');
+	res.status(200).send('Hello World');
+	return;
 });
 
 //get pharmacies
@@ -52,6 +53,7 @@ app.get('/pharmacies', (req, res) => {
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -210,6 +212,7 @@ app.post('/register', (req, res) => {
 					status = 501;
 				} else{
 					res.status(200).send("Success of Registration");
+					return;
 				}
 			})
 		}
@@ -219,6 +222,7 @@ app.post('/register', (req, res) => {
 							 
 			connection.query(query3, function(err3, result3, fields3){
 				res.status(status).send(message);
+				return;
 			})
 		}
 	})
@@ -228,6 +232,7 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
 	if(!(req.body.email && req.body.password)){
 		res.status(400).send("Missing email or password");
+		return;
 	}
 	
 	var query = "select * from Users where email=\""+req.body.email+"\" and p"+
@@ -236,6 +241,7 @@ app.post('/login', (req, res) => {
 	connection.query(query, function(err, result, fields){
 		if(err){
 			res.status(500).send("Failed SQL Query");
+			return;
 		}
 		
 		switch(result.length){
@@ -271,6 +277,7 @@ app.post('/login', (req, res) => {
 		
 		connection.query(query2, function(err2, result2, fields2){
 			res.status(200).send(result2);
+			return;
 		})
 	})
 })
@@ -293,6 +300,7 @@ app.post('/prescriptions/directions', (req,  res) => {
 app.put('/prescriptions/updateDir/:id', (req, res) => {
 	if (!(req.body.directions)){
 		res.status(400).send("Missing Directions");
+		return;
 	}
 
 	var query = "update PrescriptionDetails set directions = \"" + req.body.directions
@@ -301,6 +309,7 @@ app.put('/prescriptions/updateDir/:id', (req, res) => {
 	connection.query(query, function (err, result, fields) {
 		if(err){
 			res.status(500).send("Failed to Update Details");
+			return;
 		}
 		res.status(200).send(result);
 		return;
@@ -311,6 +320,7 @@ app.put('/prescriptions/updateDir/:id', (req, res) => {
 app.put('/prescriptions/updateSub/:id', (req, res) => {
 	if (!(req.body.name)){
 		res.status(400).send("Missing Name Information");
+		return;
 	}
 
 	var query = "update PrescriptionDetails set subRetriever = \"" + req.body.name
@@ -318,6 +328,7 @@ app.put('/prescriptions/updateSub/:id', (req, res) => {
 	connection.query(query, function (err, result, fields) {
 		if(err){
 			res.status(500).send("Failed to Update Sub. Retriever");
+			return;
 		}
 		res.status(200).send(result);
 		return;
