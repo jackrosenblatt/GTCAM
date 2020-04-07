@@ -291,7 +291,12 @@ app.post('/prescriptions/directions', (req,  res) => {
 
 //update prescription details
 app.put('/prescriptions/update/:id', (req, res) => {
+	var query = "update PrescriptionDetails set directions = \"" + req.body.directions + "\" where patientID=\"" + req.params.id + "\"";
 	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
+	})
 })
 
 //connecting the express object to listen on a particular port as defined in the config object.
