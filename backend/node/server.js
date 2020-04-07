@@ -289,17 +289,35 @@ app.post('/prescriptions/directions', (req,  res) => {
 //PUT//
 ///////
 
-//update prescription details
-app.put('/prescriptions/update/:id', (req, res) => {
+//update prescription directions
+app.put('/prescriptions/updateDir/:id', (req, res) => {
 	if (!(req.body.directions)){
 		res.status(400).send("Missing Directions");
 	}
+
 	var query = "update PrescriptionDetails set directions = \"" + req.body.directions
-				+ "\" where patientID=\"" + req.params.id + "\"";
+		+ "\" where patientID=\"" + req.params.id + "\"";
 	
 	connection.query(query, function (err, result, fields) {
 		if(err){
 			res.status(500).send("Failed to Update Details");
+		}
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//Change subRetriever of Prescription
+app.put('/prescriptions/updateSub/:id', (req, res) => {
+	if (!(req.body.name)){
+		res.status(400).send("Missing Name Information");
+	}
+
+	var query = "update PrescriptionDetails set subRetriever = \"" + req.body.name
+		+ "\" where patientID=\"" + req.params.id + "\"";
+	connection.query(query, function (err, result, fields) {
+		if(err){
+			res.status(500).send("Failed to Update Sub. Retriever");
 		}
 		res.status(200).send(result);
 		return;
