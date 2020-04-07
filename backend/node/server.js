@@ -291,9 +291,16 @@ app.post('/prescriptions/directions', (req,  res) => {
 
 //update prescription details
 app.put('/prescriptions/update/:id', (req, res) => {
-	var query = "update PrescriptionDetails set directions = \"" + req.body.directions + "\" where patientID=\"" + req.params.id + "\"";
+	if (!(req.body.directions)){
+		res.status(400).send("Missing Directions");
+	}
+	var query = "update PrescriptionDetails set directions = \"" + req.body.directions
+				+ "\" where patientID=\"" + req.params.id + "\"";
 	
-	connection.query(query, function(err, result, fields){
+	connection.query(query, function (err, result, fields) {
+		if(err){
+			res.status(500).send("Failed to Update Details");
+		}
 		res.status(200).send(result);
 		return;
 	})
