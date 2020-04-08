@@ -81,7 +81,7 @@ CREATE TABLE `Directions` (
   `directions` varchar(255) DEFAULT NULL,
   `ID` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,8 +90,37 @@ CREATE TABLE `Directions` (
 
 LOCK TABLES `Directions` WRITE;
 /*!40000 ALTER TABLE `Directions` DISABLE KEYS */;
-INSERT INTO `Directions` VALUES ('Take twice a day',1),('Once a day',2),('Three times a day',3),('Every other day',4);
+INSERT INTO `Directions` VALUES ('Take twice a day',1),('Once a day',2),('Three times a day',3),('Every other day',4),('Once a week',5);
 /*!40000 ALTER TABLE `Directions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DoctorPatientLookup`
+--
+
+DROP TABLE IF EXISTS `DoctorPatientLookup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `DoctorPatientLookup` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `patientID` int DEFAULT NULL,
+  `doctorID` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `patientID` (`patientID`),
+  KEY `doctorID` (`doctorID`),
+  CONSTRAINT `DoctorPatientLookup_ibfk_1` FOREIGN KEY (`patientID`) REFERENCES `Patients` (`ID`),
+  CONSTRAINT `DoctorPatientLookup_ibfk_2` FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DoctorPatientLookup`
+--
+
+LOCK TABLES `DoctorPatientLookup` WRITE;
+/*!40000 ALTER TABLE `DoctorPatientLookup` DISABLE KEYS */;
+INSERT INTO `DoctorPatientLookup` VALUES (1,1,1),(2,1,2),(3,2,1),(4,3,4),(5,4,3);
+/*!40000 ALTER TABLE `DoctorPatientLookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -446,4 +475,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-05 21:01:16
+-- Dump completed on 2020-04-07 19:25:52
