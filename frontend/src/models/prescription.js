@@ -1,4 +1,4 @@
-export class Medication {
+export class Prescription {
     constructor(id, medname, dosage, quantity, details) {
         this.id = id;
         this.medname = medname;
