@@ -1,14 +1,14 @@
 import React from 'react';
+import { Card } from 'react-bootstrap';
 import Prescription from '.../models/prescription.js';
 
-
-class PrescriptionList extends React.Component {
+export class PrescriptionList extends React.Component {
 
     onEmpty() {
         return <>
         <Card>
             <Card.Header>
-                You have no prescriptions
+                You have no prescriptions!
             </Card.Header>
         </Card>
         </>;

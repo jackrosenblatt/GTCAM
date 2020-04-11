@@ -3,10 +3,9 @@ import Calendar from 'react-calendar';
 import Nav from '../nav/nav';
 import './home.css';
 
-class Home extends React.Component {
+export class Home extends React.Component {
     constructor(props) {
         super(props);
-
     }
 
     render() {
@@ -17,6 +16,5 @@ class Home extends React.Component {
         </>;
     }
 }
-
 
 export default Home;

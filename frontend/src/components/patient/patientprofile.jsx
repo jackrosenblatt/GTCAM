@@ -1,8 +1,7 @@
 import React from 'react';
-import { Container } from 'react-bootstrap/lib/Tab';
+import { Container, Row, Form } from 'react-bootstrap/lib/Tab';
 
-
-class PatientProfile extends React.Component {
+export class PatientProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,8 +13,6 @@ class PatientProfile extends React.Component {
             allergies: []
         }
     }
-
-
 
     render() {
         return <>
@@ -39,5 +36,4 @@ class PatientProfile extends React.Component {
 
         </>;
     }
-
 }

@@ -1,6 +1,7 @@
 import React from 'react';
+import { Card } from 'react-bootstrap';
 
-class AppointmentList extends React.Component {
+export class AppointmentList extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -8,12 +9,12 @@ class AppointmentList extends React.Component {
     };
   }
 
-  onEmpty() {
-      <Card>
-          <Card.Header>
-              You have no appointments!
-          </Card.Header>
-      </Card>
+  onEmpty(){
+    <Card>
+        <Card.Header>
+            You have no appointments!
+        </Card.Header>
+    </Card>
   }
 
   render() {
