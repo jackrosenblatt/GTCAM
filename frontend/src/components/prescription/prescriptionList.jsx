@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import Prescription from '.../models/prescription.js';
 
 export class PrescriptionList extends React.Component {
 

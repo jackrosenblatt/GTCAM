@@ -5,3 +5,4 @@ export * from './nav';
 export * from './patient';
 export * from './prescription';
 export * from './register';
+export * from './pharmacies';

@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { Card } from 'react-bootstrap';
+
 
 export class AppointmentList extends React.Component {
   constructor() {
@@ -9,6 +11,7 @@ export class AppointmentList extends React.Component {
     };
   }
 
+/* DOES NOT WORK- CAUSES ERROR
   onEmpty(){
     <Card>
         <Card.Header>
@@ -16,9 +19,11 @@ export class AppointmentList extends React.Component {
         </Card.Header>
     </Card>
   }
+  */
 
   render() {
     return <>
+
     <h3>Appointments</h3>
         {
             this.props.appointments.length === 0 ? this.onEmpty() : ""
