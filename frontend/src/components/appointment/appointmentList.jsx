@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 
 class AppointmentList extends React.Component {

@@ -20,7 +20,7 @@ class Nav extends React.Component {
                     </ul> */}
                 </nav>
         </Container>
-        <div class='sidenav'>
+        <div className='sidenav'>
             <div id='profilepic'>
             </div>
             <a href='#'>Profile</a>
