@@ -106,6 +106,38 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 	})
 })
 
+//get past appointments for a doctor 
+app.get('/appointments/doctor/past/:id', (req,  res) => {
+	var query = "select * from Appointments where docID=\""+req.params.id+"\""  and current_time() > time;
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Past Appointments Found For Specified Doctor");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+//get future appointments for a doctor 
+app.get('/appointments/doctor/future/:id', (req,  res) => {
+	var query = "select * from Appointments where docID=\""+req.params.id+"\""  and current_time() < time;
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Future Appointments Found For Specified Doctor");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
 //get prescriptions to be picked up given a patient
 app.get('/prescriptions/pickup/:id', (req,  res) => {
 	var query = "select * from PrescriptionDetails where readyForPickup=1 and patientID=\""+req.params.id+"\"";
@@ -181,6 +213,22 @@ app.get('/patient/allergies/:id', (req, res) =>{
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
 		return;
+	})
+})
+
+//get all medications in inventory given pharmacy 
+app.get('/medications/inventory/:id', (req,  res) => {
+	var query = "select * from Inventory where pharmID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Medications In Inventory for Specified Pharmacy");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
 	})
 })
 
@@ -375,6 +423,24 @@ app.post('/patient/allergy', (req, res) => {
 		return;
 	})
 })
+
+
+//add medication to inventory given medicationID,pharmacyID, and medicationQuantity
+app.post('/inventory', (req,  res) => {
+	
+	let medicineID = req.body.medID
+	let pharmacyID = req.body.pharmID
+	let inputQuantity = req.body.quantity
+	con.query(`INSERT INTO Inventory (medID,pharmID,quantity) VALUES (${medicineID},${pharmacyID},${inputQuantity})`, function(err,result,fields) {
+		if (err) {
+			res.status(500).send("Failed to Add Medication");
+		}
+		res.status(200).send(result);
+		return; 
+
+	});
+});
+
 
 ///////
 //PUT//

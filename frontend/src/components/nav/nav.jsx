@@ -1,15 +1,15 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import './nav.css';
 
-class Nav extends React.Component {
+export class Nav extends React.Component {
     constructor(props) {
         super(props);
-
     }
 
     render() {
         return <>
+
         <Container className='bg-light'>
                 <nav className='navbar navbar-expand-lg navbar-light bg-light' id='main-nav'>
                     <a className='navbar-brand' id='brand-name'>GTCAM</a>
@@ -20,13 +20,10 @@ class Nav extends React.Component {
                     </ul> */}
                 </nav>
         </Container>
-        <div class='sidenav'>
+        <div className='sidenav'>
             <div id='profilepic'>
+                <h5>Notifications</h5>
             </div>
-            <a href='#'>Profile</a>
-            <a href='#'>Calendar</a>
-            <a href='#'>Appointments</a>
-            <a href='#'>Prescriptions</a>
         </div>
         </>;
     }
