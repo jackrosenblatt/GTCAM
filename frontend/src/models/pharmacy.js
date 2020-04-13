@@ -1,7 +1,8 @@
 export class Pharmacy {
-    constructor(id, pharmName, pharmHours) {
-        this.id = id;
+    constructor(pharmID, pharmName, pharmHours, pharmAddress) {
+        this.pharmID = pharmID;
         this.pharmName = pharmName;
         this.pharmHours = pharmHours;
+        this.pharmAddress = pharmAddress;
     }
 }

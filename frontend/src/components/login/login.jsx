@@ -1,14 +1,13 @@
 import React from 'react';
 import { Container, Row, Jumbotron } from 'react-bootstrap';
 
-
-class Login extends React.Component {
+export class Login extends React.Component {
     state = {
         email: '',
         password: ''
-    }
+    };
 
-    onSubmit() {
+    onSubmit(){
 
     }
 

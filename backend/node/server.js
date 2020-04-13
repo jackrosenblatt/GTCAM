@@ -108,6 +108,38 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 	})
 })
 
+//get past appointments for a doctor 
+app.get('/appointments/doctor/past/:id', (req,  res) => {
+	var query = "select * from Appointments where docID=\""+req.params.id+"\""  and current_time() > time;
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Past Appointments Found For Specified Doctor");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+//get future appointments for a doctor 
+app.get('/appointments/doctor/future/:id', (req,  res) => {
+	var query = "select * from Appointments where docID=\""+req.params.id+"\""  and current_time() < time;
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Future Appointments Found For Specified Doctor");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
 //get prescriptions to be picked up given a patient
 app.get('/prescriptions/pickup/:id', (req,  res) => {
 	var query = "select * from PrescriptionDetails where readyForPickup=1 and patientID=\""+req.params.id+"\"";
@@ -140,6 +172,22 @@ app.get('/prescriptions/patient/:id', (req,  res) => {
 	})
 })
 
+//get prescriptions given a doctor
+app.get('/prescriptions/doctor/:id', (req,  res) => {
+	var query = "select * from PrescriptionDetails where docID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Prescriptions For Specified Doctor");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
 //get options for directions of prescriptions
 app.get('/prescriptions/directions', (req,  res) => {
 	var query = "select * from Directions;";
@@ -147,6 +195,42 @@ app.get('/prescriptions/directions', (req,  res) => {
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
 		return;
+	})
+})
+
+//get all allergy types
+app.get('/allergies', (req, res) =>{
+	var query = "select * from Allergies";
+	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//get all allergies for a patient
+app.get('/patient/allergies/:id', (req, res) =>{
+	var query = "select * from PatientAllergies pa join Allergies a on pa.allergyID=a.ID where patientID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//get all medications in inventory given pharmacy 
+app.get('/medications/inventory/:id', (req,  res) => {
+	var query = "select * from Inventory where pharmID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Medications In Inventory for Specified Pharmacy");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
 	})
 })
 
@@ -282,15 +366,88 @@ app.post('/login', (req, res) => {
 	})
 })
 
-//get options for directions of prescriptions
+//creates new directions for prescriptions
 app.post('/prescriptions/directions', (req,  res) => {
+	if(!req.body.directions){
+		res.status(400).send("Missing Directions");
+		return;
+	}
+	
 	var query = "insert into Directions(directions) values(\""+req.body.directions+"\");";
 	
 	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to Create Directions");
+			return;
+		}
+		
 		res.status(200).send(result);
 		return;
 	})
 })
+
+//creates new allergy type
+app.post('/allergy', (req, res) => {
+	if(!req.body.allergyName){
+		res.status(400).send("Missing Allergy Name");
+	}
+	
+	var query = "insert into Allergies(allergyName) values(\""+req.body.allergyName+"\");";
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to Create Allergy");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//creates new patient allergy
+app.post('/patient/allergy', (req, res) => {
+	if(!(req.body.patientID && req.body.allergyID)){
+		if(req.body.patientID)
+			res.status(400).send("Missing Allergy ID");
+		else
+			res.status(401).send("Missing Patient ID");
+		return;
+	}
+	
+	var query = "insert into PatientAllergies(patientID, allergyID) values("+req.body.patientID+", "+req.body.allergyID+");";
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			if(err.code == "ER_DUP_ENTRY")
+				res.status(500).send("Duplicate Entry");
+			else
+				res.status(501).send("Failed to Create Patient Allergy");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
+
+//add medication to inventory given medicationID,pharmacyID, and medicationQuantity
+app.post('/inventory', (req,  res) => {
+	
+	let medicineID = req.body.medID
+	let pharmacyID = req.body.pharmID
+	let inputQuantity = req.body.quantity
+	con.query(`INSERT INTO Inventory (medID,pharmID,quantity) VALUES (${medicineID},${pharmacyID},${inputQuantity})`, function(err,result,fields) {
+		if (err) {
+			res.status(500).send("Failed to Add Medication");
+		}
+		res.status(200).send(result);
+		return; 
+
+	});
+});
+
 
 ///////
 //PUT//
