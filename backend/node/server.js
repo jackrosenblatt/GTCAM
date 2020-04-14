@@ -126,7 +126,7 @@ app.get('/appointments/doctor/:docID/:patientID', (req,  res) => {
 
 //get past appointments for a doctor 
 app.get('/appointments/doctor/past/:id', (req,  res) => {
-	var query = "select * from Appointments where docID=\""+req.params.id+"\""  and current_time() > time;
+	var query = "select * from Appointments where docID=\""+req.params.id+"\" and "+current_time()+" > time";
 	
 	connection.query(query, function(err, result, fields){
 		switch(result.length){
@@ -142,7 +142,7 @@ app.get('/appointments/doctor/past/:id', (req,  res) => {
 
 //get future appointments for a doctor 
 app.get('/appointments/doctor/future/:id', (req,  res) => {
-	var query = "select * from Appointments where docID=\""+req.params.id+"\""  and current_time() < time;
+	var query = "select * from Appointments where docID=\""+req.params.id+"\"  and "+current_time()+" < time";
 	
 	connection.query(query, function(err, result, fields){
 		switch(result.length){
