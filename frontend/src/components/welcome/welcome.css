@@ -3,7 +3,7 @@
     font-family: 'Rubik', sans-serif;
 }
 
-#login-page-container {
+#welcome-page-container {
     width: 40%;
     height: 60%;
     border-radius: 10px;
@@ -11,24 +11,14 @@
     background-color: bisque;
 }
 
-#login-page-jumbotron {
-    margin: 0;
-    padding: 3rem;
+#welcome-page-jumbotron {
     background-color: bisque;
 }
 
-#btn-submit-login {
-    text-align: center;
-}
 
-#login-title {
-    margin: 0;
-    padding-bottom: 1rem;
-    padding-top:0;
-}
-
-#login-btn {
+#btn-register, #btn-login {
     border-width: 0;
     background-color: rgb(25, 25, 73);
     border-radius: 4px;
+
 }

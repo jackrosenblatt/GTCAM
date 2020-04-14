@@ -44,7 +44,8 @@ connection.connect(function (err) {
 
 //verification of connection
 app.get('/', (req, res) => {
-  res.status(200).send('Hello World');
+	res.status(200).send('Hello World');
+	return;
 });
 
 //get pharmacies
@@ -53,6 +54,7 @@ app.get('/pharmacies', (req, res) => {
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -74,6 +76,24 @@ app.get('/pharmacy/:id', (req,  res) => {
 		}
 	})
 })
+
+//Returns appointment by ID
+app.get('/appointments/:id', (req, res) => {
+	var query = "select * from Appointments where ID = \"" + req.params.id + "\"";
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointment Found With Specified ID");
+				return;
+			case 1:
+				res.status(200).send(result[0]);
+				return;
+			default:
+				res.status(401).send("Too Many Appointments Found");
+				return;
+		}
+	})
+} )
 
 //get appointments for a patient
 app.get('/appointments/patient/:id', (req,  res) => {
@@ -327,6 +347,7 @@ app.post('/register', (req, res) => {
 					status = 501;
 				} else{
 					res.status(200).send("Success of Registration");
+					return;
 				}
 			})
 		}
@@ -336,6 +357,7 @@ app.post('/register', (req, res) => {
 							 
 			connection.query(query3, function(err3, result3, fields3){
 				res.status(status).send(message);
+				return;
 			})
 		}
 	})
@@ -345,6 +367,7 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
 	if(!(req.body.email && req.body.password)){
 		res.status(400).send("Missing email or password");
+		return;
 	}
 	
 	var query = "select * from Users where email=\""+req.body.email+"\" and p"+
@@ -353,6 +376,7 @@ app.post('/login', (req, res) => {
 	connection.query(query, function(err, result, fields){
 		if(err){
 			res.status(500).send("Failed SQL Query");
+			return;
 		}
 		
 		switch(result.length){
@@ -388,6 +412,7 @@ app.post('/login', (req, res) => {
 		
 		connection.query(query2, function(err2, result2, fields2){
 			res.status(200).send(result2);
+			return;
 		})
 	})
 })
@@ -473,6 +498,50 @@ app.post('/inventory', (req,  res) => {
 	});
 });
 
+//Creates a new Prescription
+app.post('/prescription', (req, res) => {
+	let id = req.body.id
+	let patientID = req.body.patientID
+	let medID = req.body.medID
+	let pharmID = req.body.pharmID
+	let dir = req.body.directions
+	let docID = req.body.docID
+	let refill = req.body.refillEvery
+	let sub = req.body.subRetriever
+	let pickup = req.body.pickupPrefTime
+
+
+	if (!(id && patientID && medID && pharmID && dir && docID && refill)) {
+		res.status(400).send("Missing id, patientID, medID, pharmID, directions," +
+						 	 " docID, OR refillEvery\n" +
+							 "Optional Entry Data: subRetriever, pickupPrefTime");
+		return;
+	}
+
+	if (!sub)
+		sub = ""
+	if (!pickup)
+		pickup = ""
+	
+	var query = "insert into PrescriptionDetails(ID, patientID, medID, pharmID, directions, docID, needRefill, subRetriever," +
+		" readyForPickup, pickupPrefTime, refillEvery) " +
+		"values(" + id + ", " + patientID + ", " + medID + ", " + pharmID +
+		", " + dir + ", " + docID + ", 0" + ", " + sub + ", 0, " + pickup + ", " + refill + ");";
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			if(err.code == "ER_DUP_ENTRY")
+				res.status(500).send("Duplicate Entry");
+			else
+				res.status(501).send("Failed to Create Prescription");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
 
 ///////
 //PUT//
@@ -534,6 +603,25 @@ app.put('/inventory/order/:pharmID/:medID', (req, res) => {
 		res.status(200).send(result);
 		return;
 	})
+})
+
+//Update Preferred Availability for Pickup
+app.put('prescriptions/updatePickup/:id', (req, res) => {
+	if (!(req.body.date)){
+		res.status(400).send("Missing Date and Time Information");
+		return;
+	}
+	var query = "update PrescriptionDetails set pickupPrefTime = \"" + req.body.date
+		+ "\" where patientID=\"" + req.params.id + "\"";
+	connection.query(query, function (err, result, fields) {
+		if(err){
+			res.status(500).send("Failed to Update Preferred Pickup Time.");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+	
 })
 
 //connecting the express object to listen on a particular port as defined in the config object.
