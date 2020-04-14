@@ -93,7 +93,7 @@ app.get('/appointments/:id', (req, res) => {
 })
 
 //Returns past appointments by patient id
-app.get('/appointments/patient/:id', (req, res) => {
+app.get('/appointments/patient/past/:id', (req, res) => {
 	var date = new Date();
 	var query = "select * from Appointments where ID = \"" + req.params.id + "\" AND time < \"" +
 		date.getFullYear + "-" + date.getMonth + "-" + date.getDay + " " +
