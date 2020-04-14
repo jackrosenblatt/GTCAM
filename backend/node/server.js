@@ -76,6 +76,24 @@ app.get('/pharmacy/:id', (req,  res) => {
 	})
 })
 
+//Returns appointment by ID
+app.get('/appointments/:id', (req, res) => {
+	var query = "select * from Appointments where ID = \"" + req.params.id + "\"";
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointment Found With Specified ID");
+				return;
+			case 1:
+				res.status(200).send(result[0]);
+				return;
+			default:
+				res.status(401).send("Too Many Appointments Found");
+				return;
+		}
+	})
+} )
+
 //get appointments for a patient
 app.get('/appointments/patient/:id', (req,  res) => {
 	var query = "select * from Appointments where patientID=\""+req.params.id+"\"";
