@@ -1,4 +1,5 @@
 import React from 'react';
+import './login.css';
 import { Container, Row, Jumbotron } from 'react-bootstrap';
 
 export class Login extends React.Component {
@@ -13,28 +14,26 @@ export class Login extends React.Component {
 
     render() {
         return <>
-        <Container className="justify-content-md-center" id="loginForm">
-            <Jumbotron fluid style={{width:'100%'}} className="bg-light" id="form-content">
-            <Container>
-                <Row className="formTitle">
+        <Container id='login-page-container'>
+            <Jumbotron fluid style={{width:'100%'}} id="login-page-jumbotron">
+            <Container className='justify-content-md-center'>
+                <Row className='justify-content-md-center' id='login-title'>
                     <h3>Login</h3>
                 </Row>
-                <Row className="bg-light">
+                <Row className='justify-content-md-center'>
                     <form id='login-form'>
                         <div>
-                            <Row>
-                            <label for='email-login'> Email </label>
-                            </Row>
+                            <label for='email-login'> Email </label> <br/>
                             <input type="text" id='email-login' value={this.state.email} onChange={ e => this.setState({ email: e.target.value })}></input>
                         </div>
+                        <br/>
                         <div>
-                            <Row>
-                                <label for="password-login">Password</label>
-                            </Row>
+                            <label for="password-login">Password</label> <br/>
                             <input type='password' id='password-login' value={ this.state.password } onChange={e => this.setState({ password: e.target.value})}></input>
                         </div>
-                        <div>
-                            <button type="submit" onClick={ () => this.onReviewSubmit() }>Submit</button>
+                        <div id='btn-submit-login'>
+                            <br/>
+                            <button className='btn btn-primary' id='login-btn' type="submit" onClick={ () => this.onReviewSubmit() }>Submit</button>
                         </div>
                     </form>
                 </Row>
