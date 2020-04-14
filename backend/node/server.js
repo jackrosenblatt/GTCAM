@@ -108,6 +108,22 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 	})
 })
 
+//get appointments for a doctor patient combo
+app.get('/appointments/doctor/:docID/:patientID', (req,  res) => {
+	var query = "select * from Appointments where docID=\""+req.params.docID+"\" and patientID=\""+req.params.patientID+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointments Found For Specified Doctor Patient Combo");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
 //get past appointments for a doctor 
 app.get('/appointments/doctor/past/:id', (req,  res) => {
 	var query = "select * from Appointments where docID=\""+req.params.id+"\""  and current_time() > time;
@@ -226,6 +242,22 @@ app.get('/medications/inventory/:id', (req,  res) => {
 		switch(result.length){
 			case 0:
 				res.status(400).send("No Medications In Inventory for Specified Pharmacy");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+//get specific medication in inventory for given pharmacy 
+app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
+	var query = "select * from Inventory where pharmID=\""+req.params.pharmID+"\" and medID=\""+req.params.medID+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Medication Found In Inventory for Given Pharmacy");
 				return;
 			default:
 				res.status(200).send(result);
@@ -431,7 +463,6 @@ app.post('/patient/allergy', (req, res) => {
 	})
 })
 
-
 //add medication to inventory given medicationID,pharmacyID, and medicationQuantity
 app.post('/inventory', (req,  res) => {
 	
@@ -486,6 +517,28 @@ app.put('/prescriptions/updateSub/:id', (req, res) => {
 		if(err){
 			res.status(500).send("Failed to Update Sub. Retriever");
 			return;
+<<<<<<< HEAD
+=======
+		}
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//Update Stock of a given med at a given pharmacy
+app.put('/inventory/order/:pharmID/:medID', (req, res) => {
+	if (!(req.body.quantity)){
+		res.status(400).send("Missing Quantity");
+		return;
+	}
+
+	var query = "update PrescriptionDetails set quantity = quantity + \"" + req.body.quantity
+		+ "\" where pharmID=\""+req.params.pharmID+"\" and medID=\""+req.params.medID+"\"";
+	connection.query(query, function (err, result, fields) {
+		if(err){
+			res.status(500).send("Failed to Update Inventory");
+			return;
+>>>>>>> 6752124d1d055b0a3e3508bab3441df2871d70f8
 		}
 		res.status(200).send(result);
 		return;
