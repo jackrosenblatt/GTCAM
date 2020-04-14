@@ -479,6 +479,50 @@ app.post('/inventory', (req,  res) => {
 	});
 });
 
+//Creates a new Prescription
+app.post('/prescription', (req, res) => {
+	let id = req.body.id
+	let patientID = req.body.patientID
+	let medID = req.body.medID
+	let pharmID = req.body.pharmID
+	let dir = req.body.directions
+	let docID = req.body.docID
+	let refill = req.body.refillEvery
+	let sub = req.body.subRetriever
+	let pickup = req.body.pickupPrefTime
+
+
+	if (!(id && patientID && medID && pharmID && dir && docID && refill)) {
+		res.status(400).send("Missing id, patientID, medID, pharmID, directions," +
+						 	 " docID, OR refillEvery\n" +
+							 "Optional Entry Data: subRetriever, pickupPrefTime");
+		return;
+	}
+
+	if (!sub)
+		sub = ""
+	if (!pickup)
+		pickup = ""
+	
+	var query = "insert into PrescriptionDetails(ID, patientID, medID, pharmID, directions, docID, needRefill, subRetriever," +
+		" readyForPickup, pickupPrefTime, refillEvery) " +
+		"values(" + id + ", " + patientID + ", " + medID + ", " + pharmID +
+		", " + dir + ", " + docID + ", 0" + ", " + sub + ", 0, " + pickup + ", " + refill + ");";
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			if(err.code == "ER_DUP_ENTRY")
+				res.status(500).send("Duplicate Entry");
+			else
+				res.status(501).send("Failed to Create Prescription");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
 
 ///////
 //PUT//
