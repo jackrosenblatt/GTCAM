@@ -84,15 +84,31 @@ app.get('/appointments/:id', (req, res) => {
 			case 0:
 				res.status(400).send("No Appointment Found With Specified ID");
 				return;
-			case 1:
-				res.status(200).send(result[0]);
-				return;
 			default:
-				res.status(401).send("Too Many Appointments Found");
+				res.status(200).send(result[0]);
 				return;
 		}
 	})
-} )
+})
+
+//Returns past appointments by patient id
+app.get('/appointments/patient/:id', (req, res) => {
+	var date = new Date();
+	var query = "select * from Appointments where ID = \"" + req.params.id + "\" AND time < \"" +
+		date.getFullYear + "-" + date.getMonth + "-" + date.getDay + " " +
+		date.getHours + ":" + date.getMinutes + ":" + date.getSeconds;
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Past Appointments Found For Specified Patient");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
 
 //get appointments for a patient
 app.get('/appointments/patient/:id', (req,  res) => {
