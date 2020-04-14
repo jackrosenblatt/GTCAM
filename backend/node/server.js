@@ -517,8 +517,6 @@ app.put('/prescriptions/updateSub/:id', (req, res) => {
 		if(err){
 			res.status(500).send("Failed to Update Sub. Retriever");
 			return;
-<<<<<<< HEAD
-=======
 		}
 		res.status(200).send(result);
 		return;
@@ -538,11 +536,29 @@ app.put('/inventory/order/:pharmID/:medID', (req, res) => {
 		if(err){
 			res.status(500).send("Failed to Update Inventory");
 			return;
->>>>>>> 6752124d1d055b0a3e3508bab3441df2871d70f8
 		}
 		res.status(200).send(result);
 		return;
 	})
+})
+
+//Update Preferred Availability for Pickup
+app.put('prescriptions/updatePickup/:id', (req, res) => {
+	if (!(req.body.date)){
+		res.status(400).send("Missing Date and Time Information");
+		return;
+	}
+	var query = "update PrescriptionDetails set pickupPrefTime = \"" + req.body.date
+		+ "\" where patientID=\"" + req.params.id + "\"";
+	connection.query(query, function (err, result, fields) {
+		if(err){
+			res.status(500).send("Failed to Update Preferred Pickup Time.");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+	
 })
 
 //connecting the express object to listen on a particular port as defined in the config object.
