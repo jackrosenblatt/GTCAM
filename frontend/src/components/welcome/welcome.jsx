@@ -11,7 +11,8 @@ export class Welcome extends React.Component {
             <Jumbotron fluid style={{width:'100%'}} id='welcome-page-jumbotron'>
                 <Container className='justify-contents-md-center'>
                     <Row className='justify-content-md-center'> 
-                        <h2> Welcome to GTCAM </h2> 
+                        <div id='gtcam-logo-welcome'>
+                        </div> 
                     </Row>
                     <Row className='justify-content-md-center'>
                         <p>Helping You Make Medicine Easier</p>

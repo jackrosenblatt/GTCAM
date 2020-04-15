@@ -1,6 +1,6 @@
 
 #main-nav {
-    background-color: bisque;
+    background-color: #E1C299;
     color: black;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -44,4 +44,17 @@
     color: white;
     display: block;
   }
+
+#gtcam-logo-container {
+    width: 150px;
+    height: 150px;
+    background-image: url('../img/logo.jpg');
+    background-size: contain;
+    padding: 0.5rem;
+}
+
+#nav-container {
+    margin: 0;
+    fill: bisque;
+}
 
