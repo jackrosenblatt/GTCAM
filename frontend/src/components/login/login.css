@@ -1,6 +1,5 @@
 * {
     box-sizing: border-box;
-    font-family: 'Rubik', sans-serif;
 }
 
 #login-page-container {
@@ -8,13 +7,13 @@
     height: 60%;
     border-radius: 10px;
     margin-top: 5em;
-    background-color: bisque;
+    background-color: #E1C299;
 }
 
 #login-page-jumbotron {
     margin: 0;
     padding: 3rem;
-    background-color: bisque;
+    background-color: #E1C299;
 }
 
 #btn-submit-login {
@@ -25,6 +24,7 @@
     margin: 0;
     padding-bottom: 1rem;
     padding-top:0;
+    font-family: 'Shrikhand', cursive;
 }
 
 #login-btn {

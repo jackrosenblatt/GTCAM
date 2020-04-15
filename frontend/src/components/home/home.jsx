@@ -84,8 +84,12 @@ export class Home extends React.Component {
                 </div>
             </div>
             <p></p>
-            
             </div>
+            <footer>
+                <nav>
+                    <a href="/">Home</a>
+                </nav>
+            </footer>
         </>;
     }
 }

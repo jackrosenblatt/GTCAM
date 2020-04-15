@@ -1,6 +1,14 @@
 * {
     box-sizing: border-box;
-    font-family: 'Rubik', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
+}
+
+#gtcam-logo-welcome {
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+    background-image: url('../img/logo.jpg');
+
 }
 
 #welcome-page-container {
@@ -8,11 +16,11 @@
     height: 60%;
     border-radius: 10px;
     margin-top: 5em;
-    background-color: bisque;
+    background-color: white;
 }
 
 #welcome-page-jumbotron {
-    background-color: bisque;
+    background-color: white;
 }
 
 

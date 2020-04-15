@@ -10,15 +10,16 @@ export class Nav extends React.Component {
     render() {
         return <>
 
-        <Container className='bg-light'>
-                <nav className='navbar navbar-expand-lg navbar-light bg-light' id='main-nav'>
-                    <a className='navbar-brand' id='brand-name'>GTCAM</a>
+        <Container className='bg-light' id='nav-container'>
+                <div id='gtcam-logo-container'>
+                    
+                </div>
                     {/* <ul className='navbar-nav mr-auto' id='links-list'>
                         <li className='nav-item active'>
                             <a className='nav-link'>Home</a>
                         </li>
                     </ul> */}
-                </nav>
+                {/* </nav> */}
         </Container>
         <div className='sidenav'>
             <div id='profilepic'>
