@@ -16,7 +16,7 @@ export class Pharmacies extends React.Component {
                     <div className="card-body">
                     <p className="text-center">
                             Here you can view all of your pharmacies. <br></br>
-                            The heart shows your prefered pharmacy!
+                            The heart shows your prefered pharmacy to pick up prescriptions!
                     </p>
                     </div>
                 </div>
@@ -55,5 +55,5 @@ export class Pharmacies extends React.Component {
         </>;
     }
 }
-    
-    export default Pharmacies;
+
+export default Pharmacies;
