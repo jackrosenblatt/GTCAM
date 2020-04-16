@@ -6,3 +6,5 @@ export * from './patient';
 export * from './prescription';
 export * from './register';
 export * from './pharmacies';
+export * from './allergyform';
+export * from './messageform';

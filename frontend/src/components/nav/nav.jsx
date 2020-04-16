@@ -3,9 +3,6 @@ import { Container } from 'react-bootstrap';
 import './nav.css';
 
 export class Nav extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return <>

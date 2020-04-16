@@ -4,7 +4,6 @@ import './App.css';
 import { BrowserRouter as Router, 
   Route, 
   Switch,
-  Link,
   Redirect
 } from 'react-router-dom';
 
@@ -18,8 +17,6 @@ import AppointmentList from './components/appointment/appointmentList';
 import PrescriptionList from './components/prescription/prescriptionList';
 import Pharmacies from './components/pharmacies/pharmacies';
 import Message from './components/message/message';
-
-
 
 class App extends Component {
   render() {

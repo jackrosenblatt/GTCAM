@@ -2,7 +2,6 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import Nav from '../nav/nav';
 import './home.css';
-import { Link } from "react-router-dom";
 
 export class Home extends React.Component {
     constructor(props) {
@@ -15,9 +14,13 @@ export class Home extends React.Component {
 
     render() {
         return <>
+
              <Nav></Nav>
 
-            <div><Calendar id='userCal'></Calendar></div>
+            <div>
+                <Calendar id='userCal'></Calendar>
+            </div>
+            
             <p></p>
 
             <div class="container">
@@ -82,7 +85,7 @@ export class Home extends React.Component {
                 </div>
 
                 <div class="card-body">
-                    <p class="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacit.
+                    <p class="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacist.
                                         Click the link below log any questons!</p>
                     <a href="/message" class="btn btn-info">Click Here!</a>
                 </div>
