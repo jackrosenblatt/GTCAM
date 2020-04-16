@@ -11,8 +11,8 @@ export class MedicalInfo extends React.Component {
 
             <Container>
 
-            <div className="card card bg-light mb-3">
-                <div className="card-header font-weight-bold text-center bg-secondary text-light">
+            <div className="card card bg-light mb-3 border-secondary">
+                <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
                     <h4>Welcome to Your Medical Information!</h4>
                 </div>
                 <div className="card-body">
@@ -34,8 +34,8 @@ export class MedicalInfo extends React.Component {
             <p></p>
 
             
-            <div className="card">
-            <h5 className="card-header text-dark">Add A New Allergy Below!</h5>
+            <div className="card border-secondary mb-3">
+            <h5 className="card-header text-dark border-secondary mb-3">Add A New Allergy Below!</h5>
                 <form>
                 <div className="card-body">
                     <div className="col-12">
@@ -49,7 +49,7 @@ export class MedicalInfo extends React.Component {
                         <button
                             type="button"
                             className="btn btn-info"
-                            onClick={ () => this.onReviewSubmit() }>
+                            onClick={ () => this.onSubmit() }>
                             Submit
                         </button>
                     </div>
