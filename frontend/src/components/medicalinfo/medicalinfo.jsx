@@ -11,21 +11,23 @@ export class MedicalInfo extends React.Component {
 
             <Container>
 
-            <div className="card text-center">
-                <div className="card-header font-weight-bold">
+            <div className="card card bg-light mb-3">
+                <div className="card-header font-weight-bold text-center bg-secondary text-light">
                     <h4>Welcome to Your Medical Information!</h4>
                 </div>
                 <div className="card-body">
                     <p className="card-text">
-                        Name: patient.name <br/>
-                        Address:  patient.address <br/>
-                        Doctor's Name: patient.doctorname <br/>
-                        Medical Information: patient.medicalinfo <br/>
-                        Current Allergies: patient.allergies
+                            <b>Name: </b> patient.name <br/>
+                            <b>Address: </b> patient.address <br/>
+                            <b>Doctor's Name: </b> patient.doctorname <br/>
+                            <b>Medical Information: </b> patient.medicalinfo <br/>
+                            <b>Current Allergies: </b> patient.allergies
+                            <ul>
+                                <li>peanuts</li>
+                                <li>dairy</li>
+                                <li>gluten</li>
+                            </ul> 
                     </p>
-                </div>
-                <div className="card-footer text-muted">
-                    <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
                 </div>
             </div>
 
@@ -33,21 +35,31 @@ export class MedicalInfo extends React.Component {
 
             
             <div className="card">
-            <h5 className="card-header bg-secondary text-light">Add A New Allergy</h5>
+            <h5 className="card-header text-dark">Add A New Allergy Below!</h5>
                 <form>
                 <div className="card-body">
-
                     <div className="col-12">
-                            <label htmlFor="comment">New Allegy:</label>
+                            <label htmlFor="comment"> <b>New Allegy:</b> </label>
                             <textarea className="form-control" id="exampleFormControlTextarea1" rows="3">
                             </textarea>
                             <p></p>
                     </div>
 
+                    <div className="col-3">
+                        <button
+                            type="button"
+                            className="btn btn-info"
+                            onClick={ () => this.onReviewSubmit() }>
+                            Submit
+                        </button>
+                    </div>
+
                 </div>
                 </form>
             </div>
-    
+
+            <p></p>
+            <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
             </Container>
 
         </>;
