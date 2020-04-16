@@ -78,7 +78,7 @@ export class Home extends React.Component {
                 </div>
 
                 <div class="card-body">
-                    <p class="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacit.
+                    <p class="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacist.
                                         Click the link below log any questons!</p>
                     <a href="/message" class="btn btn-info">Click Here!</a>
                 </div>
