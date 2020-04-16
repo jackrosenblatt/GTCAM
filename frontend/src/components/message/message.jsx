@@ -1,27 +1,35 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import MessageForm from './messageform';
 
 export class Message extends React.Component {
-    
-    onReviewSubmit(){
+    state = {
+        toUser: [],
+        message: []
+    };
 
-    }
+    addMessage = log => {
+        this.setState(state => ({
+          toUser: [...state.toUser, log],
+          message: [...state.message, log]
+        }));
+      };
 
-    render(){
-        return <>
-            <p></p>
+    render() {
+        return<>
+
+        <p></p>
             <Container>
-
                 <div className="card card bg-light mb-3 border-secondary">
                     <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
                         <h4>Welcome to Your Message Log!</h4>
                     </div>
-
+                    
                     <div className="card-body">
-                    <p className="text-center">
-                        Here you can log any question or concerns about your 
-                        prescriptions to a doctor or a pharmacist.
-                    </p>
+                        <p className="card-text text-center">
+                            Here you can log any question or concerns about your 
+                            prescriptions to a doctor or a pharmacist.
+                        </p>
                     </div>
                 </div>
 
@@ -31,58 +39,29 @@ export class Message extends React.Component {
                 </h5>
                     <div className="card-body">
                         <p className="card-text">
-                                <b>To: </b> message.toUser <br/>
-                                <b>Message: </b> message.message <br/>
+                            <b>To: </b> message.toUser <br/>
+                            <b>Message: </b> message.message <br/>
+
+                            {this.state.toUser.map(toUser => (
+                                <div>
+                                    <b>To:</b>{toUser.newMessage}
+                                </div>))
+                            }
+                            {this.state.message.map(message => (
+                                <div>
+                                    <b>Message:</b>{message.newMessage}
+                                </div>))
+                            }<br/>
+
                         </p>
                     </div>
                 </div>
-                
-                <div className="card border-secondary mb-3">
-                <form>
-                
-                <div className="card-body">
-                <div className="row">
 
-                <div className="col-8">
-                    <div className="form-group">
-                    <label htmlFor="userName"><b>Addressed To: </b></label>
-                        <input type="text"
-                            id="userName"
-                            name="userName"
-                            className="form-control"
-                            placeholder="doctor or pharmacist"
-                        />
-                    </div>
-                </div>
+            <MessageForm  onSubmit={this.addMessage}/>
 
-                    <div className="col-12">
-                        <label htmlFor="comment"><b>Message:</b></label>
-                        <textarea className="form-control" 
-                            id="comment" 
-                            name="comment"
-                            rows="3"
-                            placeholder="enter problem">
-                        </textarea>
-                        <p></p>
-                    </div>
+            <p></p>
+            <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
 
-                    <div className="col-6">
-                        <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={ () => this.onReviewSubmit() }>
-                        Submit Message
-                    </button>
-                    </div>
-
-                </div>
-                </div>
-                </form>
-                </div>
-
-                <p></p>
-                <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
-                
             </Container>
         </>;
     }
