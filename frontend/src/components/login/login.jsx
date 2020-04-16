@@ -24,17 +24,17 @@ export class Login extends React.Component {
                 <Row className='justify-content-md-center'>
                     <form id='login-form'>
                         <div>
-                            <label for='email-login'> Email </label> <br/>
+                            <label HTMLFor='email-login'> Email </label> <br/>
                             <input type="text" id='email-login' value={this.state.email} onChange={ e => this.setState({ email: e.target.value })}></input>
                         </div>
                         <br/>
                         <div>
-                            <label for="password-login">Password</label> <br/>
+                            <label HTMLFor="password-login">Password</label> <br/>
                             <input type='password' id='password-login' value={ this.state.password } onChange={e => this.setState({ password: e.target.value})}></input>
                         </div>
                         <div id='btn-submit-login'>
                             <br/>
-                            <button className='btn btn-primary' id='login-btn' type="submit" onClick={ () => this.onReviewSubmit() }>Submit</button>
+                            <button className='btn btn-primary' id='login-btn' type="button" onClick={ () => this.onReviewSubmit() }>Submit</button>
                         </div>
                     </form>
                 </Row>

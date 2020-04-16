@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 export class Home extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+
+        }
+        
     }
 
     render() {
@@ -86,7 +90,7 @@ export class Home extends React.Component {
             <p></p>
             </div>
             <footer>
-                <nav>
+                <nav id='main-footer'>
                     <a href="/">Home</a>
                 </nav>
             </footer>

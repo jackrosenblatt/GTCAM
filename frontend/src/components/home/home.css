@@ -5,6 +5,10 @@ div.react-calendar {
     
 }
 
-#home-footer {
+#main-footer {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    color: white;
     background-color: #E1C299;
+    padding-bottom: 1rem;
 }
