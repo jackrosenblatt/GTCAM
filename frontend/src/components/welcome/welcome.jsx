@@ -1,6 +1,6 @@
 import React from 'react';
 import './welcome.css';
-import { Card, Container, Jumbotron, Row } from 'react-bootstrap';
+import { Container, Jumbotron, Row } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
 export class Welcome extends React.Component {
