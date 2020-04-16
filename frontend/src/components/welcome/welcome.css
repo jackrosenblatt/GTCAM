@@ -8,19 +8,40 @@
     height: 150px;
     background-size: contain;
     background-image: url('../img/logo.jpg');
-
+    padding-bottom: 0;
 }
 
 #welcome-page-container {
     width: 40%;
     height: 60%;
-    border-radius: 10px;
     margin-top: 5em;
     background-color: white;
 }
 
+@media (max-width: 425px) {
+    #welcome-page-container {
+        width: 90%;
+        height: 90%;
+        margin-top: 1rem;
+        
+        background-color: white;
+        text-align: center;
+    }
+
+    #welcome-page-jumbotron {
+        margin-left: 1rem;
+        margin-right: 1rem;
+
+    }
+}
+
 #welcome-page-jumbotron {
     background-color: white;
+    border-width: 3px;
+    border-radius:10px;
+    border-style: solid;
+    padding-top: 1rem;
+    border-color: #E1C299;
 }
 
 

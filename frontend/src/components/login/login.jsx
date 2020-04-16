@@ -15,9 +15,10 @@ export class Login extends React.Component {
     render() {
         return <>
         <Container id='login-page-container'>
+            <Row className='justify-content-md-center' id='login-title'></Row>
             <Jumbotron fluid style={{width:'100%'}} id="login-page-jumbotron">
             <Container className='justify-content-md-center'>
-                <Row className='justify-content-md-center' id='login-title'>
+                <Row className='justify-content-md-center' id='form-title'>
                     <h3>Login</h3>
                 </Row>
                 <Row className='justify-content-md-center'>
