@@ -1,23 +1,19 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Card, Jumbotron } from 'react-bootstrap';
+
 
 export class AppointmentList extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      someKey: 'someValue'
-    };
-  }
 
-/* DOES NOT WORK- CAUSES ERROR
   onEmpty(){
+    return <>
     <Card>
         <Card.Header>
             You have no appointments!
         </Card.Header>
     </Card>
+    </>;
   }
-  */
 
   render() {
     return <>

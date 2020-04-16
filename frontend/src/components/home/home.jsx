@@ -4,6 +4,13 @@ import Nav from '../nav/nav';
 import './home.css';
 
 export class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+        
+    }
 
     render() {
         return <>
@@ -86,7 +93,7 @@ export class Home extends React.Component {
             <p></p>
             </div>
             <footer>
-                <nav>
+                <nav id='main-footer'>
                     <a href="/">Home</a>
                 </nav>
             </footer>
