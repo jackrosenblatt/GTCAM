@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Card, Jumbotron } from 'react-bootstrap';
-
+import Nav from '../nav/nav';
 
 export class AppointmentList extends React.Component {
-
+  state = {
+      appointments: []
+  }
   onEmpty(){
     return <>
     <Card>
@@ -17,23 +19,23 @@ export class AppointmentList extends React.Component {
 
   render() {
     return <>
-
+    <Nav></Nav>
     <h3>Appointments</h3>
         {
-            this.props.appointments.length === 0 ? this.onEmpty() : ""
+            this.state.appointments.length === 0 ? this.onEmpty() : ""
         }
         {
-            this.props.appointments.map((appointment) => (
+            this.state.appointments.map((appointment) => (
                 <Card>
                     <Card.Header>
-                        Appointment with : { appointment.doctorName }
+                        Appointment with :  appointment.doctorName 
                     </Card.Header>
                     <Card.Body>
                         <Card.Title>
-                            { appointment.time }
+                             appointment.time 
                         </Card.Title>
                         <Card.Text>
-                            { appointment.details }
+                             appointment.details 
                         </Card.Text>
                         
                     </Card.Body>

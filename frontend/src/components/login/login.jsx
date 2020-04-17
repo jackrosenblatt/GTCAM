@@ -5,11 +5,24 @@ import { Container, Row, Jumbotron } from 'react-bootstrap';
 export class Login extends React.Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        apiResponse: ''
     };
 
     onSubmit(){
 
+    }
+
+    callAPI() {
+        fetch("http://localhost:8000/pharmacies")
+        .then(res => res.text())
+        .then(res => this.setState({ apiResponse: res}))
+        .catch(err => err);
+    }
+
+    componentDidMount() {
+        this.callAPI();
+        console.log(this.state.apiResponse);
     }
 
     render() {
