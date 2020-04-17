@@ -43,7 +43,7 @@ export class MedicalInfo extends React.Component {
             <AllergyForm onSubmit={this.addAllergy} />
 
             <p></p>
-            <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
+            <a href="/DashBoard" className="btn btn-primary"> Back to Dashboard</a>
 
             </Container>
         </>;

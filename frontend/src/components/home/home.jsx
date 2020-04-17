@@ -7,7 +7,8 @@ export class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            userID: '',
+            name: ''
         }
         
     }
@@ -94,7 +95,7 @@ export class Home extends React.Component {
             </div>
             <footer>
                 <nav id='main-footer'>
-                    <a href="/">Home</a>
+                    <a href="/">Log Out</a>
                 </nav>
             </footer>
         </>;
