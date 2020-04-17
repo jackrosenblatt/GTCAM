@@ -2,8 +2,7 @@
 #main-nav {
     background-color: #E1C299;
     color: black;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    
 }
 
 #brand-name {
@@ -13,10 +12,6 @@
     font-style: italic;
     font-weight: 300;
     font-family: 'Rubik', sans-serif;
-}
-
-#links-list {
-    display: inline;
 }
 
 .sidenav {
@@ -29,12 +24,6 @@
     background-color: rgb(25, 25, 73); /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
-}
-
-#profile-pic {
-    width: 4rem;
-    height: 4rem;
-    background-image: image('.../img/placehold.png');
 }
 
 .sidenav a {
@@ -51,10 +40,33 @@
     background-image: url('../img/logo.jpg');
     background-size: contain;
     padding: 0.5rem;
+    margin-left: 1rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#top-nav {
+    padding: 0;
 }
 
 #nav-container {
-    margin: 0;
-    fill: bisque;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right:0;
+}
+
+#nav-list li {
+    color: white;
+}
+
+#navbarNav {
+    padding-top: 0.5rem;
+    padding-left: 0;
+    color: white;
+    background-color:  rgb(25, 25, 73);
+    padding-bottom: 0.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    
 }
 

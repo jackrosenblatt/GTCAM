@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import AllergyForm from './allergyform';
+import Nav from '../nav/nav.jsx';
 
 export class MedicalInfo extends React.Component {
     state = {
@@ -15,7 +16,7 @@ export class MedicalInfo extends React.Component {
 
     render() {
         return<>
-
+        <Nav></Nav>
         <p></p>
             <Container>
                 <div className="card card bg-light mb-3 border-secondary">
@@ -42,7 +43,7 @@ export class MedicalInfo extends React.Component {
             <AllergyForm onSubmit={this.addAllergy} />
 
             <p></p>
-            <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
+            <a href="/DashBoard" className="btn btn-primary"> Back to Dashboard</a>
 
             </Container>
         </>;

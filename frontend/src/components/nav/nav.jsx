@@ -7,22 +7,25 @@ export class Nav extends React.Component {
     render() {
         return <>
 
-        <Container className='bg-light' id='nav-container'>
-                <div id='gtcam-logo-container'>
-                    
+        <Container id='nav-container' fluid style={{width: '100%'}}>
+                <div id='gtcam-logo-container'>   
                 </div>
-                    {/* <ul className='navbar-nav mr-auto' id='links-list'>
-                        <li className='nav-item active'>
-                            <a className='nav-link'>Home</a>
+                <nav class="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav nav-pills nav-fill" id='nav-list'>
+                        <li class="nav-item">
+                            <a className='nav-link' href="/dashboard">Home</a>
                         </li>
-                    </ul> */}
-                {/* </nav> */}
+                        <li className='nav-item'>
+                           <a className='nav-link' href="/appointment">Appointments</a>
+                        </li>
+                        <li className='nav-item'>
+                            <a className='nav-link' href="/prescriptions">Prescriptions</a>
+                        </li>
+                    </ul>
+                </div>
+                </nav>
         </Container>
-        <div className='sidenav'>
-            <div id='profilepic'>
-                <h5>Notifications</h5>
-            </div>
-        </div>
         </>;
     }
 }
