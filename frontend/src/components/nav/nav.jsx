@@ -7,12 +7,12 @@ export class Nav extends React.Component {
     render() {
         return <>
 
-        <Container id='nav-container'>
+        <Container id='nav-container' fluid style={{width: '100%'}}>
                 <div id='gtcam-logo-container'>   
                 </div>
-                <nav class="navbar navbar-expand-sm navbar-light bg-light">
+                <nav class="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="nav nav-pills nav-fill">
+                    <ul class="nav nav-pills nav-fill" id='nav-list'>
                         <li class="nav-item">
                             <a className='nav-link' href="/dashboard">Home</a>
                         </li>

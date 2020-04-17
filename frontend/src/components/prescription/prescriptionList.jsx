@@ -1,11 +1,15 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import Nav from '../nav/nav';
+import { Prescription } from '../../models/prescription';
+import './prescription.css';
 
 export class PrescriptionList extends React.Component {
     state = {
-        prescriptions: []
+        prescriptions: [ new Prescription('patientname', 'medname', 'date', 'dosage', 'quantity', 'details')]
     }
+
+    //routing here to get prescriptions from backend
     onEmpty() {
         return <>
         <Card>
@@ -19,21 +23,21 @@ export class PrescriptionList extends React.Component {
     render() {
         return <>
         <Nav></Nav>
-        <h3>Prescriptions</h3>
+        <h3 id='prescription-header'>Your Prescriptions</h3>
         {
             this.state.prescriptions.length === 0 ? this.onEmpty() : ""
         }
         {
             this.state.prescriptions.map((prescription) => (
-                <Card>
-                    <Card.Header>
-                         prescription.medname  :  prescription.dosage 
+                <Card fluid style={{width: '90%'}} id='prescription-card'>
+                    <Card.Header id='prescription-card-header'>
+                         prescription.medname:  prescription.dosage 
                     </Card.Header>
                     <Card.Body>
-                        <Card.Title>
+                        <Card.Title id='prescription-title'>
                              prescription.quantity 
                         </Card.Title>
-                        <Card.Text>
+                        <Card.Text id='prescription-text'>
                              prescription.details 
                         </Card.Text>
                         
@@ -41,6 +45,8 @@ export class PrescriptionList extends React.Component {
                 </Card>
             ))
         }
+        <br/>
+        <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
         </>;
     }
 

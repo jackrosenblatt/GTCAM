@@ -40,25 +40,33 @@
     background-image: url('../img/logo.jpg');
     background-size: contain;
     padding: 0.5rem;
+    margin-left: 1rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#top-nav {
+    padding: 0;
 }
 
 #nav-container {
     padding-right: 0;
-    padding-left: 1rem;
+    padding-left: 0;
+    margin-right:0;
 }
 
-div#nav-container.container {
-    margin-left: 0;
-    margin-right: 0;
+#nav-list li {
+    color: white;
 }
 
 #navbarNav {
-    margin-left:0;
+    padding-top: 0.5rem;
+    padding-left: 0;
+    color: white;
+    background-color:  rgb(25, 25, 73);
+    padding-bottom: 0.5rem;
     margin-right: 0;
-    background-color: rgb(25, 25, 73);
-}
-
-#navbarNav li {
+    margin-left: 0;
     
 }
 
