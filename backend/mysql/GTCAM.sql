@@ -1,3 +1,12 @@
+-- create user called `manager` with password `Password`
+CREATE USER 'manager'@'%' IDENTIFIED BY 'Password';
+-- give access to manager on db
+GRANT ALL PRIVILEGES ON db.* TO 'manager'@'%';
+-- set password method to native password for mysql workbench access (mysql 8 issue)
+ALTER USER 'manager'@'%' IDENTIFIED WITH MYSQL_NATIVE_PASSWORD BY 'Password';
+-- flush them privileges
+FLUSH PRIVILEGES;
+
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: db

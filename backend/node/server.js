@@ -5,11 +5,11 @@ const mysql = require('mysql');
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
 //Configure Connections
-var connection = mysql.createConnection({
+var connection = mysql.createPool({
   host: 'backend-db',
   port: '3306',
-  user: 'root',
-  password: 'password',
+  user: 'manager',
+  password: 'Password',
   database: 'db'
 });
 
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 //Attempting to connect to the database.
-connection.connect(function (err) {
+connection.getConnection(function (err) {
 	if (err)
 		console.log("Cannot connect to DB!");
 	else
@@ -53,6 +53,7 @@ app.get('/pharmacies', (req, res) => {
 	var query = "select * from Pharmacies";
 	
 	connection.query(query, function(err, result, fields){
+		console.log(err);
 		res.status(200).send(result);
 		return;
 	})
