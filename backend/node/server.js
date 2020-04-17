@@ -28,8 +28,11 @@ app.use(bodyParser.json());
 
 //Attempting to connect to the database.
 connection.connect(function (err) {
-	if (err)
+	if(err)
+	{
 		console.log("Cannot connect to DB!");
+		console.log(err);
+	}
 	else
 		console.log("Connected to the DB!");
 });
