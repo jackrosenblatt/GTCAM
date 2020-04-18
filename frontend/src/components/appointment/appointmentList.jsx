@@ -10,8 +10,16 @@ export class AppointmentList extends React.Component {
   state = {
       appointments: [
           new Appointment('patient.name', 'doctor.name', 'time', 'details'),
-      ]
+      ],
+      apiResponse: ''
   }
+
+  callAPI() {
+    fetch("http://localhost:8000/")
+        .then(res => res.text())
+        .then(res => this.setState({ apiResponse: res }));
+  }
+
   onEmpty(){
     return <>
     <Card>
@@ -25,7 +33,7 @@ export class AppointmentList extends React.Component {
   render() {
     return <>
     <Nav></Nav>
-    <h3 id='appointment-header'>Your Appointments</h3>
+     <h3 id='appointment-header'>Your Appointments</h3>
         {
             this.state.appointments.length === 0 ? this.onEmpty() : ""
         }
@@ -52,11 +60,9 @@ export class AppointmentList extends React.Component {
     </>;
   }
 
-  componentDidMount() {
-    this.setState({
-      someKey: 'otherValue'
-    });
-  }
+  componentWillMount() {
+    this.callAPI();
+   }
 }
 
 export default AppointmentList;

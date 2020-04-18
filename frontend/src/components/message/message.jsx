@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import MessageForm from './messageform';
+import Nav from '../nav/nav.jsx';
 
 export class Message extends React.Component {
     state = {
@@ -17,7 +18,7 @@ export class Message extends React.Component {
 
     render() {
         return<>
-
+        <Nav></Nav>
         <p></p>
             <Container>
                 <div className="card card bg-light mb-3 border-secondary">

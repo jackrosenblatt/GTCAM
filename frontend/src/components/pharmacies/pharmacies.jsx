@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import Nav from '../nav/nav';
 
 export class Pharmacies extends React.Component {
     
     render(){
         return <>
+        <Nav></Nav>
             <p></p>
             <Container>
 
