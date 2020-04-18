@@ -12,7 +12,7 @@ export class MedicalInfo extends React.Component {
         this.setState(state => ({
           allergies: [...state.allergies, todo]
         }));
-      };
+    };
 
     render() {
         return<>
@@ -25,6 +25,7 @@ export class MedicalInfo extends React.Component {
                 </div>
                 
                 <div className="card-body">
+
                     <p className="card-text">
                         <b>Name: </b> patient.name <br/>
                         <b>Address: </b> patient.address <br/>
@@ -36,7 +37,13 @@ export class MedicalInfo extends React.Component {
                                 <li><div>{allergies.newAllergy}</div></li>
                             ))}
                         </ul> 
+                        <b>Prefered Way of Receiving Notifications:</b><br />
+                            <input type="radio" id="text" name="user-type"></input>
+                            <label htmlFor="patient"> Text Messages</label><br/>
+                            <input type="radio" id="phone" name="user-type"></input>
+                            <label htmlFor="doctor"> Phone Number</label><br/>
                     </p>
+
                 </div>
             </div>
 

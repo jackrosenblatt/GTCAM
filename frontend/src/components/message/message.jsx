@@ -53,7 +53,6 @@ export class Message extends React.Component {
                                     <b>Message:</b>{message.newMessage}
                                 </div>))
                             }<br/>
-
                         </p>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ import AppointmentList from './components/appointment/appointmentList';
 import PrescriptionList from './components/prescription/prescriptionList';
 import Pharmacies from './components/pharmacies/pharmacies';
 import Message from './components/message/message';
+import DrHome from './components/drhome/drhome';
 
 class App extends Component {
   render() {
@@ -33,6 +34,7 @@ class App extends Component {
             <Route exact path="/prescriptions" component={ PrescriptionList } />
             <Route exact path="/pharmacies" component= { Pharmacies} />
             <Route exact path="/message" component= { Message }/>
+            <Route exact path="/DrHome" component={ DrHome }   />
           </Switch>
         </Router>
       </>

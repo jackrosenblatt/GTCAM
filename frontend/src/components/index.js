@@ -8,3 +8,5 @@ export * from './register';
 export * from './pharmacies';
 export * from './allergyform';
 export * from './messageform';
+export * from './drhome';
+export * from './drnav';
