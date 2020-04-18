@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+#register-page-container {
+    width: 40%;
+    height: 60%;
+    border-radius: 10px;
+    margin-top: 5em;
+    background-color: white;
+    
+}
+
+#register-page-jumbotron {
+    background-color: white;
+    border-width: 3px;
+    border-radius:10px;
+    border-style: solid;
+    padding-top: 1rem;
+    border-color: #E1C299;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#btn-submit-register {
+    text-align: center;
+}
+
+#register-title {
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+    background-image: url('../img/logo.jpg');
+    padding-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ #form-title {
+    margin: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-top:0;
+    font-family: 'Anton', sans-serif;
+    color: rgb(25, 25, 73);
+    text-shadow: 13px;
+} 
+
+#login-btn {
+    border-width: 0;
+    background-color: rgb(25, 25, 73);
+    border-radius: 4px;
+}
+
+
+@media (max-width: 425px) {
+    #login-page-container {
+        width: 90%;
+        height: 90%;
+        margin-top: 1rem;
+        
+        background-color: white;
+        text-align: center;
+    }
+
+    #login-page-jumbotron {
+      
+
+    }
+}

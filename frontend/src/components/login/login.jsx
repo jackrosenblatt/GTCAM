@@ -13,18 +13,6 @@ export class Login extends React.Component {
 
     }
 
-    callAPI() {
-        fetch("http://localhost:8000/pharmacies")
-        .then(res => res.text())
-        .then(res => this.setState({ apiResponse: res}))
-        .catch(err => err);
-    }
-
-    componentDidMount() {
-        this.callAPI();
-        console.log(this.state.apiResponse);
-    }
-
     render() {
         return <>
         <Container id='login-page-container'>
