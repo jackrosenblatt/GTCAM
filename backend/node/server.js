@@ -395,6 +395,35 @@ app.put('/prescriptions/updateSub/:id', (req, res) => {
 	})
 })
 
+///////////
+//DELETE
+///////////
+
+//need to test still 
+app.delete('/appointments/delete/:id', (req,res)=>{
+
+	var appointmentID = req.params.id
+	con.query(`DELETE FROM Appointments WHERE Appointments.ID = '${appointmentID}'`,
+	function(err,result,fields){
+		if(err){
+			res.status(500).send("Failed to Delete Appointment.");
+			return;
+		}
+		res.status(200).send(result);
+		return;	
+	
+	})
+
+})
+
+
+
+
+
+
+
+
+
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
   if (e) {
