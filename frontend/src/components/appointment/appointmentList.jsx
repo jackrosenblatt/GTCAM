@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Card } from 'react-bootstrap';
 import Nav from '../nav/nav';
 import './appointment.css';
-import '../prescription/prescription.css';
 import { Appointment } from '../../models/appointment';
 
 export class AppointmentList extends React.Component {
@@ -44,6 +43,9 @@ export class AppointmentList extends React.Component {
                         Appointment with :  appointment.doctorName 
                     </Card.Header>
                     <Card.Body>
+                        <Card.Title style={{float: 'right'}}>
+                            <a href="/appointment/edit" id='editappt' className='btn btn-primary'>Edit</a> 
+                        </Card.Title>
                         <Card.Title>
                              appointment.time 
                         </Card.Title>
@@ -56,6 +58,7 @@ export class AppointmentList extends React.Component {
             ))
         }
         <br/>
+        <a href="/appointment/request" id='makeappt' className='btn btn-primary'>Request Appointment</a> <br/>
         <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
     </>;
   }
