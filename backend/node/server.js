@@ -303,6 +303,24 @@ app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
 	})
 })
 
+//get all notifications involving a given user
+app.get('/notifications/:id', (req, res) => {
+	var query = "select * from Notifications where sender=\""+req.params.id+"\" or receiver=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		console.log(err);
+		console.log(result);
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Notifications Found");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
 ////////
 //POST//
 ////////
@@ -459,6 +477,7 @@ app.post('/prescriptions/directions', (req,  res) => {
 app.post('/allergy', (req, res) => {
 	if(!req.body.allergyName){
 		res.status(400).send("Missing Allergy Name");
+		return;
 	}
 	
 	var query = "insert into Allergies(allergyName) values(\""+req.body.allergyName+"\");";
@@ -560,6 +579,36 @@ app.post('/prescription', (req, res) => {
 	})
 })
 
+//Creates a new Notification
+app.post('/notification', (req, res) => {
+	if(!req.body.message){
+		res.status(400).send("Missing Message");
+		return;
+	} else if(!req.body.sender){
+		res.status(401).send("Missing Sender");
+		return;
+	} else if(!req.body.receiver){
+		res.status(402).send("Missing Receiver");
+		return;
+	} else if(!req.body.time){
+		res.status(403).send("Missing Time");
+		return;
+	}
+	
+	var query = "insert into Notifications(message, sender, receiver, time) v"+
+				"alues(\""+req.body.message+"\", "+req.body.sender+", "+
+				req.body.receiver+", "+req.body.time+");";
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to Create Notification");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
 
 ///////
 //PUT//
@@ -644,7 +693,7 @@ app.put('prescriptions/updatePickup/:id', (req, res) => {
 
 
 ///////////
-//DELETE
+//DELETE///
 ///////////
 
 //need to test still 
