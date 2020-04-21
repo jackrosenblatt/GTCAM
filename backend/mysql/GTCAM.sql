@@ -168,6 +168,7 @@ CREATE TABLE `Inventory` (
   `medID` int DEFAULT NULL,
   `pharmID` int DEFAULT NULL,
   `quantity` int DEFAULT NULL,
+  `physicalLocation` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `medID` (`medID`),
   KEY `pharmID` (`pharmID`),
@@ -182,7 +183,7 @@ CREATE TABLE `Inventory` (
 
 LOCK TABLES `Inventory` WRITE;
 /*!40000 ALTER TABLE `Inventory` DISABLE KEYS */;
-INSERT INTO `Inventory` VALUES (1,1,1,30),(2,1,2,40),(3,3,2,80),(4,2,3,60),(5,4,4,20);
+INSERT INTO `Inventory` VALUES (1,1,1,30,'Storage room'),(2,1,2,40,'Storage room'),(3,3,2,80,'Storage room'),(4,2,3,60,'Storage room'),(5,4,4,20,'Storage room');
 /*!40000 ALTER TABLE `Inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +298,7 @@ CREATE TABLE `Patients` (
 
 LOCK TABLES `Patients` WRITE;
 /*!40000 ALTER TABLE `Patients` DISABLE KEYS */;
-INSERT INTO `Patients` VALUES (1,1,1,'123456789',1),(2,0,4,'987654321',2),(3,1,3,'456123789',3),(4,1,2,'789456132',4),(6,1,1,'654321987',27);
+INSERT INTO `Patients` VALUES (1,0,1,'123456789',1),(2,0,4,'987654321',2),(3,1,3,'456123789',3),(4,1,2,'789456132',4),(6,1,1,'654321987',27);
 /*!40000 ALTER TABLE `Patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,4 +516,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-20 17:02:52
+-- Dump completed on 2020-04-20 20:11:35
