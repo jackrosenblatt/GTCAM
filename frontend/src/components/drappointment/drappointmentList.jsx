@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Card } from 'react-bootstrap';
 import Nav from '../nav/nav';
-import './appointment.css';
 import { Appointment } from '../../models/appointment';
 
 export class AppointmentList extends React.Component {
@@ -40,12 +39,9 @@ export class AppointmentList extends React.Component {
             this.state.appointments.map((appointment) => (
                 <Card fluid style={{width: '90%'}}>
                     <Card.Header>
-                        Appointment with :  appointment.doctorName 
+                        Appointment with :  appointment.patientName 
                     </Card.Header>
                     <Card.Body>
-                        <Card.Title style={{float: 'right'}}>
-                            <a href="/appointment/edit" id='editappt' className='btn btn-primary'>Edit</a> 
-                        </Card.Title>
                         <Card.Title>
                              appointment.time 
                         </Card.Title>
@@ -58,7 +54,6 @@ export class AppointmentList extends React.Component {
             ))
         }
         <br/>
-        <a href="/appointment/request" id='makeappt' className='btn btn-primary'>Request Appointment</a> <br/>
         <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
     </>;
   }
