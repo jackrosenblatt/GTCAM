@@ -54,7 +54,6 @@ app.get('/pharmacies', (req, res) => {
 	var query = "select * from Pharmacies";
 	
 	connection.query(query, function(err, result, fields){
-		console.log(err);
 		res.status(200).send(result);
 		return;
 	})
@@ -308,8 +307,6 @@ app.get('/notifications/:id', (req, res) => {
 	var query = "select * from Notifications where sender=\""+req.params.id+"\" or receiver=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		console.log(err);
-		console.log(result);
 		switch(result.length){
 			case 0:
 				res.status(400).send("No Notifications Found");
@@ -318,6 +315,19 @@ app.get('/notifications/:id', (req, res) => {
 				res.status(200).send(result);
 				return;
 		}
+	})
+})
+
+//get notificationPref for a given patient
+app.get('/notification/pref/:id', (req, res) => {
+	var query = "select notificationPref from Patients where ID="+req.params.id;
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result[0]);
 	})
 })
 
@@ -691,6 +701,20 @@ app.put('prescriptions/updatePickup/:id', (req, res) => {
 	
 })
 
+//Change notificationPref for a given patient
+app.put('/notifications/pref/:id', (req, res) => {
+	var query = "update Patients set notificationPref = not notificationPref "
+				+ "where ID=" + req.params.id;
+	connection.query(query, function (err, result, fields) {
+		if(err){
+			res.status(500).send("Failed to Update notificationPref.");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+	
+})
 
 ///////////
 //DELETE///
