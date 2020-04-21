@@ -10,3 +10,5 @@ export * from './allergyform';
 export * from './messageform';
 export * from './drhome';
 export * from './drnav';
+export * from './pharmHome';
+export * from './pharmNav';
