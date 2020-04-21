@@ -22,7 +22,7 @@ export function AppointmentForm(props) {
                     </select> <br/>
                     <label htmlFor='' >Select a Date</label> <br/>
                     <input type='date'></input> <br/>
-                    <label htmlFor=''>Select a Time </label>
+                    <label htmlFor=''>Select a Time </label> <br/>
                     <input type='time'></input> <br/>
                     <br/>
                     <a href="/appointment/request" id='request-submit' className='btn btn-primary'>Request</a>

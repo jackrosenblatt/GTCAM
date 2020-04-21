@@ -11,6 +11,10 @@ export function AppointmentEdit(props) {
             </Row>
             <Card fluid style={{width: '90%'}}>
                 <Card.Body id='request-appt-form'>
+                <Card.Title style={{float: 'right'}}>
+                    {/* add an alert: are you sure you want to cancel? */}
+                    <a href="/appointment" id='editappt-return' className='btn btn-primary'>Cancel Appointment</a> 
+                </Card.Title>
                 <form>
                     <label htmlFor='patient-name'>Edit Name</label> <br/>
                     <input type='text' id='patient-name' placeholder={ props.patientName }></input> <br/>

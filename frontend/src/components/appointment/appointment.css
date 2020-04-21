@@ -10,6 +10,12 @@
     border-style: none;
 }
 
+#editappt-return {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    border-style: none;
+}
+
 #request-submit, #edit-submit {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;

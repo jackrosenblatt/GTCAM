@@ -5,8 +5,7 @@ import { Container, Row, Jumbotron } from 'react-bootstrap';
 export class Login extends React.Component {
     state = {
         email: '',
-        password: '',
-        apiResponse: ''
+        password: ''
     };
 
     onSubmit(){
