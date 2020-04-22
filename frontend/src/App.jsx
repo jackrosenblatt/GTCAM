@@ -21,6 +21,7 @@ import DrHome from './components/drhome/drhome';
 import pharmHome from './components/pharmHome/pharmHome';
 import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
+import DrAppointmentList from './components/drappointment/drappointmentList';
 
 class App extends Component {
   render() {
@@ -41,6 +42,7 @@ class App extends Component {
             <Route exact path="/PharmHome" component={ pharmHome }   />
             <Route exact path="/appointment/request" component={ AppointmentForm } />
             <Route exact path="/appointment/edit" component={ AppointmentEdit } />
+            <Route exact path="/drappointment" component={ DrAppointmentList } />
           </Switch>
         </Router>
       </>

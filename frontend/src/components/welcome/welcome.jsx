@@ -22,7 +22,7 @@ export class Welcome extends React.Component {
                     </Row >
                     <br/>
                     <Row className='justify-content-md-center'>
-                        <Link to="/register" className='btn btn-primary' id='btn-register'>Register for an Account</Link>
+                        <Link to="/register" className='btn btn-primary' id='btn-register'>Register for An Account</Link>
                     </Row>
                 </Container>
             </Jumbotron> 
