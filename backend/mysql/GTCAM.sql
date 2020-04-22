@@ -168,6 +168,7 @@ CREATE TABLE `Inventory` (
   `medID` int DEFAULT NULL,
   `pharmID` int DEFAULT NULL,
   `quantity` int DEFAULT NULL,
+  `physicalLocation` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `medID` (`medID`),
   KEY `pharmID` (`pharmID`),
@@ -182,7 +183,7 @@ CREATE TABLE `Inventory` (
 
 LOCK TABLES `Inventory` WRITE;
 /*!40000 ALTER TABLE `Inventory` DISABLE KEYS */;
-INSERT INTO `Inventory` VALUES (1,1,1,30),(2,1,2,40),(3,3,2,80),(4,2,3,60),(5,4,4,20);
+INSERT INTO `Inventory` VALUES (1,1,1,30,'Storage room'),(2,1,2,40,'Storage room'),(3,3,2,80,'Storage room'),(4,2,3,60,'Storage room'),(5,4,4,20,'Storage room');
 /*!40000 ALTER TABLE `Inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,6 +212,37 @@ LOCK TABLES `Medications` WRITE;
 /*!40000 ALTER TABLE `Medications` DISABLE KEYS */;
 INSERT INTO `Medications` VALUES (1,'Aspirin','500mg',30,'Take with food'),(2,'Tylenol','600mg',30,'Take with food'),(3,'Azithromycin','250mg',10,'Take with food'),(4,'Vicodin','5mg/300mg',30,'Schedule II Narcotic');
 /*!40000 ALTER TABLE `Medications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Notifications`
+--
+
+DROP TABLE IF EXISTS `Notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Notifications` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `message` varchar(3000) DEFAULT NULL,
+  `sender` int DEFAULT NULL,
+  `receiver` int DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `sender` (`sender`),
+  KEY `receiver` (`receiver`),
+  CONSTRAINT `Notifications_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `Users` (`ID`),
+  CONSTRAINT `Notifications_ibfk_2` FOREIGN KEY (`receiver`) REFERENCES `Users` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Notifications`
+--
+
+LOCK TABLES `Notifications` WRITE;
+/*!40000 ALTER TABLE `Notifications` DISABLE KEYS */;
+INSERT INTO `Notifications` VALUES (1,'You left your laptop at the appointment',6,3,'2020-06-20 12:00:00'),(2,'I think you misdiagnosed me',2,7,'2020-06-30 10:00:00'),(3,'Do you think this medication is okay for patient x',6,11,'2020-05-30 11:00:00'),(4,'Can I pick up my prescription',1,10,'2020-06-04 14:00:00');
+/*!40000 ALTER TABLE `Notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -266,7 +298,7 @@ CREATE TABLE `Patients` (
 
 LOCK TABLES `Patients` WRITE;
 /*!40000 ALTER TABLE `Patients` DISABLE KEYS */;
-INSERT INTO `Patients` VALUES (1,1,1,'123456789',1),(2,0,4,'987654321',2),(3,1,3,'456123789',3),(4,1,2,'789456132',4),(6,1,1,'654321987',27);
+INSERT INTO `Patients` VALUES (1,0,1,'123456789',1),(2,0,4,'987654321',2),(3,1,3,'456123789',3),(4,1,2,'789456132',4),(6,1,1,'654321987',27);
 /*!40000 ALTER TABLE `Patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -484,4 +516,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-07 19:25:52
+-- Dump completed on 2020-04-20 20:11:35
