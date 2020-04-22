@@ -1,6 +1,8 @@
 import React from 'react';
 import './login.css';
 import { Container, Row, Jumbotron } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import { Home } from '../home/home';
 
 export class Login extends React.Component {
     state = {
@@ -9,7 +11,7 @@ export class Login extends React.Component {
     };
 
     onSubmit(){
-
+        
     }
 
     render() {
@@ -34,7 +36,10 @@ export class Login extends React.Component {
                         </div>
                         <div id='btn-submit-login'>
                             <br/>
-                            <button className='btn btn-primary' id='login-btn' type="button" onClick={ () => this.onReviewSubmit() }>Submit</button>
+                            <a href="/dashboard" className='btn btn-primary' id='login-btn'>Login</a> <br/>
+                            <br/> <p>Don't have an account?</p>
+                            <a href="/register">Register here</a>
+                            {/* <button className='btn btn-primary' id='login-btn' type="button" onClick={ () => this.onSubmit() }>Submit</button> */}
                         </div>
                     </form>
                 </Row>

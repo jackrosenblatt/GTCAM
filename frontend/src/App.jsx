@@ -20,6 +20,7 @@ import Message from './components/message/message';
 import DrHome from './components/drhome/drhome';
 import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
+import DrAppointmentList from './components/drappointment/drappointmentList';
 
 class App extends Component {
   render() {
@@ -39,6 +40,7 @@ class App extends Component {
             <Route exact path="/DrHome" component={ DrHome }   />
             <Route exact path="/appointment/request" component={ AppointmentForm } />
             <Route exact path="/appointment/edit" component={ AppointmentEdit } />
+            <Route exact path="/drappointment" component={ DrAppointmentList } />
           </Switch>
         </Router>
       </>
