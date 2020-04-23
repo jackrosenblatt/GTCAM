@@ -163,6 +163,24 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 	})
 })
 
+//get appointments for a doctor on a given day
+app.get('/appointments/doctor/specificDate/:id/:date', (req,res) =>{
+	var query = "select * from Appointments where docID =\"" req.params.id+"\" and date=\""+req.params.date+"\"";
+
+	connection.query(query,function(err,result,fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointments On Selected Date");
+				return;
+			default:
+			res.status(200).send(result);
+			return; 
+		}
+
+	})
+
+})
+
 //get appointments for a doctor patient combo
 app.get('/appointments/doctor/:docID/:patientID', (req,  res) => {
 	var query = "select * from Appointments where docID=\""+req.params.docID+"\" and patientID=\""+req.params.patientID+"\"";
