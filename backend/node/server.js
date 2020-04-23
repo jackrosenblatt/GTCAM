@@ -129,6 +129,24 @@ app.get('/appointments/patient/:id', (req,  res) => {
 	})
 })
 
+//get appointments for a patient on a given day
+app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
+	var query = "select * from Appointments where patientID =\"" req.params.id+"\" and date=\""+req.params.date+"\"";
+
+	connection.query(query,function(err,result,fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointments On Selected Date");
+				return;
+			default:
+			res.status(200).send(result);
+			return; 
+		}
+
+	})
+
+})
+
 //get appointments for a doctor
 app.get('/appointments/doctor/:id', (req,  res) => {
 	var query = "select * from Appointments where docID=\""+req.params.id+"\"";
@@ -624,7 +642,7 @@ app.put('/inventory/order/:pharmID/:medID', (req, res) => {
 })
 
 //Update Preferred Availability for Pickup
-app.put('prescriptions/updatePickup/:id', (req, res) => {
+app.put('/prescriptions/updatePickup/:id', (req, res) => {
 	if (!(req.body.date)){
 		res.status(400).send("Missing Date and Time Information");
 		return;
@@ -643,6 +661,23 @@ app.put('prescriptions/updatePickup/:id', (req, res) => {
 })
 
 //update Preferred pharmacy preference 
+app.put('/patients/updatePharmacy/:id', (req,res)=>{
+	if(!(req.body.pharmacy)){
+		res.status(400).send("Missing Pharmacy Preference Information");
+		return;
+	}
+	var query = "update Patients set pharmacyPref = \"" + req.body.pharmacy
+	+ "\" where patientID =\"" + req.params.id + "\"";
+	connection.query(query,function(err,result,fields){
+		if(err){
+			res.status(500).send("Failed to Update Preferred Pharmacy.");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+
+})
 
 
 ///////////
