@@ -128,6 +128,25 @@ app.get('/appointments/patient/:id', (req,  res) => {
 	})
 })
 
+//get appointments for a patient on a given day
+app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
+	var query = "select * from Appointments where patientID =\"" req.params.id+"\" and date=\""+req.params.date+"\"";
+
+	connection.query(query,function(err,result,fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointments On Selected Date");
+				return;
+			default:
+			res.status(200).send(result);
+			return; 
+		}
+
+	})
+
+})
+
+
 //get appointments for a doctor
 app.get('/appointments/doctor/:id', (req,  res) => {
 	var query = "select * from Appointments where docID=\""+req.params.id+"\"";
@@ -142,6 +161,24 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 				return;
 		}
 	})
+})
+
+//get appointments for a doctor on a given day
+app.get('/appointments/doctor/specificDate/:id/:date', (req,res) =>{
+	var query = "select * from Appointments where docID =\"" req.params.id+"\" and date=\""+req.params.date+"\"";
+
+	connection.query(query,function(err,result,fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Appointments On Selected Date");
+				return;
+			default:
+			res.status(200).send(result);
+			return; 
+		}
+
+	})
+
 })
 
 //get appointments for a doctor patient combo
@@ -736,6 +773,26 @@ app.put('/notifications/pref/:id', (req, res) => {
 		return;
 	})
 	
+})
+
+
+//update Preferred pharmacy preference 
+app.put('/patients/updatePharmacy/:id', (req,res)=>{
+	if(!(req.body.pharmacy)){
+		res.status(400).send("Missing Pharmacy Preference Information");
+		return;
+	}
+	var query = "update Patients set pharmacyPref = \"" + req.body.pharmacy
+	+ "\" where patientID =\"" + req.params.id + "\"";
+	connection.query(query,function(err,result,fields){
+		if(err){
+			res.status(500).send("Failed to Update Preferred Pharmacy.");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+
 })
 
 ///////////
