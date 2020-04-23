@@ -1,6 +1,11 @@
 import React from 'react';
 import Calendar from 'react-calendar';
 import DrNav from '../drnav/drnav'; 
+import { BrowserRouter as Router, 
+    Route, 
+    Switch,
+    Redirect
+  } from 'react-router-dom';
 
 export class DrHome extends React.Component {
     constructor(props) {
@@ -13,6 +18,9 @@ export class DrHome extends React.Component {
     }
 
     render() {
+        if (!localStorage.getItem('id')) {
+            return <Redirect to="/login" />
+        }
         return <>
 
              <DrNav></DrNav>
