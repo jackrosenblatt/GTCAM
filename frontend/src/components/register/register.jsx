@@ -32,16 +32,37 @@ export class Register extends React.Component {
     }
 
     async onRegisterSubmit() {
-        var user = {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password,
-            type: this.state.type,
-            notifPref: this.state.notifPref,
-            pharmacyPref: this.state.pharmacyPref,
-            ssn: this.state.ssn,
-            pharmID: this.state.pharmID,
-          }
+        if( this.state.type === '1'){
+            var user = {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                type: this.state.type,
+                notificationPref: this.state.notifPref,
+                pharmacyPref: this.state.pharmacyPref,
+                ssn: this.state.ssn,
+                pharmID: this.state.pharmID,
+              }
+        }
+        else if(this.state.type === '2')
+        {
+            var user = {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                type: this.state.type,
+              }
+        }
+        else {
+            var user = {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                type: this.state.type,
+                pharmID: this.state.pharmID,
+              }
+        }
+        
   
           await this.userRepo.registerUser(user)
             .then(resp => {
@@ -97,11 +118,11 @@ export class Register extends React.Component {
                         </div>
                         <div>
                             <p>What kind of user are you?</p>
-                            <input type="radio" id="patient" name="user-type" value="1" value={ this.state.type } onChange={ e => { this.setState({ type: e.target.value }); this.setState({ isPatient: 'true'}); }}></input>
+                            <input type="radio" id="patient" name="user-type" value="1" onChange={ e => { this.setState({ type: e.target.value }); this.setState({ isPatient: 'true'}); }}></input>
                             <label htmlFor="patient"> Patient</label><br/>
-                            <input type="radio" id="doctor" name="user-type" value="2" value={ this.state.type } onChange={ e => this.setState({ type: e.target.value })}></input>
+                            <input type="radio" id="doctor" name="user-type" value="2" onChange={ e => this.setState({ type: e.target.value }) }></input>
                             <label htmlFor="doctor"> Doctor</label><br/>
-                            <input type="radio" id="pharmacist" name="user-type" value="3" value={ this.state.type } onChange={ e => { this.setState({ type: e.target.value }); this.setState({ isPharmacist: 'true' }); }}></input>
+                            <input type="radio" id="pharmacist" name="user-type" value="3" onChange={ e => { this.setState({ type: e.target.value }); this.setState({ isPharmacist: 'true' }); }}></input>
                             <label htmlFor="pharmacist"> Pharmacist</label>
                         </div>
                         {
@@ -120,7 +141,7 @@ export class Register extends React.Component {
                             <option value='' disabled>Pharmacies</option>
                             {
                                  this.state.pharmacies.map((pharmacy) => 
-                                <option value={ pharmacy.pharmID }>{ pharmacy.pharmName }</option>)
+                                <option key={ pharmacy.ID } value={ pharmacy.ID }>{ pharmacy.pharmName }</option>)
                             }
                             </select> <br/>
                         </div> : null
