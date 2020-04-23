@@ -339,6 +339,23 @@ app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
 	})
 })
 
+//get all prescription details for given patient
+app.get('patient/prescriptiondetails/:id', (req,  res) => {
+	var query = "select * from PrescriptionDetails where patientID=\""+req.params.id+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		switch(result.length){
+			case 0:
+				res.status(400).send("No Prescription Details for Given Patient");
+				return;
+			default:
+				res.status(200).send(result);
+				return;
+		}
+	})
+})
+
+
 ////////
 //POST//
 ////////
