@@ -547,7 +547,6 @@ app.post('/inventory', (req,  res) => {
 
 //Creates a new Prescription
 app.post('/prescription', (req, res) => {
-	let id = req.body.id
 	let patientID = req.body.patientID
 	let medID = req.body.medID
 	let pharmID = req.body.pharmID
@@ -558,8 +557,8 @@ app.post('/prescription', (req, res) => {
 	let pickup = req.body.pickupPrefTime
 
 
-	if (!(id && patientID && medID && pharmID && dir && docID && refill)) {
-		res.status(400).send("Missing id, patientID, medID, pharmID, directions," +
+	if (!(patientID && medID && pharmID && dir && docID && refill)) {
+		res.status(400).send("Missing patientID, medID, pharmID, directions," +
 						 	 " docID, OR refillEvery\n" +
 							 "Optional Entry Data: subRetriever, pickupPrefTime");
 		return;
@@ -570,10 +569,9 @@ app.post('/prescription', (req, res) => {
 	if (!pickup)
 		pickup = ""
 	
-	var query = "insert into PrescriptionDetails(ID, patientID, medID, pharmID, directions, docID, needRefill, subRetriever," +
-		" readyForPickup, pickupPrefTime, refillEvery) " +
-		"values(" + id + ", " + patientID + ", " + medID + ", " + pharmID +
-		", " + dir + ", " + docID + ", 0" + ", " + sub + ", 0, " + pickup + ", " + refill + ");";
+	var query = "insert into PrescriptionDetails(patientID, medID, pharmID, directions, docID, needRefill, subRetriever," +
+		" readyForPickup, pickupPrefTime, refillEvery) values(" + patientID + ", " + medID + ", " + pharmID +
+		", " + dir + ", " + docID + ", 0" + ", \"" + sub + "\", 0, \"" + pickup + "\", " + refill + ");";
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
@@ -582,10 +580,34 @@ app.post('/prescription', (req, res) => {
 			else
 				res.status(501).send("Failed to Create Prescription");
 			return;
+		} else{
+			var date = new Date();
+			dateStr = date.getYear() + 1900
+            + ':'
+            + ((date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+            + ':' + date.getDate()
+            + ':' + date.getHours()
+            + ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
+            + ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
+			
+			
+			var query2 = "insert into Notifications(message, sender, receiver, time) v"+
+				"alues(\"Your Doctor added a new medication\", "+docID+", "+
+				patientID+", \""+dateStr+"\");";
+	
+			connection.query(query2, function(err2, result2, fields2){
+				if(err2){
+					res.status(500).send("Failed to Create Notification");
+					return;
+				}
+				
+				res.status(200).send(result);
+				return;
+			})
+			
+			/*res.status(200).send(result);
+			return;*/
 		}
-		
-		res.status(200).send(result);
-		return;
 	})
 })
 
