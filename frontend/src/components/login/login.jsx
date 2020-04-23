@@ -7,14 +7,46 @@ import { Home } from '../home/home';
 export class Login extends React.Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        redirect: '',
+        showError: ''
     };
 
-    onSubmit(){
-        
+    async onSubmit(){
+        var user = {
+            email: this.state.email,
+            password: this.state.password
+        } 
+        await await this.userRepo.userLogin(user)
+        .then(() => {
+            if (localStorage.getItem('code') === '200') {
+                this.setState(pState => {
+                    pState.email = '';
+                    pState.password = '';
+                    pState.redirect = '/home';
+                    pState.showError = false;
+                    return pState;
+                });
+        } else 
+            {
+                this.setState({ showError: true })
+            }
+        })
+        .catch(resp => {
+            console.log(resp);
+            this.setState({ showError:true });
+        }); 
+    this.setState(pState => {
+        pState.email = '';
+        pState.password = '';
+        return pState;
+        });  
     }
 
     render() {
+        if (this.state.redirect) {
+        return <Redirect to={{ pathname: this.state.redirect }} />
+        }
         return <>
         <Container id='login-page-container'>
             <Row className='justify-content-md-center' id='login-title'></Row>

@@ -2,6 +2,11 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import Nav from '../nav/nav';
 import './home.css';
+import { BrowserRouter as Router, 
+    Route, 
+    Switch,
+    Redirect
+  } from 'react-router-dom';
 
 export class Home extends React.Component {
     constructor(props) {
@@ -14,6 +19,9 @@ export class Home extends React.Component {
     }
 
     render() {
+        if (!localStorage.getItem('id')) {
+            return <Redirect to="/login" />
+        }
         return <>
 
              <Nav></Nav>
