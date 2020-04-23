@@ -642,6 +642,8 @@ app.put('prescriptions/updatePickup/:id', (req, res) => {
 	
 })
 
+//update Preferred pharmacy preference 
+
 
 ///////////
 //DELETE
