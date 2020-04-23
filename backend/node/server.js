@@ -677,7 +677,7 @@ app.put('/inventory/order/:pharmID/:medID', (req, res) => {
 })
 
 //Update Preferred Availability for Pickup
-app.put('prescriptions/updatePickup/:id', (req, res) => {
+app.put('/prescriptions/updatePickup/:id', (req, res) => {
 	if (!(req.body.date)){
 		res.status(400).send("Missing Date and Time Information");
 		return;
