@@ -775,6 +775,26 @@ app.put('/notifications/pref/:id', (req, res) => {
 	
 })
 
+
+//update Preferred pharmacy preference 
+app.put('/patients/updatePharmacy/:id', (req,res)=>{
+	if(!(req.body.pharmacy)){
+		res.status(400).send("Missing Pharmacy Preference Information");
+		return;
+	}
+	var query = "update Patients set pharmacyPref = \"" + req.body.pharmacy
+	+ "\" where patientID =\"" + req.params.id + "\"";
+	connection.query(query,function(err,result,fields){
+		if(err){
+			res.status(500).send("Failed to Update Preferred Pharmacy.");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+
+})
+
 ///////////
 //DELETE///
 ///////////
