@@ -47,8 +47,9 @@ connection.getConnection(function (err) {
 *
 *
 *
-*Create endpoint to update user info and create endpoint for get user by id
-*
+*Create endpoint to update user info
+*Edit Appointments
+Create appointment
 */
 
 ///////
@@ -76,17 +77,8 @@ app.get('/pharmacy/:id', (req,  res) => {
 	var query = "select * from Pharmacies where ID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Pharmacy Found With Specified ID");
-				return;
-			case 1:
-				res.status(200).send(result[0]);
-				return;
-			default:
-				res.status(401).send("Too Many Pharmacies Found");
-				return;
-		}
+		res.status(200).send(result[0]);
+		return;
 	})
 })
 
@@ -105,38 +97,32 @@ app.get('/appointments/:id', (req, res) => {
 	})
 })
 
-//Returns past appointments by patient id
-app.get('/appointments/patient/past/:id', (req, res) => {
-	var date = new Date();
-	var query = "select * from Appointments where ID = \"" + req.params.id + "\" AND time < \"" +
-		date.getFullYear + "-" + date.getMonth + "-" + date.getDay + " " +
-		date.getHours + ":" + date.getMinutes + ":" + date.getSeconds;
-	
-	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Past Appointments Found For Specified Patient");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
-	})
-})
-
 //get appointments for a patient
 app.get('/appointments/patient/:id', (req,  res) => {
 	var query = "select * from Appointments where patientID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Appointments Found For Specified Patient");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//Returns past appointments by patient id
+app.get('/appointments/patient/past/:id', (req, res) => {
+	var date = new Date();
+	dateStr = date.getYear() + 1900
+	+ '-'
+	+ ((date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+	+ '-' + date.getDate()
+	+ ' ' + date.getHours()
+	+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
+	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
+	
+	var query = "select * from Appointments where patientID=\""+req.params.id+"\"  and \""+dateStr+"\" > time";
+	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -160,17 +146,11 @@ app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
 
 //get appointments for a doctor
 app.get('/appointments/doctor/:id', (req,  res) => {
-	var query = "select * from Appointments where docID=\""+req.params.id+"\"";
-	
+	var query = "select * from Appointments where docID="+req.params.id;
+	console.log(query);
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Appointments Found For Specified Doctor");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -179,64 +159,56 @@ app.get('/appointments/doctor/specificDate/:id/:date', (req,res) =>{
 	var query = "select * from Appointments where docID =\""+ req.params.id+"\" and date=\""+req.params.date+"\"";
 
 	connection.query(query,function(err,result,fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Appointments On Selected Date");
-				return;
-			default:
-			res.status(200).send(result);
-			return; 
-		}
-
-	})
-
-})
-
-//get appointments for a doctor patient combo
-app.get('/appointments/doctor/:docID/:patientID', (req,  res) => {
-	var query = "select * from Appointments where docID=\""+req.params.docID+"\" and patientID=\""+req.params.patientID+"\"";
-	
-	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Appointments Found For Specified Doctor Patient Combo");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return; 
 	})
 })
 
 //get past appointments for a doctor 
 app.get('/appointments/doctor/past/:id', (req,  res) => {
-	var query = "select * from Appointments where docID=\""+req.params.id+"\" and "+current_time()+" > time";
+	var date = new Date();
+	dateStr = date.getYear() + 1900
+	+ '-'
+	+ ((date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+	+ '-' + date.getDate()
+	+ ' ' + date.getHours()
+	+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
+	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
+	
+	var query = "select * from Appointments where docID=\""+req.params.id+"\"  and \""+dateStr+"\" > time";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Past Appointments Found For Specified Doctor");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
 //get future appointments for a doctor 
 app.get('/appointments/doctor/future/:id', (req,  res) => {
-	var query = "select * from Appointments where docID=\""+req.params.id+"\"  and "+current_time()+" < time";
+	var date = new Date();
+	dateStr = date.getYear() + 1900
+	+ '-'
+	+ ((date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+	+ '-' + date.getDate()
+	+ ' ' + date.getHours()
+	+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
+	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
+	
+	var query = "select * from Appointments where docID=\""+req.params.id+"\"  and \""+dateStr+"\" < time";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Future Appointments Found For Specified Doctor");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//get appointments for a doctor patient combo
+app.get('/appointments/:docID/:patientID', (req,  res) => {
+	var query = "select * from Appointments where docID=\""+req.params.docID+"\" and patientID=\""+req.params.patientID+"\"";
+	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -245,14 +217,8 @@ app.get('/prescriptions/pickup/:id', (req,  res) => {
 	var query = "select * from PrescriptionDetails where readyForPickup=1 and patientID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Prescriptions Ready For Pickup For Specified Patient");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -311,14 +277,8 @@ app.get('/medications/inventory/:id', (req,  res) => {
 	var query = "select * from Inventory where pharmID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Medications In Inventory for Specified Pharmacy");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -327,14 +287,8 @@ app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
 	var query = "select * from Inventory where pharmID=\""+req.params.pharmID+"\" and medID=\""+req.params.medID+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Medication Found In Inventory for Given Pharmacy");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -343,14 +297,8 @@ app.get('/notifications/:id', (req, res) => {
 	var query = "select * from Notifications where sender=\""+req.params.id+"\" or receiver=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Notifications Found");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -397,7 +345,7 @@ app.get('/patient/:id', (req, res) => {
 
 //get a doctor by id
 app.get('/doctor/:id', (req, res) => {
-	var query = 'select * from Doctors d join Users u on u.ID=d.userID where d.ID=+'+req.params.id;
+	var query = 'select * from Users u join Doctors d on u.ID=d.userID where d.ID=+'+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
@@ -411,7 +359,7 @@ app.get('/doctor/:id', (req, res) => {
 
 //get a pharmacist by id
 app.get('/pharmacist/:id', (req, res) => {
-	var query = 'select * from Pharmacists p join Users u on u.ID=p.userID where p.ID=+'+req.params.id;
+	var query = 'select * from Users u join Pharmacists p on u.ID=p.userID where p.ID=+'+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
@@ -675,10 +623,10 @@ app.post('/prescription', (req, res) => {
 		} else{
 			var date = new Date();
 			dateStr = date.getYear() + 1900
-            + ':'
+            + '-'
             + ((date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
-            + ':' + date.getDate()
-            + ':' + date.getHours()
+            + '-' + date.getDate()
+            + ' ' + date.getHours()
             + ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
             + ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
 			
@@ -689,7 +637,7 @@ app.post('/prescription', (req, res) => {
 	
 			connection.query(query2, function(err2, result2, fields2){
 				if(err2){
-					res.status(500).send("Failed to Create Notification");
+					res.status(502).send("Failed to Create Notification");
 					return;
 				}
 				
@@ -797,7 +745,7 @@ app.put('/inventory/order/:pharmID/:medID', (req, res) => {
 })
 
 //Update Preferred Availability for Pickup
-app.put('prescriptions/updatePickup/:id', (req, res) => {
+app.put('/prescriptions/updatePickup/:id', (req, res) => {
 	if (!(req.body.date)){
 		res.status(400).send("Missing Date and Time Information");
 		return;
@@ -829,7 +777,6 @@ app.put('/notifications/pref/:id', (req, res) => {
 	})
 	
 })
-
 
 //update Preferred pharmacy preference 
 app.put('/patients/updatePharmacy/:id', (req,res)=>{
