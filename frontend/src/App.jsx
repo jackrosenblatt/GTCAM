@@ -41,7 +41,7 @@ class App extends Component {
             <Route exact path="/DrHome" component={ DrHome }   />
             <Route exact path="/PharmHome" component={ pharmHome }   />
             <Route exact path="/appointment/request" component={ AppointmentForm } />
-            <Route exact path="/appointment/edit" component={ AppointmentEdit } />
+            <Route exact path="/appointment/edit/:id" render={(props) => <AppointmentEdit {...props} />} />
             <Route exact path="/drappointment" component={ DrAppointmentList } />
           </Switch>
         </Router>

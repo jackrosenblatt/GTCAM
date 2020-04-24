@@ -1,5 +1,6 @@
 export class Appointment {
-    constructor(patientName, doctorName, date, time, details) {
+    constructor(id, patientName, doctorName, date, time, details) {
+        this.id = id;
         this.patientName = patientName;
         this.doctorName = doctorName;
         this.date =date;

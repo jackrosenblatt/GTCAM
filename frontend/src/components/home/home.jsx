@@ -37,9 +37,9 @@ export class Home extends React.Component {
         return <>
 
              <Nav></Nav>
-            <div>
-                <h3>Welcome Back, { this}</h3>
-            </div>
+            {/* <div>
+                <h3>Welcome Back, { this.state.name }</h3>
+            </div> */}
             <div>
                 <Calendar id='userCal'></Calendar>
             </div>
