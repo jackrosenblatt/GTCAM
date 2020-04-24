@@ -39,6 +39,18 @@ connection.getConnection(function (err) {
 //END POINTS/////
 /////////////////
 
+/*
+*
+*
+*
+*
+*
+*
+*
+*Create endpoint to update user info and create endpoint for get user by id
+*
+*/
+
 ///////
 //GET//
 ///////
@@ -130,7 +142,7 @@ app.get('/appointments/patient/:id', (req,  res) => {
 
 //get appointments for a patient on a given day
 app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
-	var query = "select * from Appointments where patientID =\"" req.params.id+"\" and date=\""+req.params.date+"\"";
+	var query = "select * from Appointments where patientID =\""+ req.params.id+"\" and date=\""+req.params.date+"\"";
 
 	connection.query(query,function(err,result,fields){
 		switch(result.length){
@@ -165,7 +177,7 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 
 //get appointments for a doctor on a given day
 app.get('/appointments/doctor/specificDate/:id/:date', (req,res) =>{
-	var query = "select * from Appointments where docID =\"" req.params.id+"\" and date=\""+req.params.date+"\"";
+	var query = "select * from Appointments where docID =\""+ req.params.id+"\" and date=\""+req.params.date+"\"";
 
 	connection.query(query,function(err,result,fields){
 		switch(result.length){
@@ -250,14 +262,8 @@ app.get('/prescriptions/patient/:id', (req,  res) => {
 	var query = "select * from PrescriptionDetails where patientID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Prescriptions For Specified Patient");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
@@ -266,14 +272,8 @@ app.get('/prescriptions/doctor/:id', (req,  res) => {
 	var query = "select * from PrescriptionDetails where docID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Prescriptions For Specified Doctor");
-				return;
-			default:
-				res.status(200).send(result);
-				return;
-		}
+		res.status(200).send(result);
+		return;
 	})
 })
 
