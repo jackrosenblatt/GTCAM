@@ -7,13 +7,25 @@ import { BrowserRouter as Router,
     Switch,
     Redirect
   } from 'react-router-dom';
+import { UserRepository } from '../../api/userRepository';
 
 export class Home extends React.Component {
+
+    userRepo = new UserRepository();
+
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
+            name: '',
             userID: '',
-            name: ''
+            address: '',
+            notificationPreference: '',
+            pharmacyPreference: '',
+            ssn: '',
+            allergies: '',
+            doctorname: '',
+            medicalinfo: ''
         }
         
     }
@@ -25,7 +37,9 @@ export class Home extends React.Component {
         return <>
 
              <Nav></Nav>
-
+            <div>
+                <h3>Welcome Back, { this}</h3>
+            </div>
             <div>
                 <Calendar id='userCal'></Calendar>
             </div>
@@ -107,6 +121,11 @@ export class Home extends React.Component {
                 </nav>
             </footer>
         </>;
+    }
+
+    componentDidMount() {
+        this.userRepo.getUserById(localStorage.getItem('id'))
+            .then(user => this.setState({ user }));
     }
 }
 
