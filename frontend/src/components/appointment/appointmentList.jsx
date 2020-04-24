@@ -4,19 +4,15 @@ import { Card } from 'react-bootstrap';
 import Nav from '../nav/nav';
 import './appointment.css';
 import { Appointment } from '../../models/appointment';
+import { AppointmentRepository } from '../../api/appointmentRepository';
 
 export class AppointmentList extends React.Component {
-  state = {
-      appointments: [
-          new Appointment('patient.name', 'doctor.name', 'time', 'details'),
-      ],
-      apiResponse: ''
-  }
 
-  callAPI() {
-    fetch("http://localhost:8000/")
-        .then(res => res.text())
-        .then(res => this.setState({ apiResponse: res }));
+    apptRepo = new AppointmentRepository();
+
+  state = {
+      appointments: [],
+      redirect: ''
   }
 
   onEmpty(){
@@ -40,17 +36,19 @@ export class AppointmentList extends React.Component {
             this.state.appointments.map((appointment) => (
                 <Card fluid style={{width: '90%'}}>
                     <Card.Header>
-                        Appointment with :  appointment.doctorName 
+                        Appointment with : { appointment.doctorName }
                     </Card.Header>
                     <Card.Body>
                         <Card.Title style={{float: 'right'}}>
-                            <a href="/appointment/edit" id='editappt' className='btn btn-primary'>Edit</a> 
+                        <Link to={'/appointment/edit/' + appointment.id } id='edit-appt' className="btn btn-primary  mt-auto">
+                                     Edit
+                                      </Link> 
                         </Card.Title>
                         <Card.Title>
-                             appointment.time 
+                            { appointment.time }
                         </Card.Title>
                         <Card.Text>
-                             appointment.details 
+                            { appointment.details }
                         </Card.Text>
                         
                     </Card.Body>
@@ -64,7 +62,8 @@ export class AppointmentList extends React.Component {
   }
 
   componentWillMount() {
-    this.callAPI();
+        this.apptRepo.getAppointmentsPatient(localStorage.getItem('id'))
+            .then(appointments => this.setState({ appointments }));
    }
 }
 

@@ -46,14 +46,6 @@ export class UserRepository {
         });
     }
 
-    // updateFirstName(firstName) {
-    //     return new Promise((res, rej) => {
-    //         axios.put(this.url + 'user/update/firstName/' + localStorage.getItem('id'), { firstName }, this.config)
-    //             .then(resp => {
-    //                 res(resp.data);
-    //             })
-    //             .catch(resp => rej(resp));
-    //     })
-    // }
+
 
 }

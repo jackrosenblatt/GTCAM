@@ -1,5 +1,6 @@
 export class Prescription {
-    constructor(patientname, medname, date, dosage, quantity, details) {
+    constructor(id, patientname, medname, date, dosage, quantity, details) {
+        this.id = id;
         this.patientname = patientname;
         this.medname = medname;
         this.date = date;

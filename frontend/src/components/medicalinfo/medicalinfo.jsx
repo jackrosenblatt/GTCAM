@@ -55,6 +55,10 @@ export class MedicalInfo extends React.Component {
             </Container>
         </>;
     }
+
+    componentDidMount() {
+        
+    }
 }
 
 export default MedicalInfo;
