@@ -383,7 +383,7 @@ app.get('/user/:id', (req, res) => {
 
 //get a patient by id
 app.get('/patient/:id', (req, res) => {
-	var query = 'select * from Patients where ID=+'+req.params.id;
+	var query = 'select * from Patients p join Users u on u.ID=p.userID where p.ID=+'+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
@@ -397,7 +397,7 @@ app.get('/patient/:id', (req, res) => {
 
 //get a doctor by id
 app.get('/doctor/:id', (req, res) => {
-	var query = 'select * from Patients where ID=+'+req.params.id;
+	var query = 'select * from Doctors d join Users u on u.ID=d.userID where d.ID=+'+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
@@ -411,7 +411,7 @@ app.get('/doctor/:id', (req, res) => {
 
 //get a pharmacist by id
 app.get('/pharmacist/:id', (req, res) => {
-	var query = 'select * from Pharmacists where ID=+'+req.params.id;
+	var query = 'select * from Pharmacists p join Users u on u.ID=p.userID where p.ID=+'+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
