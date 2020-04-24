@@ -158,7 +158,6 @@ app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
 
 })
 
-
 //get appointments for a doctor
 app.get('/appointments/doctor/:id', (req,  res) => {
 	var query = "select * from Appointments where docID=\""+req.params.id+"\"";
@@ -365,6 +364,62 @@ app.get('/notification/pref/:id', (req, res) => {
 			return;
 		}
 		res.status(200).send(result[0]);
+	})
+})
+
+//get a user by id
+app.get('/user/:id', (req, res) => {
+	var query = 'select * from Users where ID=+'+req.params.id;
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result[0]);
+		return;
+	})
+})
+
+//get a patient by id
+app.get('/patient/:id', (req, res) => {
+	var query = 'select * from Patients p join Users u on u.ID=p.userID where p.ID=+'+req.params.id;
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result[0]);
+		return;
+	})
+})
+
+//get a doctor by id
+app.get('/doctor/:id', (req, res) => {
+	var query = 'select * from Doctors d join Users u on u.ID=d.userID where d.ID=+'+req.params.id;
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result[0]);
+		return;
+	})
+})
+
+//get a pharmacist by id
+app.get('/pharmacist/:id', (req, res) => {
+	var query = 'select * from Pharmacists p join Users u on u.ID=p.userID where p.ID=+'+req.params.id;
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result[0]);
+		return;
 	})
 })
 
