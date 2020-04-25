@@ -145,7 +145,6 @@ app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
 //get appointments for a doctor
 app.get('/appointments/doctor/:id', (req,  res) => {
 	var query = "select * from Appointments where docID="+req.params.id;
-	console.log(query);
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
 		return;
@@ -859,6 +858,97 @@ app.put('/appointment/:id', (req, res) => {
 			return;
 		}
 		res.status(200).send(result);
+		return;
+	})
+})
+
+//update a user info
+app.put('/user/:id', (req, res) => {
+	var query = 'select * from Users where ID='+req.params.id;
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		
+		var query2 = 'update Users set ';
+		var updateTable = true;
+	
+		if(req.body.name){
+			query2 += 'name=\"'+req.body.name+'\", ';
+		}
+		
+		if(req.body.password){
+			query2 += 'password=\"'+req.body.password+'\", ';
+		}
+		
+		if(req.body.email){
+			query2 += 'email=\"'+req.body.email+'\", ';
+		}
+		
+		if(query2.slice(-4) == 'set '){
+			updateTable = false;
+		}
+		else{
+			query2 = query2.slice(0, -2);
+			query2 += ' where ID='+req.params.id
+		}
+		
+		if(updateTable){
+			connection.query(query2, function(err2, result2, fields){
+				if(err2){
+					res.status(501).send("Failed to Update Users Table");
+					return;
+				}
+			})
+		} 
+		
+		updateTable = true;
+		var query2 = 'update ';	
+		switch(result[0].type){
+			case 1:
+				query2 += 'Patients set ';
+				
+				if(req.body.notificationPref){
+					query2 += 'notificationPref='+req.body.notificationPref+', ';
+				}
+				
+				if(req.body.pharmacyPref){
+					query2 += 'pharmacyPref='+req.body.pharmacyPref+', ';
+				}
+				
+				if(req.body.ssn){
+					query2 += 'ssn=\"'+req.body.ssn+'\", ';
+				}
+				
+				break;
+			case 3:
+				query2 += 'Pharmacists set ';
+				
+				if(req.body.pharmID){
+					query2 += 'pharmID='+req.body.pharmID+', ';
+				}
+		}
+		
+		if(query2.slice(-4) == 'set ' || result[0].type == 2){
+			updateTable = false;
+		}
+		else{
+			query2 = query2.slice(0, -2);
+			query2 += ' where userID='+req.params.id
+		}
+		
+		if(updateTable){
+			connection.query(query2, function(err3, result3, fields){
+				if(err3){
+					res.status(502).send("Failed to Update Typed Table");
+					return;
+				}
+			})
+		}
+		
+		res.status(200).send("Success in Updating User");
 		return;
 	})
 })
