@@ -48,7 +48,6 @@ connection.getConnection(function (err) {
 *
 *
 *Create endpoint to update user info
-*Edit Appointments
 */
 
 ///////
@@ -755,25 +754,6 @@ app.put('/prescriptions/updateSub/:id', (req, res) => {
 	})
 })
 
-//Update Stock of a given med at a given pharmacy
-app.put('/inventory/order/:pharmID/:medID', (req, res) => {
-	if (!(req.body.quantity)){
-		res.status(400).send("Missing Quantity");
-		return;
-	}
-
-	var query = "update PrescriptionDetails set quantity = quantity + \"" + req.body.quantity
-		+ "\" where pharmID=\""+req.params.pharmID+"\" and medID=\""+req.params.medID+"\"";
-	connection.query(query, function (err, result, fields) {
-		if(err){
-			res.status(500).send("Failed to Update Inventory");
-			return;
-		}
-		res.status(200).send(result);
-		return;
-	})
-})
-
 //Update Preferred Availability for Pickup
 app.put('/prescriptions/updatePickup/:id', (req, res) => {
 	if (!(req.body.date)){
@@ -791,6 +771,25 @@ app.put('/prescriptions/updatePickup/:id', (req, res) => {
 		return;
 	})
 	
+})
+
+//Update Stock of a given med at a given pharmacy
+app.put('/inventory/order/:pharmID/:medID', (req, res) => {
+	if (!(req.body.quantity)){
+		res.status(400).send("Missing Quantity");
+		return;
+	}
+
+	var query = "update PrescriptionDetails set quantity = quantity + \"" + req.body.quantity
+		+ "\" where pharmID=\""+req.params.pharmID+"\" and medID=\""+req.params.medID+"\"";
+	connection.query(query, function (err, result, fields) {
+		if(err){
+			res.status(500).send("Failed to Update Inventory");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
 })
 
 //Change notificationPref for a given patient
@@ -825,6 +824,43 @@ app.put('/patients/updatePharmacy/:id', (req,res)=>{
 		return;
 	})
 
+})
+
+//update an Appointment
+app.put('/appointment/:id', (req, res) => {
+	if(!(req.body.patientID || req.body.docID || req.body.time || req.body.details)){
+		res.status(400).send("Missing update information");
+	}
+	
+	var query = 'update Appointments set ';
+	
+	if(req.body.patientID){
+		query += 'patientID='+req.body.patientID+', ';
+	}
+	
+	if(req.body.docID){
+		query += 'docID='+req.body.docID+', ';
+	}
+	
+	if(req.body.time){
+		query += 'time=\"'+req.body.time+'\", ';
+	}
+	
+	if(req.body.details){
+		query += 'details=\"'+req.body.details+'\", ';
+	}
+	
+	query = query.slice(0, -2);
+	query += ' where ID='+req.params.id;
+	
+	connection.query(query,function(err,result,fields){
+		if(err){
+			res.status(500).send("Failed to Update Appointment");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
 })
 
 ///////////
