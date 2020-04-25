@@ -49,7 +49,6 @@ connection.getConnection(function (err) {
 *
 *Create endpoint to update user info
 *Edit Appointments
-Create appointment
 */
 
 ///////
@@ -503,26 +502,6 @@ app.post('/login', (req, res) => {
 	})
 })
 
-//creates new directions for prescriptions
-app.post('/prescriptions/directions', (req,  res) => {
-	if(!req.body.directions){
-		res.status(400).send("Missing Directions");
-		return;
-	}
-	
-	var query = "insert into Directions(directions) values(\""+req.body.directions+"\");";
-	
-	connection.query(query, function(err, result, fields){
-		if(err){
-			res.status(500).send("Failed to Create Directions");
-			return;
-		}
-		
-		res.status(200).send(result);
-		return;
-	})
-})
-
 //creates new allergy type
 app.post('/allergy', (req, res) => {
 	if(!req.body.allergyName){
@@ -651,6 +630,26 @@ app.post('/prescription', (req, res) => {
 	})
 })
 
+//creates new directions for prescriptions
+app.post('/prescriptions/directions', (req,  res) => {
+	if(!req.body.directions){
+		res.status(400).send("Missing Directions");
+		return;
+	}
+	
+	var query = "insert into Directions(directions) values(\""+req.body.directions+"\");";
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to Create Directions");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
 //Creates a new Notification
 app.post('/notification', (req, res) => {
 	if(!req.body.message){
@@ -674,6 +673,37 @@ app.post('/notification', (req, res) => {
 	connection.query(query, function(err, result, fields){
 		if(err){
 			res.status(500).send("Failed to Create Notification");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//Creates a new Appointment
+app.post('/appointment', (req, res) => {
+	if(!req.body.patientID){
+		res.status(400).send("Missing Patient ID");
+		return;
+	} else if(!req.body.docID){
+		res.status(401).send("Missing Doctor ID");
+		return;
+	} else if(!req.body.time){
+		res.status(402).send("Missing Time");
+		return;
+	} else if(!req.body.details){
+		res.status(403).send("Missing Details");
+		return;
+	}
+	
+	var query = "insert into Appointments(patientID, docID, time, details) v"+
+				"alues("+req.body.patientID+", "+req.body.docID+", \""+
+				req.body.time+"\", \""+req.body.details+"\");";
+				
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to Create Appointment");
 			return;
 		}
 		
