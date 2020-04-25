@@ -39,17 +39,6 @@ connection.getConnection(function (err) {
 //END POINTS/////
 /////////////////
 
-/*
-*
-*
-*
-*
-*
-*
-*
-*Create endpoint to update user info
-*/
-
 ///////
 //GET//
 ///////
@@ -951,7 +940,7 @@ app.put('/user/:id', (req, res) => {
 ///////////
 
 //need to test still 
-app.delete('/appointments/delete/:id', (req,res)=>{
+app.delete('/appointment/:id', (req,res)=>{
 
 	var appointmentID = req.params.id
 	con.query(`DELETE FROM Appointments WHERE Appointments.ID = '${appointmentID}'`,
