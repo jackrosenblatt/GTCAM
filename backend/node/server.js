@@ -126,18 +126,11 @@ app.get('/appointments/patient/past/:id', (req, res) => {
 
 //get appointments for a patient on a given day
 app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
-	var query = "select * from Appointments where patientID =\""+ req.params.id+"\" and date=\""+req.params.date+"\"";
-
+	var query = "select * from Appointments where patientID="+ req.params.id+" and LEFT(time, 10)=LEFT(\""+req.params.date+"\", 10)";
+	
 	connection.query(query,function(err,result,fields){
-		switch(result.length){
-			case 0:
-				res.status(400).send("No Appointments On Selected Date");
-				return;
-			default:
-			res.status(200).send(result);
-			return; 
-		}
-
+		res.status(200).send(result);
+		return;
 	})
 
 })
@@ -153,11 +146,11 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 
 //get appointments for a doctor on a given day
 app.get('/appointments/doctor/specificDate/:id/:date', (req,res) =>{
-	var query = "select * from Appointments where docID =\""+ req.params.id+"\" and date=\""+req.params.date+"\"";
-
+	var query = "select * from Appointments where docID="+ req.params.id+" and LEFT(time, 10)=LEFT(\""+req.params.date+"\", 10)";
+	
 	connection.query(query,function(err,result,fields){
 		res.status(200).send(result);
-		return; 
+		return;
 	})
 })
 
