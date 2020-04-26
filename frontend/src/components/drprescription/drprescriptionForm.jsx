@@ -3,7 +3,7 @@ import { Container, Row, Card } from 'react-bootstrap';
 import DrNav from '../drnav/drnav';
 import './drpres.css';
 import { DrPrescriptionRepository } from '../../api/drprescriptionRepository';
-import { Redirect } from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 
 export class DrPrescriptionForm extends React.Component {
 

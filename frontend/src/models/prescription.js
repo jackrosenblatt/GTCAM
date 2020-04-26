@@ -1,5 +1,5 @@
 export class Prescription {
-    constructor(id, patientname, medname, date, dosage, quantity, details, directions) {
+    constructor(id, patientname, medname, date, dosage, quantity, details, directions,refillEveryXDays) {
         this.id = id;
         this.patientname = patientname;
         this.medname = medname;
@@ -8,5 +8,6 @@ export class Prescription {
         this.quantity = quantity;
         this.details = details;
         this.directions = directions;
+        this.refillEveryXDays = refillEveryXDays;
     }
 }
