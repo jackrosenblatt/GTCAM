@@ -76,7 +76,7 @@ app.get('/pharmacy/:id', (req,  res) => {
 
 //Returns appointment by ID
 app.get('/appointments/:id', (req, res) => {
-	var query = "select u2.name as patient, u.name as doctor, a.time, a.details from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.ID = \"" + req.params.id + "\"";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.ID = \"" + req.params.id + "\"";
 	connection.query(query, function(err, result, fields){
 		switch(result.length){
 			case 0:
@@ -91,7 +91,7 @@ app.get('/appointments/:id', (req, res) => {
 
 //get appointments for a patient
 app.get('/appointments/patient/:id', (req,  res) => {
-	var query = "select u2.name as patient, u.name as doctor, a.time, a.details from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.patientID="+req.params.id+"";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.patientID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -110,7 +110,7 @@ app.get('/appointments/patient/past/:id', (req, res) => {
 	+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
 	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
 	
-	var query = "select * from Appointments where patientID=\""+req.params.id+"\"  and \""+dateStr+"\" > time";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.patientID="+req.params.id+" and \""+dateStr+"\" > a.time";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -120,7 +120,7 @@ app.get('/appointments/patient/past/:id', (req, res) => {
 
 //get appointments for a patient on a given day
 app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
-	var query = "select * from Appointments where patientID="+ req.params.id+" and LEFT(time, 10)=LEFT(\""+req.params.date+"\", 10)";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.patientID="+req.params.id+" and LEFT(a.time, 10)=LEFT(\""+req.params.date+"\", 10)";
 	
 	connection.query(query,function(err,result,fields){
 		res.status(200).send(result);
@@ -131,7 +131,7 @@ app.get('/appointments/patient/specificDate/:id/:date', (req,res) =>{
 
 //get appointments for a doctor
 app.get('/appointments/doctor/:id', (req,  res) => {
-	var query = "select * from Appointments where docID="+req.params.id;
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.docID="+req.params.id;
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
 		return;
@@ -140,7 +140,7 @@ app.get('/appointments/doctor/:id', (req,  res) => {
 
 //get appointments for a doctor on a given day
 app.get('/appointments/doctor/specificDate/:id/:date', (req,res) =>{
-	var query = "select * from Appointments where docID="+ req.params.id+" and LEFT(time, 10)=LEFT(\""+req.params.date+"\", 10)";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.docID="+req.params.id+" and LEFT(a.time, 10)=LEFT(\""+req.params.date+"\", 10)";
 	
 	connection.query(query,function(err,result,fields){
 		res.status(200).send(result);
@@ -159,7 +159,7 @@ app.get('/appointments/doctor/past/:id', (req,  res) => {
 	+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
 	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
 	
-	var query = "select * from Appointments where docID=\""+req.params.id+"\"  and \""+dateStr+"\" > time";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.docID="+req.params.id+" and \""+dateStr+"\" > a.time";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -178,7 +178,7 @@ app.get('/appointments/doctor/future/:id', (req,  res) => {
 	+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
 	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
 	
-	var query = "select * from Appointments where docID=\""+req.params.id+"\"  and \""+dateStr+"\" < time";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.docID="+req.params.id+" and \""+dateStr+"\" < a.time";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -188,7 +188,7 @@ app.get('/appointments/doctor/future/:id', (req,  res) => {
 
 //get appointments for a doctor patient combo
 app.get('/appointments/:docID/:patientID', (req,  res) => {
-	var query = "select * from Appointments where docID=\""+req.params.docID+"\" and patientID=\""+req.params.patientID+"\"";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.docID=\""+req.params.docID+"\" and a.patientID=\""+req.params.patientID+"\"";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -248,7 +248,7 @@ app.get('/allergies', (req, res) =>{
 
 //get all allergies for a patient
 app.get('/patient/allergies/:id', (req, res) =>{
-	var query = "select * from PatientAllergies pa join Allergies a on pa.allergyID=a.ID where patientID=\""+req.params.id+"\"";
+	var query = "select u.name, a.allergyName from PatientAllergies pa join Allergies a on pa.allergyID=a.ID join Patients p on pa.patientID=p.ID join Users u on p.userID=u.ID where patientID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -278,7 +278,7 @@ app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
 
 //get all notifications involving a given user
 app.get('/notifications/:id', (req, res) => {
-	var query = "select * from Notifications where sender=\""+req.params.id+"\" or receiver=\""+req.params.id+"\"";
+	var query = "select n.message, u.name, u2.name, n.time from Notifications n join Users u on n.sender=u.ID join Users u2 on n.receiver=u2.ID where n.sender=\""+req.params.id+"\" or n.receiver=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
