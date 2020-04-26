@@ -58,6 +58,7 @@ export class AppointmentEdit extends React.Component {
                     <input type='date' placeholder={ this.state.date }></input> <br/>
                     <label htmlFor=''>Select a New Time</label> <br/>
                     <input type='time' placeholder= { this.state.time }></input> <br/>
+                    <label htmlFor='details' placeholder={this.state.details }></label>
                     <br/>
                     <a href="/appointment/edit" id='edit-submit' className='btn btn-primary'>Confirm</a>
                 </form>

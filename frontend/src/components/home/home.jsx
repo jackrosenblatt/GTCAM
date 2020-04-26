@@ -130,14 +130,14 @@ export class Home extends React.Component {
     componentDidMount() {
         console.log(localStorage.getItem('userID'));
         this.userRepo.getUserById(localStorage.getItem('userID'))
-            .then(user => this.setState({ user }));
-        
-        if(this.state.type == 2) {
-            this.setState({ redirect: '/DrHome'});
-        }
-        else if(this.state.type == 3) {
-            this.setState({ redirect: '/PharmHome'});
-        }
+            .then(user => { this.setState({ user })
+            if(user.type == 2) {
+                this.setState({ redirect: '/DrHome'});
+            }
+            else if(user.type == 3) {
+                this.setState({ redirect: '/PharmHome'});
+            }
+        }); 
     }
 }
 
