@@ -75,8 +75,13 @@ export class DrAppointmentForm extends React.Component {
                 <Card.Body id='request-appt-form'>
                 <form>
 
-                    <label htmlFor='patient-name'>Patient Name</label> <br/>
-                    <input id='patient-name' type='text'></input> <br/>
+                    <label htmlFor="patient"> Patient Name: </label>
+                        <input 
+                            className="form-control" 
+                            name="patient" 
+                            value={this.state.patient}
+                            onChange={ e =>  this.setState({ patient: e.target.value })}
+                        ></input><br/>
 
                     <label htmlFor='doctor-name'>Select a Doctor</label> <br/>
                     <select id='doctor-name' value={this.state.doctorID} onChange={ e => this.setState({ doctorID: e.target.value})}>

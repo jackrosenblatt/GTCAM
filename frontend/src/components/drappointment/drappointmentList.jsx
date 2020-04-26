@@ -7,7 +7,7 @@ import { DrAppointmentRepository } from '../../api/drappRepository';
 import { Appointment } from '../../models/appointment';
 
 
-export class AppointmentList extends React.Component {
+export class DrAppointmentList extends React.Component {
 
   drapptRepo = new DrAppointmentRepository();
 
@@ -98,7 +98,8 @@ export class AppointmentList extends React.Component {
                     </Card>
                 ))
             }
-            </div> <p></p>
+            </div>
+            <p></p> 
 
 
         </Container>
@@ -115,4 +116,4 @@ export class AppointmentList extends React.Component {
             .then(pastappt => this.setState({ pastappt }));
    }
 }
-export default AppointmentList;
+export default DrAppointmentList;

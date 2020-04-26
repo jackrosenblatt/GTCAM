@@ -9,14 +9,9 @@ import { BrowserRouter as Router,
     Redirect
   } from 'react-router-dom';
 
-
-import { DoctorRepository } from '../../api/doctorRepository';
-
-
 export class DrAppointmentEdit extends React.Component {
 
     drapptRepo = new DrAppointmentRepository();
-    doctorRepo = new DoctorRepository();
 
     constructor(props) {
         super(props);
@@ -27,7 +22,6 @@ export class DrAppointmentEdit extends React.Component {
             docID: '',
             time:'',
             details: '',
-            doctors: [],
             redirect: ''
         }
     }
@@ -111,9 +105,6 @@ export class DrAppointmentEdit extends React.Component {
              this.drapptRepo.getAppointmentById(apptid)
                  .then(appt => this.setState({appt}));
         }
-
-        this.doctorRepo.getDoctors()
-            .then(doctors => this.setState({ doctors: doctors }));
     }
 }
 export default DrAppointmentEdit;

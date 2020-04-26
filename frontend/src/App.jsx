@@ -29,7 +29,7 @@ import DrAppointmentEdit from './components/drappointment/drapptEdit';
 
 
 import DrPatients from './components/drpatients/drpatients';
-import DrPrescription from './components/drprescription/drprescription';
+import DrPrescriptionList from './components/drprescription/drprescriptionList';
 import DrNewPrescription from './components/drnewpres/drnewpres';
 
 
@@ -62,7 +62,7 @@ class App extends Component {
             <Route exact path="/DrAppointmentList/edit/:apptid" render={(props) => < DrAppointmentEdit {...props} />} />
 
             <Route exact path="/DrPatients" component={ DrPatients } />
-            <Route exact path="/DrPrescription" component={ DrPrescription } />
+            <Route exact path="/DrPrescriptionList" component={ DrPrescriptionList } />
             <Route exact path="/DrNewPrescription" component={ DrNewPrescription } />
 
           </Switch>
