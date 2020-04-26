@@ -66,7 +66,7 @@ CREATE TABLE `Appointments` (
   KEY `patientID` (`patientID`),
   CONSTRAINT `Appointments_ibfk_1` FOREIGN KEY (`docID`) REFERENCES `Doctors` (`ID`),
   CONSTRAINT `Appointments_ibfk_2` FOREIGN KEY (`patientID`) REFERENCES `Patients` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `Appointments` (
 
 LOCK TABLES `Appointments` WRITE;
 /*!40000 ALTER TABLE `Appointments` DISABLE KEYS */;
-INSERT INTO `Appointments` VALUES (1,1,1,'2020-06-20 12:00:00','Will be meeting patient'),(2,2,1,'2020-06-20 13:00:00','Will be meeting patient'),(3,3,2,'2020-06-20 12:00:00','Will be meeting patient'),(4,4,3,'2020-06-20 12:00:00','Will be meeting patient');
+INSERT INTO `Appointments` VALUES (1,4,3,'2020-05-30 09:34:42','These are details'),(2,2,1,'2020-06-20 13:00:00','Will be meeting patient'),(3,3,2,'2020-06-20 12:00:00','Will be meeting patient'),(4,4,3,'2020-06-20 12:00:00','Will be meeting patient'),(5,4,3,'2020-05-30 09:34:42','These are details'),(6,1,1,'2020-04-18 12:00:00','Check up');
 /*!40000 ALTER TABLE `Appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +232,7 @@ CREATE TABLE `Notifications` (
   KEY `receiver` (`receiver`),
   CONSTRAINT `Notifications_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `Users` (`ID`),
   CONSTRAINT `Notifications_ibfk_2` FOREIGN KEY (`receiver`) REFERENCES `Users` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +352,7 @@ CREATE TABLE `Pharmacists` (
 
 LOCK TABLES `Pharmacists` WRITE;
 /*!40000 ALTER TABLE `Pharmacists` DISABLE KEYS */;
-INSERT INTO `Pharmacists` VALUES (1,1,9),(2,2,10),(3,3,11),(4,4,12);
+INSERT INTO `Pharmacists` VALUES (1,2,9),(2,2,10),(3,3,11),(4,4,12);
 /*!40000 ALTER TABLE `Pharmacists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,7 +388,7 @@ CREATE TABLE `PrescriptionDetails` (
   CONSTRAINT `PrescriptionDetails_ibfk_4` FOREIGN KEY (`medID`) REFERENCES `Medications` (`ID`),
   CONSTRAINT `PrescriptionDetails_ibfk_5` FOREIGN KEY (`directions`) REFERENCES `Directions` (`ID`),
   CONSTRAINT `PrescriptionDetails_ibfk_6` FOREIGN KEY (`refillEvery`) REFERENCES `RefillOccurence` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -397,7 +397,7 @@ CREATE TABLE `PrescriptionDetails` (
 
 LOCK TABLES `PrescriptionDetails` WRITE;
 /*!40000 ALTER TABLE `PrescriptionDetails` DISABLE KEYS */;
-INSERT INTO `PrescriptionDetails` VALUES (1,1,1,1,1,1,0,'Mary Washington',0,'2020-06-20 12:00:00',1),(2,1,2,1,2,1,1,'Mary Washington',0,'2020-06-20 12:00:00',2),(3,2,2,3,3,1,1,'Bob Adams',0,'2020-06-20 12:00:00',3),(4,3,4,2,4,1,1,'Anna Jefferson',1,'2020-06-20 12:00:00',4);
+INSERT INTO `PrescriptionDetails` VALUES (1,1,1,1,1,1,0,'Mary Washington',0,'2020-06-20 12:00:00',1),(2,1,2,1,2,1,1,'Mary Washington',0,'2020-06-20 12:00:00',2),(3,2,2,3,3,1,1,'Bob Adams',0,'2020-06-20 12:00:00',3),(4,3,4,2,4,1,1,'Anna Jefferson',1,'2020-06-20 12:00:00',4),(12,4,3,4,2,3,0,'Person',0,'2020-05-30 09:34:42',2);
 /*!40000 ALTER TABLE `PrescriptionDetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,7 +503,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'George Washington','password','example@example.com',1),(2,'John Adams','password','example1@example.com',1),(3,'Thomas Jefferson','password','example2@example.com',1),(4,'James Madison','password','example3@example.com',1),(5,'John Smith','password','example4@example.com',2),(6,'Bob Jones','password','example5@example.com',2),(7,'Eric Johnson','password','example6@example.com',2),(8,'Kyle Adams','password','example7@example.com',2),(9,'Jakob Harmon','password','example8@example.com',3),(10,'Abigail Lozano','password','example9@example.com',3),(11,'Maxim Clarke','password','example10@example.com',3),(12,'Shane Coleman','password','example12@example.com',3),(27,'Jack','password','ex@example.com',1);
+INSERT INTO `Users` VALUES (1,'George Washington','password','exampleee@example.com',1),(2,'John Adams','password','example1@example.com',1),(3,'Thomas Jefferson','password','example2@example.com',1),(4,'James Madison','password','example3@example.com',1),(5,'John Smith','password','example4@example.com',2),(6,'Bob Jones','password','example5@example.com',2),(7,'Eric Johnson','password','example6@example.com',2),(8,'Kyle Adams','password','example7@example.com',2),(9,'Jakob Harmon','password','examplee@example.com',3),(10,'Abigail Lozano','password','example9@example.com',3),(11,'Maxim Clarke','password','example10@example.com',3),(12,'Shane Coleman','password','example12@example.com',3),(27,'Jack','password','ex@example.com',1);
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -516,4 +516,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-20 20:11:35
+-- Dump completed on 2020-04-26 12:00:23
