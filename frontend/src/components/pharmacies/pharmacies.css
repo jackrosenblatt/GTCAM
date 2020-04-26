@@ -1,18 +1,3 @@
-#message:hover, #return:hover {
-    background-color: #E1C299;
-    color: rgb(25, 25, 73);
-}
-
-#message, #return {
-    background-color: rgb(25, 25, 73);
-    margin-bottom: 1rem;
-    border-style: none;
-}
-
-#message {
-    margin-left: 2.5rem;
-}
-
 div#mess-h {
     background-color: #E1C299;
     color: rgb(25, 25, 73);
@@ -22,4 +7,15 @@ div#mess-h {
 #mess-h1 {
     border-style: solid;
     border-width: 1px;
+}
+
+#return {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    border-style: none;
+}
+
+#return:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
 }

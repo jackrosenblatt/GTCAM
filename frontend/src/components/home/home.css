@@ -16,3 +16,13 @@ div.react-calendar {
     background-color: #E1C299;
     padding-bottom: 1rem;
 }
+
+#info-btn, #appt-btn, #prescrip-btn, #pharm-btn, #message-btn {
+    background-color: rgb(25, 25, 73);
+    border-style: none;
+}
+
+#info-btn:hover, #appt-btn:hover, #prescrip-btn:hover, #pharm-btn:hover, #message-btn:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+}

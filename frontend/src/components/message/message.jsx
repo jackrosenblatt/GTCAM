@@ -20,9 +20,9 @@ export class Message extends React.Component {
         <Nav></Nav>
         <p></p>
             <Container>
-                <div className="card card bg-light mb-3 border-secondary">
-                    <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
-                        <h4>Welcome to Your Message Log!</h4>
+                <div className="card card mb-3 " id='mess-h1'>
+                    <div className="card-header font-weight-bold text-center mb-3" id='mess-h'>
+                        <h4 id='message-head'>Welcome to Your Message Log!</h4>
                     </div>
                     
                     <div className="card-body">
@@ -33,8 +33,8 @@ export class Message extends React.Component {
                     </div>
                 </div>
 
-                <div className="card border-secondary mb-3">
-                <h5 className="card-header text-dark border-secondary mb-3">
+                <div className="card mb-3">
+                <h5 className="card-header text-dark mb-3">
                     Log Board
                 </h5>
                     <div className="card-body">

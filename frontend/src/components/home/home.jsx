@@ -56,7 +56,7 @@ export class Home extends React.Component {
                         <p className="card-text" >Here you will find your personal information, your doctor's name, 
                                             your medical information, and add current allergies. <br/>
                                             Click the link below to see your medical information!</p>
-                        <a href="/medicalinfo" className="btn btn-info">Click Here!</a>
+                        <a href="/medicalinfo" id='info-btn' className="btn btn-primary">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
@@ -70,7 +70,7 @@ export class Home extends React.Component {
                     <p className="card-text"> Here you can check for upcoming appointments, make an appointment,
                                         cancel an appointment, as well as view past appointments. <br/>
                                         Click the link below to see your calendar and appointments!</p>
-                    <a href="/appointment" className="btn btn-info">Click Here!</a>
+                    <a href="/appointment" id='appt-btn' className="btn btn-primary">Click Here!</a>
                 </div>
             </div>
             <p></p>
@@ -84,7 +84,7 @@ export class Home extends React.Component {
                     <p className="card-text"> Here you can see past prescriptions, current prescriptions, and 
                                         prescriptions that are ready to pick up. <br/>
                                         Click the link below to see all of your prescriptions!</p>
-                    <a href="/prescriptions" className="btn btn-info">Click Here!</a>
+                    <a href="/prescriptions" id='prescrip-btn' className="btn btn-primary">Click Here!</a>
                 </div>
             </div>
             <p></p>
@@ -97,7 +97,7 @@ export class Home extends React.Component {
                 <div className="card-body">
                     <p className="card-text"> Here you can see your prefered pharmacies and their current address and store hours. <br/>
                                         Click the link below to see your prefered pharmacies!</p>
-                    <a href="/pharmacies" className="btn btn-info">Click Here!</a>
+                    <a href="/pharmacies" id='pharm-btn' className="btn btn-primary">Click Here!</a>
                 </div>
             </div>
             <p></p>
@@ -110,7 +110,7 @@ export class Home extends React.Component {
                 <div className="card-body">
                     <p className="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacist.
                                         Click the link below log any questons!</p>
-                    <a href="/message" className="btn btn-info">Click Here!</a>
+                    <a href="/message" id='message-btn' className="btn btn-primary">Click Here!</a>
                 </div>
             </div>
             <p></p>
@@ -134,6 +134,6 @@ export class Home extends React.Component {
             }
         }); 
     }
-    
+
 }
 export default Home;
