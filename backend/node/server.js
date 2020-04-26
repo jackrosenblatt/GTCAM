@@ -329,7 +329,7 @@ app.get('/patient/:id', (req, res) => {
 
 //get all patient medical records for a given doctor
 app.get('/patient/records/:docID', (req, res) => {
-	var query = 'select * from DoctorPatientLookup dp join Patients p on dp.patientID=p.ID join Users u on p.userID=u.ID left join PatientAllergies pa on pa.patientID=p.ID left join Allergies a on pa.allergyID=a.ID where dp.doctorID='+req.params.docID;
+	var query = 'select * from DoctorPatientLookup dp join Patients p on dp.patientID=p.ID join Users u on p.userID=u.ID join PrescriptionDetails pd on pd.patientID=p.ID join Medications m on pd.medId=m.ID join Directions d on pd.directions=d.ID left join PatientAllergies pa on pa.patientID=p.ID left join Allergies a on pa.allergyID=a.ID where dp.doctorID='+req.params.docID;
 
 	connection.query(query, (err, result, fields) => {
 		if(err){
