@@ -6,20 +6,9 @@ export class DrPrescriptionRepository {
 
     };
 
-    getPrescriptionsForPatient(id) {
+    getPrescriptionsForDoctor(id) {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/prescriptions/patient/${id}`, this.config)
-                .then(x => resolve(x.data))
-                .catch(x => {
-                    alert(x);
-                    reject(x);
-                });
-            });
-        }
-    
-    getPrescriptionsToPickupForPatient(id) {
-        return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/prescriptions/pickup/${id}`, this.config)
+            axios.get(`${this.url}/prescriptions/doctor/${id}`, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);
@@ -61,5 +50,4 @@ export class DrPrescriptionRepository {
             });
     }
     
-
 }

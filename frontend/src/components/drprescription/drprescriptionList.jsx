@@ -2,6 +2,7 @@ import React from 'react';
 import DrNav from '../drnav/drnav';
 import { Card, Container } from 'react-bootstrap';
 import { DrPrescriptionRepository } from '../../api/drprescriptionRepository';
+import './drpres.css';
 import { Prescription } from '../../models/prescription';
 
 export class DrPrescriptionList extends React.Component {
@@ -13,8 +14,6 @@ export class DrPrescriptionList extends React.Component {
           this.state = {
                 prescription: [],
                 newprescriptions: [],
-                currentprescriptions: [],
-                pastprescriptions: [],
                 redirect: ''
           }
       }
@@ -28,6 +27,17 @@ export class DrPrescriptionList extends React.Component {
       </Card>
       </>;
     }
+
+    onNewEmpty(){
+        return <>
+        <Card>
+            <Card.Header>
+                You have no new prescriptions!
+            </Card.Header>
+        </Card>
+        </>;
+    }
+
     render() {
       return <>
       <DrNav></DrNav>
@@ -41,15 +51,44 @@ export class DrPrescriptionList extends React.Component {
               
               <div className="card-body">
                   <p className="card-text text-center">
-                  Here you can see past prescriptions, current prescriptions, and make a new prescriptions!
+                  Here you can see current prescription and make a new prescriptions!
                   </p>
               </div>
             </div>
+
+
+            <h4><span className="float-center badge badge-info">Current Prescriptions!</span></h4>
+
+            {
+              this.state.prescription.length === 0 ? this.onEmpty() : ""
+            }
+  
+            <div className = "card-deck">
+            {
+                this.state.prescription.map((currentpres) => (
+                    <Card key={ currentpres.patient } fluid style={{width: '90%'}}>
+                        <Card.Header>
+                            <b>Pres. Name:</ b> {currentpres.medName} <br/>
+                            <b>Patient Name:</b> {currentpres.patient}
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Text>
+                                <b>Dosage:</b> { currentpres.dosage } <br/>
+                                <b>Quantity:</b> { currentpres.quantity } <br/>
+                                <b>Details:</b> { currentpres.details } <br/>
+                                <b>Directions:</b> { currentpres.directions } <br/>
+                                <b>Refill:</b> { currentpres.refillEveryXDays } <br/>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                ))
+            }
+            </div> <p></p>
   
             <h4><span className="float-center badge badge-info">New Prescriptions!</span></h4>
   
             {
-              this.state.prescription.length === 0 ? this.onEmpty() : ""
+              this.state.newprescriptions.length === 0 ? this.onNewEmpty() : ""
             }
     
             <div className = "card-deck">
@@ -57,12 +96,11 @@ export class DrPrescriptionList extends React.Component {
                 this.state.newprescriptions.map((newpres) => (
                     <Card key={ newpres.id } fluid style={{width: '90%'}}>
                         <Card.Header>
-                            <b>Prescrtion Name:</b> {newpres.medname}
+                            <b>Prescrtion Name:</b> {newpres.medname} <br/>
                             <b>Patient Name:</b> {newpres.patientname}
                         </Card.Header>
                         <Card.Body>
                             <Card.Text>
-                                <b>Date:</b> { newpres.date } <br/>
                                 <b>Dosage:</b> { newpres.dosage } <br/>
                                 <b>Quantity:</b> { newpres.quantity } <br/>
                                 <b>Details:</b> { newpres.details } <br/>
@@ -73,65 +111,18 @@ export class DrPrescriptionList extends React.Component {
                 ))
             }
             </div> <p></p>
-  
-            <h4><span className="float-center badge badge-info">Current Prescriptions!</span></h4>
-  
-            <div className = "card-deck">
-            {
-                this.state.currentprescriptions.map((currentpres) => (
-                    <Card key={ currentpres.id } fluid style={{width: '90%'}}>
-                        <Card.Header>
-                            <b>Prescrtion Name:</b> {currentpres.medname}
-                            <b>Patient Name:</b> {currentpres.patientname}
-                        </Card.Header>
-                        <Card.Body>
-                            <Card.Text>
-                                <b>Date:</b> { currentpres.date } <br/>
-                                <b>Dosage:</b> { currentpres.dosage } <br/>
-                                <b>Quantity:</b> { currentpres.quantity } <br/>
-                                <b>Details:</b> { currentpres.details } <br/>
-                                <b>Directions:</b> { currentpres.directions } <br/>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                ))
-            }
-            </div> <p></p>
 
-            <h4><span className="float-center badge badge-info">Past Prescriptions!</span></h4>
-  
-            <div className = "card-deck">
-            {
-                this.state.pastprescriptions.map((pastpres) => (
-                    <Card key={ pastpres.id } fluid style={{width: '90%'}}>
-                        <Card.Header>
-                            <b>Prescrtion Name:</b> {pastpres.medname}
-                            <b>Patient Name:</b> {pastpres.patientname}
-                        </Card.Header>
-                        <Card.Body>
-                            <Card.Text>
-                                <b>Date:</b> { pastpres.date } <br/>
-                                <b>Dosage:</b> { pastpres.dosage } <br/>
-                                <b>Quantity:</b> { pastpres.quantity } <br/>
-                                <b>Details:</b> { pastpres.details } <br/>
-                                <b>Directions:</b> { pastpres.directions } <br/>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                ))
-            }
-            </div> <p></p>
-  
-  
           </Container>
           <br/>
+          <a href="/DrPrescriptionList/request" id='makepres' className='btn btn-primary'>Make a New Prescription</a> <br/>
           <a href="/DrHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
       </>;
     }
 
     componentWillMount() {
-         
-     }
+        this.drpresRepo.getPrescriptionsForDoctor(localStorage.getItem('id'))
+            .then(prescription => this.setState({ prescription }));
+   }
 
 }
 

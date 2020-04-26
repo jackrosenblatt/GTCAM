@@ -1,12 +1,8 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { AllergyRepository } from '../../api/allergyRepository';
+import { Redirect } from 'react-router-dom';
 import Nav from '../nav/nav';
-import { BrowserRouter as Router, 
-    Route, 
-    Switch,
-    Redirect
-  } from 'react-router-dom';
 
 export class AllergyForm extends React.Component {
 

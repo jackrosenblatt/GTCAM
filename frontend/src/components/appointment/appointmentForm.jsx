@@ -4,11 +4,7 @@ import Nav from '../nav/nav';
 import './appointment.css';
 import { DoctorRepository } from '../../api/doctorRepository';
 import { AppointmentRepository } from '../../api/appointmentRepository';
-import { BrowserRouter as Router, 
-    Route, 
-    Switch,
-    Redirect
-  } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export class AppointmentForm extends React.Component {
 

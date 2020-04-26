@@ -1,11 +1,7 @@
 import React from 'react';
 import Calendar from 'react-calendar';
 import DrNav from '../drnav/drnav'; 
-import { BrowserRouter as Router, 
-    Route, 
-    Switch,
-    Redirect
-  } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export class DrHome extends React.Component {
     constructor(props) {

@@ -2,11 +2,7 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import Nav from '../nav/nav';
 import './home.css';
-import { BrowserRouter as Router, 
-    Route, 
-    Switch,
-    Redirect
-  } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { UserRepository } from '../../api/userRepository';
 
 export class Home extends React.Component {
@@ -130,10 +126,10 @@ export class Home extends React.Component {
         console.log(localStorage.getItem('userID'));
         this.userRepo.getUserById(localStorage.getItem('userID'))
             .then(user => { this.setState({ user })
-            if(user.type == 2) {
+            if(user.type === 2) {
                 this.setState({ redirect: '/DrHome'});
             }
-            else if(user.type == 3) {
+            else if(user.type === 3) {
                 this.setState({ redirect: '/PharmHome'});
             }
         }); 
