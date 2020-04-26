@@ -10,10 +10,10 @@ export class Nav extends React.Component {
         <Container id='nav-container' fluid style={{width: '100%'}}>
                 <div id='gtcam-logo-container'>   
                 </div>
-                <nav class="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="nav nav-pills nav-fill" id='nav-list'>
-                        <li class="nav-item nav-list-item">
+                <nav className="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="nav nav-pills nav-fill" id='nav-list'>
+                        <li className="nav-item nav-list-item">
                             <a href="/dashboard">Home</a>
                         </li>
                         <li className='nav-item nav-list-item'>

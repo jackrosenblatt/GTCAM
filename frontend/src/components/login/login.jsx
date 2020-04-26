@@ -22,7 +22,7 @@ export class Login extends React.Component {
         } 
         await await this.userRepo.userLogin(user)
         .then(() => {
-            if (localStorage.getItem('code') === '200') {
+            if (localStorage.getItem('id')) {
                 this.setState(pState => {
                     pState.email = '';
                     pState.password = '';
@@ -38,13 +38,7 @@ export class Login extends React.Component {
         .catch(resp => {
             console.log(resp);
             this.setState({ showError:true });
-        }); 
-    this.setState(pState => {
-        pState.email = '';
-        pState.password = '';
-        pState.redirect = '/dashboard';
-        return pState;
-        });  
+        });   
     }
 
     render() {

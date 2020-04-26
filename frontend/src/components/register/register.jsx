@@ -78,7 +78,7 @@ export class Register extends React.Component {
                   pState.isPatient = 'false';
                   pState.isPharmacist = 'false';
                   pState.pharmacies = [];
-                  pState.redirect = '/dashboard';
+                  pState.redirect = '/login';
                   return pState;
                 });
             })

@@ -29,10 +29,32 @@ export class AppointmentRepository {
         });
     }
 
-    cancelAppointment(id) {
+    createAppointment(appointment) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/appointments`, appointment, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
+
+    cancelAppointmentById(id) {
         return new Promise((resolve, reject) => {
             axios.delete(`${this.url}/appointments/delete/${id}`, this.config)
                 .then(x=> resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
+
+    updateAppointmentById(id, appt) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${this.url}/appointment/${id}`, appt, this.config)
+                .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);
                     reject(x);

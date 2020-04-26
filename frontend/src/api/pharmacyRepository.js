@@ -20,7 +20,7 @@ export class PharmacyRepository {
 
     getPharmacy(id) {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/pharmacies/${id}`, this.config)
+            axios.get(`${this.url}/pharmacy/${id}`, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);
