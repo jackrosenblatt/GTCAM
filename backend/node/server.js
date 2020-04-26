@@ -76,7 +76,7 @@ app.get('/pharmacy/:id', (req,  res) => {
 
 //Returns appointment by ID
 app.get('/appointments/:id', (req, res) => {
-	var query = "select * from Appointments where ID = \"" + req.params.id + "\"";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.ID = \"" + req.params.id + "\"";
 	connection.query(query, function(err, result, fields){
 		switch(result.length){
 			case 0:
@@ -568,7 +568,7 @@ app.post('/inventory', (req,  res) => {
 	let medicineID = req.body.medID
 	let pharmacyID = req.body.pharmID
 	let inputQuantity = req.body.quantity
-	con.query(`INSERT INTO Inventory (medID,pharmID,quantity) VALUES (${medicineID},${pharmacyID},${inputQuantity})`, function(err,result,fields) {
+	connection.query(`INSERT INTO Inventory (medID,pharmID,quantity) VALUES (${medicineID},${pharmacyID},${inputQuantity})`, function(err,result,fields) {
 		if (err) {
 			res.status(500).send("Failed to Add Medication");
 		}
@@ -977,8 +977,7 @@ app.put('/user/:id', (req, res) => {
 app.delete('/appointment/:id', (req,res)=>{
 
 	var appointmentID = req.params.id
-	con.query(`DELETE FROM Appointments WHERE Appointments.ID = '${appointmentID}'`,
-	function(err,result,fields){
+	connection.query('DELETE FROM Appointments WHERE Appointments.ID = '+appointmentID,function(err,result,fields){
 		if(err){
 			res.status(500).send("Failed to Delete Appointment.");
 			return;
@@ -988,6 +987,19 @@ app.delete('/appointment/:id', (req,res)=>{
 	
 	})
 
+})
+
+app.delete('/notification/:id', (req, res) =>{
+	var query = 'delete from Notifications where Notifications.ID='+req.params.id;
+	
+	connection.query(query, (err, result, fields) => {
+		if(err){
+			res.status(500).send('Database Error');
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
 })
 
 //connecting the express object to listen on a particular port as defined in the config object.
