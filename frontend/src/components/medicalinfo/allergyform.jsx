@@ -60,7 +60,7 @@ export class AllergyForm extends React.Component {
                     this.setState({ redirect: '/medicalinfo'});
                 });
         }
-        this.setState({ redirect: '/medicalinfo'});
+        
     }
 
     render() {
