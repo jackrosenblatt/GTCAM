@@ -35,7 +35,7 @@ CREATE TABLE `Allergies` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `allergyName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `DoctorPatientLookup` (
   KEY `doctorID` (`doctorID`),
   CONSTRAINT `DoctorPatientLookup_ibfk_1` FOREIGN KEY (`patientID`) REFERENCES `Patients` (`ID`),
   CONSTRAINT `DoctorPatientLookup_ibfk_2` FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `DoctorPatientLookup` (
 
 LOCK TABLES `DoctorPatientLookup` WRITE;
 /*!40000 ALTER TABLE `DoctorPatientLookup` DISABLE KEYS */;
-INSERT INTO `DoctorPatientLookup` VALUES (1,1,1),(2,1,2),(3,2,1),(4,3,4),(5,4,3);
+INSERT INTO `DoctorPatientLookup` VALUES (1,1,1),(2,1,2),(3,2,1),(4,3,4),(5,4,3),(6,3,1);
 /*!40000 ALTER TABLE `DoctorPatientLookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +232,7 @@ CREATE TABLE `Notifications` (
   KEY `receiver` (`receiver`),
   CONSTRAINT `Notifications_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `Users` (`ID`),
   CONSTRAINT `Notifications_ibfk_2` FOREIGN KEY (`receiver`) REFERENCES `Users` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +241,7 @@ CREATE TABLE `Notifications` (
 
 LOCK TABLES `Notifications` WRITE;
 /*!40000 ALTER TABLE `Notifications` DISABLE KEYS */;
-INSERT INTO `Notifications` VALUES (1,'You left your laptop at the appointment',6,3,'2020-06-20 12:00:00'),(2,'I think you misdiagnosed me',2,7,'2020-06-30 10:00:00'),(3,'Do you think this medication is okay for patient x',6,11,'2020-05-30 11:00:00'),(4,'Can I pick up my prescription',1,10,'2020-06-04 14:00:00');
+INSERT INTO `Notifications` VALUES (1,'You left your laptop at the appointment',6,3,'2020-06-20 12:00:00'),(2,'I think you misdiagnosed me',2,7,'2020-06-30 10:00:00'),(3,'Do you think this medication is okay for patient x',6,11,'2020-05-30 11:00:00'),(4,'Can I pick up my prescription',1,10,'2020-06-04 14:00:00'),(7,'hi',1,2,'2020-06-04 16:30:00');
 /*!40000 ALTER TABLE `Notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,4 +516,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-26 12:00:23
+-- Dump completed on 2020-04-26 18:24:35
