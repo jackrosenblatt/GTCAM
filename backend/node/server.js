@@ -5,8 +5,10 @@ const mysql = require('mysql');
 
 /*
 *
-*get all patients and medical info by doctor id
-*
+*get past prescriptions given doctor
+*make prescriptions/doctor/:id only be current prescriptions
+
+return ID of allergy on creating a new allergy type
 */
 
 //Configure Connections
@@ -198,7 +200,7 @@ app.get('/appointments/:docID/:patientID', (req,  res) => {
 
 //get prescriptions to be picked up given a patient
 app.get('/prescriptions/pickup/:id', (req,  res) => {
-	var query = "select * from PrescriptionDetails where readyForPickup=1 and patientID=\""+req.params.id+"\"";
+	var query = "select u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.readyForPickup=1 and pd.patientID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -208,7 +210,7 @@ app.get('/prescriptions/pickup/:id', (req,  res) => {
 
 //get prescriptions given a patient
 app.get('/prescriptions/patient/:id', (req,  res) => {
-	var query = "select * from PrescriptionDetails where patientID=\""+req.params.id+"\"";
+	var query = "select u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.patientID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -218,7 +220,7 @@ app.get('/prescriptions/patient/:id', (req,  res) => {
 
 //get prescriptions given a doctor
 app.get('/prescriptions/doctor/:id', (req,  res) => {
-	var query = "select * from PrescriptionDetails where docID=\""+req.params.id+"\"";
+	var query = "select u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.docID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -248,7 +250,7 @@ app.get('/allergies', (req, res) =>{
 
 //get all allergies for a patient
 app.get('/patient/allergies/:id', (req, res) =>{
-	var query = "select u.name, a.allergyName from PatientAllergies pa join Allergies a on pa.allergyID=a.ID join Patients p on pa.patientID=p.ID join Users u on p.userID=u.ID where patientID=\""+req.params.id+"\"";
+	var query = "select u.name as patient, a.allergyName from PatientAllergies pa join Allergies a on pa.allergyID=a.ID join Patients p on pa.patientID=p.ID join Users u on p.userID=u.ID where patientID=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -258,7 +260,7 @@ app.get('/patient/allergies/:id', (req, res) =>{
 
 //get all medications in inventory given pharmacy 
 app.get('/medications/inventory/:id', (req,  res) => {
-	var query = "select * from Inventory where pharmID=\""+req.params.id+"\"";
+	var query = "select m.medName, m.dosage, m.quantity as pillCount, m.details, p.pharmName, p.pharmHours, p.address as pharmAddress, p.phoneNumber as pharmPhoneNumber, i.quantity, i.physicalLocation from Inventory i join Pharmacies p on i.pharmID=p.ID join Medications m on i.medID=m.ID where i.pharmID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -268,7 +270,7 @@ app.get('/medications/inventory/:id', (req,  res) => {
 
 //get specific medication in inventory for given pharmacy 
 app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
-	var query = "select * from Inventory where pharmID=\""+req.params.pharmID+"\" and medID=\""+req.params.medID+"\"";
+	var query = "select m.medName, m.dosage, m.quantity as pillCount, m.details, p.pharmName, p.pharmHours, p.address as pharmAddress, p.phoneNumber as pharmPhoneNumber, i.quantity, i.physicalLocation from Inventory i join Pharmacies p on i.pharmID=p.ID join Medications m on i.medID=m.ID where i.pharmID="+req.params.pharmID+" and i.medID="+req.params.medID;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -278,7 +280,7 @@ app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
 
 //get all notifications involving a given user
 app.get('/notifications/:id', (req, res) => {
-	var query = "select n.message, u.name, u2.name, n.time from Notifications n join Users u on n.sender=u.ID join Users u2 on n.receiver=u2.ID where n.sender=\""+req.params.id+"\" or n.receiver=\""+req.params.id+"\"";
+	var query = "select n.message, u.name as sender, u2.name as receiver, n.time from Notifications n join Users u on n.sender=u.ID join Users u2 on n.receiver=u2.ID where n.sender=\""+req.params.id+"\" or n.receiver=\""+req.params.id+"\"";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
