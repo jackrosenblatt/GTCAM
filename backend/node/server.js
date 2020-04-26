@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const mysql = require('mysql');
 
 /*
@@ -28,7 +27,6 @@ const config = {
 //create the express.js object
 const app = express();
 
-app.use(cors());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 

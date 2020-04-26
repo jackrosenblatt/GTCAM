@@ -5,15 +5,21 @@ import Nav from '../nav/nav';
 import './appointment.css';
 import { Appointment } from '../../models/appointment';
 import { AppointmentRepository } from '../../api/appointmentRepository';
+import { DoctorRepository } from '../../api/doctorRepository';
 
 export class AppointmentList extends React.Component {
 
     apptRepo = new AppointmentRepository();
+    doctorRepo = new DoctorRepository();
 
-  state = {
-      appointments: [],
-      redirect: ''
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            appointments: [],
+            doctors: [],
+            redirect: ''
+        }
+    }
 
   onEmpty(){
     return <>
@@ -64,6 +70,9 @@ export class AppointmentList extends React.Component {
   componentWillMount() {
         this.apptRepo.getAppointmentsPatient(localStorage.getItem('id'))
             .then(appointments => this.setState({ appointments }));
+
+        this.doctorRepo.getAllDoctors()
+            .then(doctors => this.setState({ doctors}));
    }
 }
 
