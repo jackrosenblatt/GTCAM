@@ -109,7 +109,6 @@ export class AppointmentEdit extends React.Component {
         </Container>
         </>
     }
-
     componentDidMount() {
          let apptid = +this.props.match.params.apptid;
          if(apptid) {
@@ -121,5 +120,4 @@ export class AppointmentEdit extends React.Component {
             .then(doctors => this.setState({ doctors: doctors }));
     }
 }
-
 export default AppointmentEdit;

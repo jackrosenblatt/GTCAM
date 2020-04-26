@@ -22,7 +22,7 @@ import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
 
 import DrHome from './components/drhome/drhome';
-import DrAppointment from './components/drappointment/drappointment';
+import DrAppointmentList from './components/drappointment/drappointmentList';
 import DrPatients from './components/drpatients/drpatients';
 import DrPrescription from './components/drprescription/drprescription';
 import DrNewPrescription from './components/drnewpres/drnewpres';
@@ -49,7 +49,7 @@ class App extends Component {
 
             {/* DOCTOR ROUTING */}
             <Route exact path="/DrHome" component={ DrHome }   />
-            <Route exact path="/DrAppointment" component={ DrAppointment } />
+            <Route exact path="/DrAppointmentList" component={ DrAppointmentList } />
             <Route exact path="/DrPatients" component={ DrPatients } />
             <Route exact path="/DrPrescription" component={ DrPrescription } />
             <Route exact path="/DrNewPrescription" component={ DrNewPrescription } />

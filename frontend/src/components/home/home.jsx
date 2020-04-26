@@ -126,7 +126,6 @@ export class Home extends React.Component {
             </footer>
         </>;
     }
-
     componentDidMount() {
         console.log(localStorage.getItem('userID'));
         this.userRepo.getUserById(localStorage.getItem('userID'))
@@ -140,5 +139,4 @@ export class Home extends React.Component {
         }); 
     }
 }
-
 export default Home;
