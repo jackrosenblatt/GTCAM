@@ -62,4 +62,15 @@ export class AppointmentRepository {
         });
     }
 
+    getAppointmentById(id) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/appointments/${id}`, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
+
 }

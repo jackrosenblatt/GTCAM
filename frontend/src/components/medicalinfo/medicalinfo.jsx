@@ -79,22 +79,22 @@ export class MedicalInfo extends React.Component {
                     <input type='text' disabled={ this.state.disabled } id='email' value={ this.state.email } onChange={ e => this.setState({ email: e.target.value })} placeholder={ localStorage.getItem('email') }></input> <br/>
                     <label htmlFor='password'>Password</label> <br/>
                     <input type='text' disabled={ this.state.disabled } id='city' value={ this.state.password } onChange={ e => this.setState({ password: e.target.value })} placeholder='xxxxxxxxxx'></input> <br/>
-                    <label htmlFor='pharm-pref' value={this.state.pharmacyPref} onChange={ e => this.setState({ pharmacyPref: e.target.value })}>Pharmacy Preference</label> <br/>
-                    <select id='pharm-pref'>
+                    <label htmlFor='pharm-pref' disabled={ this.state.disabled } value={this.state.pharmacyPref} onChange={ e => this.setState({ pharmacyPref: e.target.value })}>Pharmacy Preference</label> <br/>
+                    <select id='pharm-pref' disabled={ this.state.disabled }>
                     <option value='' disabled>Pharmacies</option>
                         {
                             this.state.pharmacies.map((pharmacy) => 
                             <option key={ pharmacy.ID } value={ pharmacy.ID }>{ pharmacy.pharmName }</option>)
                         }
                     </select>  <br/>         
-                    <label htmlFor='notif-pref' value={ this.state.notificationPref } onChange={ e => this.setState({ notificationPref: e.target.value })}>Notification Preference</label> <br/>
-                    <select id='notifpref'>
+                    <label htmlFor='notif-pref' disabled={ this.state.disabled } value={ this.state.notificationPref } onChange={ e => this.setState({ notificationPref: e.target.value })}>Notification Preference</label> <br/>
+                    <select id='notifpref' disabled={ this.state.disabled }>
                                 <option value='' disabled>Notification</option>
                                 <option value='0'>Off</option>
                                 <option value='1'>On</option>
                     </select> <br/>
                     <label htmlFor='ssn'>Social Security Number</label>
-                    <input id='ssn' type='number' disabled={ this.state.ssn } value={ this.state.ssn } onChange={ e => this.setState({ ssn: e.target.value })} placeholder='xxxxxxxxx'></input> <br/>
+                    <input id='ssn' type='number' disabled={ this.state.disabled } value={ this.state.ssn } onChange={ e => this.setState({ ssn: e.target.value })} placeholder='xxxxxxxxx'></input> <br/>
                     
                 </form>
                 <br/>

@@ -2,9 +2,33 @@ import React from 'react';
 import { Container, Row, Card } from 'react-bootstrap';
 import Nav from '../nav/nav';
 import './appointment.css';
+import { DoctorRepository } from '../../api/doctorRepository';
+import { AppointmentRepository } from '../../api/appointmentRepository';
 
-export function AppointmentForm(props) {
+export class AppointmentForm extends React.Component {
 
+    doctorRepo = new DoctorRepository();
+    apptRepo = new AppointmentRepository();
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: '',
+            patient: '',
+            doctor: '',
+            doctorID: '',
+            date: '',
+            time: '',
+            details: '',
+            doctors: []
+        }
+    }
+
+    editAppt() {
+
+    }
+
+    render() {
         return <>
         <Nav></Nav>
         <Container>
@@ -15,10 +39,14 @@ export function AppointmentForm(props) {
                 <Card.Body id='request-appt-form'>
                 <form>
                     <label htmlFor='patient-name'>Your Name</label> <br/>
-                    <input type='text' id='patient-name'></input> <br/>
+                    <input id='patient-name' type='text' value={ this.state.name } onChange={ e => this.setState({ name: e.target.value })} placeholder={ this.state.name }></input> <br/>
                     <label htmlFor='doctor-name'>Select a Doctor</label> <br/>
                     <select id='doctor-name'>
-                        <option></option>
+                    <option value='' disabled>Doctor</option>
+                        {
+                            this.state.doctors.map((doctor) => 
+                            <option key={ doctor.ID } value={ doctor.ID }>{ doctor.name }</option>)
+                        }
                     </select> <br/>
                     <label htmlFor='' >Select a Date</label> <br/>
                     <input type='date'></input> <br/>
@@ -31,7 +59,19 @@ export function AppointmentForm(props) {
             </Card>
 
         </Container>
-        </>;
+        </>
+    }
+
+    componentDidMount() {
+        var apptid = +this.props.match.params.id;
+        if(apptid) {
+            this.apptRepo.getAppointmentById(apptid)
+                .then(appt => this.setState({appt}))
+        }
+
+        this.doctorRepo.getDoctors()
+            .then(doctors => this.setState({ doctors: doctors }));
+    }
 }
 
 export default AppointmentForm;
