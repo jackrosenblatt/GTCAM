@@ -10,10 +10,13 @@ export class AppointmentList extends React.Component {
 
     apptRepo = new AppointmentRepository();
 
-  state = {
-      appointments: [],
-      redirect: ''
-  }
+  constructor(props) {
+      super(props);
+        this.state = {
+            appointments: [],
+            redirect: ''
+        }
+    }
 
   onEmpty(){
     return <>
@@ -36,7 +39,7 @@ export class AppointmentList extends React.Component {
             this.state.appointments.map((appointment) => (
                 <Card fluid style={{width: '90%'}}>
                     <Card.Header>
-                        Appointment with : { appointment.doctorName }
+                        Appointment with : { appointment.doctor }
                     </Card.Header>
                     <Card.Body>
                         <Card.Title style={{float: 'right'}}>
