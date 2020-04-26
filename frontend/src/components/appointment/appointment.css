@@ -20,13 +20,14 @@
     border-style: none;
 }
 
-#request-submit, #edit-submit {
+#request-submit, #edit-submit, #edit-appt {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;
     border-style: none;
 }
 
-#request-appt-form {
-    
+#makeappt:hover, #return:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
 }
 

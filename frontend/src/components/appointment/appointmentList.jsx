@@ -34,6 +34,7 @@ export class AppointmentList extends React.Component {
         {
             this.state.appointments.length === 0 ? this.onEmpty() : ""
         }
+        <div>
         {
             this.state.appointments.map((appointment) => (
                 <Card key={ appointment.ID } fluid style={{width: '90%'}}>
@@ -60,6 +61,7 @@ export class AppointmentList extends React.Component {
         <br/>
         <a href="/appointment/request" id='makeappt' className='btn btn-primary'>Request Appointment</a> <br/>
         <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
+        </div>
     </>;
   }
   componentWillMount() {

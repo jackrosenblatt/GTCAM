@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Card } from 'react-bootstrap';
 import AllergyForm from './allergyform';
 import Nav from '../nav/nav.jsx';
+import './medicalinfo.css';
 import { UserRepository } from '../../api/userRepository';
 import { PharmacyRepository } from '../../api/pharmacyRepository';
 import { AllergyRepository } from '../../api/allergyRepository';
@@ -58,6 +59,12 @@ export class MedicalInfo extends React.Component {
     }
 
     onUpdateProfile() {
+        if(this.state.name !== '') {
+            localStorage.setItem('name', this.state.name);
+        }
+        if(this.state.email !== '') {
+            localStorage.setItem('email', this.state.email);
+        }
         var user = {
             notificationPref: this.state.notificationPref,
             pharmacyPref: this.state.pharmacyPref,
@@ -68,9 +75,7 @@ export class MedicalInfo extends React.Component {
         }
         this.userRepo.editUserById(localStorage.getItem('id'), user)
             .then(() => {
-                localStorage.setItem('name', this.state.name);
-                localStorage.setItem('email', this.state.email);
-                this.setState({ redirect: '/medicalinfo'});
+                this.setState({ disabled: true });
             })
             .catch(() => this.setState({ user }));
     }
@@ -83,11 +88,11 @@ export class MedicalInfo extends React.Component {
         <Nav></Nav>
         <p></p>
             <Container>
-                <div className="card card bg-light mb-3 border-secondary">
-                <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
-                    <h4>Welcome to Your Medical Information!</h4>
+                <div className="card card bg-light mb-3" id='medical-header-1'>
+                <div className="card-header font-weight-bold text-center mb-3" id='medical-header'>
+                    <h4 id='medicalinfo'>Welcome to Your Medical Information!</h4>
                 </div>
-                <form>
+                <form id='medinfo'>
                     <label htmlFor='name'>Name</label> <br/>
                     <input type='text' disabled={ this.state.disabled } id='name' value={this.state.name} onChange={ e => this.setState({ name: e.target.value })} placeholder={ localStorage.getItem('name') }></input> <br/> 
                     <label htmlFor='email'>Email</label> <br/>
@@ -113,18 +118,18 @@ export class MedicalInfo extends React.Component {
                     
                 </form>
                 <br/>
-                    <button type='button' className='btn btn-primary' disabled= { ! this.state.disabled } onClick={ () => this.editProfile()  }>Edit </button> <br/> <br/>
-                    <button type='button' className='btn btn-primary' disabled={ this.state.disabled } onClick={ () => this.onUpdateProfile() }> Save </button>
+                    <button type='button' id='edit-btn' className='btn btn-primary' disabled= { ! this.state.disabled } onClick={ () => this.editProfile()  }>Edit </button><br/>
+                    <button type='button' id='save-btn' className='btn btn-primary' disabled={ this.state.disabled } onClick={ () => this.onUpdateProfile() }> Save </button>
                 </div>
 
                     {
                         this.state.allergies.length !== 0 ? <Card border="dark"> {this.myAllergies()} </Card>  : ''
                     }
                     <br/>
-            <a href="/medicalinfo/allergies" className="btn btn-primary">Edit Allergies</a>
+            <a href="/medicalinfo/allergies" id='edit-allergy' className="btn btn-primary">Edit Allergies</a>
 
             <p></p>
-            <a href="/dashboard" className="btn btn-primary"> Back to Dashboard</a>
+            <a href="/dashboard" id='return-dashboard' className="btn btn-primary"> Back to Dashboard</a> <br/> <br/>
 
             </Container>
         </>;

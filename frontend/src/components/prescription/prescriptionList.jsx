@@ -16,7 +16,7 @@ export class PrescriptionList extends React.Component {
     }
 
     getMedInfo() {
-        this.prescripRepo.getDirectionsForPrescription()
+        
     }
 
     //routing here to get prescriptions from backend
@@ -41,18 +41,20 @@ export class PrescriptionList extends React.Component {
             this.state.prescriptions.map((prescription) => (
                 <Card key={prescription.id} fluid style={{width: '90%'}} id='prescription-card'>
                     <Card.Header id='prescription-card-header'>
-                            {prescription.medname}:  {prescription.dosage }
+                            {prescription.medName}:  {prescription.dosage }
                     </Card.Header>
                     <Card.Body>
                         <Card.Title id='prescription-title'>
-                             {prescription.quantity }
+                            { prescription.directions }, total prescribed: { prescription.quantity } doses
                         </Card.Title>
                         <Card.Text id='prescription-text'>
-                             {prescription.details }
+                            Prescribed by Dr. { prescription.doctor}. { prescription.details }.
+                            Refill at { prescription.pharmName } every { prescription.refillEveryXDays } days.
                         </Card.Text>
                         
                     </Card.Body>
                 </Card>
+                
             ))
         }
         <br/>
@@ -62,7 +64,7 @@ export class PrescriptionList extends React.Component {
 
     componentDidMount() {
         this.prescripRepo.getPrescriptionsForPatient(localStorage.getItem('id'))
-            .then(prescrip => this.setState({ prescrip }));
+            .then(prescrip => this.setState({ prescriptions: prescrip }));
 
     }
 
