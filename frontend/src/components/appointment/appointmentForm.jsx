@@ -81,10 +81,10 @@ export class AppointmentForm extends React.Component {
                             <option key={ doctor.ID } value={ doctor.ID }>{ doctor.name }</option>)
                         }
                     </select> <br/>
-                    <label htmlFor='' >Select a Date</label> <br/>
-                    <input type='date' value={this.state.date} onChange={ e => this.setState({ date: e.target.value})}></input> <br/>
-                    <label htmlFor=''>Select a Time </label> <br/>
-                    <input type='time' value={this.state.time} onChange={e => this.setState({ time: e.target.value})}></input> <br/>
+                    <label htmlFor='date' >Select a Date</label> <br/>
+                    <input id='date' type='date' value={this.state.date} onChange={ e => this.setState({ date: e.target.value})}></input> <br/>
+                    <label htmlFor='time'>Select a Time </label> <br/>
+                    <input id='time' type='time' value={this.state.time} onChange={e => this.setState({ time: e.target.value})}></input> <br/>
                     <label htmlFor="details"> Details: </label>
                         <textarea 
                             className="form-control" 
