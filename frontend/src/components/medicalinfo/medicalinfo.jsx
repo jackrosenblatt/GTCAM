@@ -119,7 +119,7 @@ export class MedicalInfo extends React.Component {
                 </div>
 
                     {
-                        this.state.allergies.length !== 0 ? <Card border="dark"> {this.myAllergies()} </Card>  : ''
+                        this.state.allergies.length !== 0 ? <Card> {this.myAllergies()} </Card>  : ''
                     }
                     <br/>
             <a href="/medicalinfo/allergies" id='edit-allergy' className="btn btn-primary">Edit Allergies</a>

@@ -17,6 +17,7 @@ import AppointmentList from './components/appointment/appointmentList';
 import PrescriptionList from './components/prescription/prescriptionList';
 import Pharmacies from './components/pharmacies/pharmacies';
 import Message from './components/message/message';
+import MessageForm from './components/message/messageform';
 import pharmHome from './components/pharmHome/pharmHome';
 import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
@@ -50,6 +51,7 @@ class App extends Component {
             <Route exact path="/appointment" component= { AppointmentList } />
             <Route exact path="/appointment/request" component={ AppointmentForm } />
             <Route exact path="/appointment/edit/:apptid" render={(props) => <AppointmentEdit {...props} />} />
+            <Route exact path="/message/new" component={ MessageForm } />
 
 
             {/* DOCTOR ROUTING */}

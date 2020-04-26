@@ -20,6 +20,10 @@
     border-style: none;
 }
 
+#appt-card {
+    margin-bottom: 1rem;
+}
+
 #request-submit, #edit-submit, #edit-appt {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;

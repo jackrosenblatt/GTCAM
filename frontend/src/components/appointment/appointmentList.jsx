@@ -37,7 +37,7 @@ export class AppointmentList extends React.Component {
         <div>
         {
             this.state.appointments.map((appointment) => (
-                <Card key={ appointment.ID } fluid style={{width: '90%'}}>
+                <Card key={ appointment.ID } id='appt-card' fluid style={{width: '90%'}}>
                     <Card.Header>
                         Appointment with: { appointment.doctor }
                     </Card.Header>

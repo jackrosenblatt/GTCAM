@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import MessageForm from './messageform';
 import Nav from '../nav/nav.jsx';
+import './message.css';
 import { MessageRepository } from '../../api/messageRepository';
 
 export class Message extends React.Component {
@@ -19,9 +20,9 @@ export class Message extends React.Component {
         <Nav></Nav>
         <p></p>
             <Container>
-                <div className="card card bg-light mb-3 border-secondary">
-                    <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
-                        <h4>Welcome to Your Message Log!</h4>
+                <div className="card card mb-3 " id='mess-h1'>
+                    <div className="card-header font-weight-bold text-center mb-3" id='mess-h'>
+                        <h4 id='message-head'>Welcome to Your Message Log!</h4>
                     </div>
                     
                     <div className="card-body">
@@ -32,12 +33,12 @@ export class Message extends React.Component {
                     </div>
                 </div>
 
-                <div className="card border-secondary mb-3">
-                <h5 className="card-header text-dark border-secondary mb-3">
+                <div className="card mb-3">
+                <h5 className="card-header text-dark mb-3">
                     Log Board
                 </h5>
                     <div className="card-body">
-                        <p className="card-text">
+                        <div className="card-text">
                             {
                                 this.state.messages.map(message => (
                                 <div>
@@ -45,17 +46,16 @@ export class Message extends React.Component {
                                     <b>From: </b>{ message.sender } <br/>
                                     <b>Message: </b>{ message.message } <br/>
                                     <b>Time: </b>{ message.time }
+                                    <hr></hr>
                                 </div>))
                             }
                             <br/>
-                        </p>
+                        </div>
                     </div>
                 </div>
 
-            <MessageForm  onSubmit={this.addMessage}/>
-
-            <p></p>
-            <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
+            <a href='/message/new' id='message' className='btn btn-primary'> Add A Message</a> <br/>
+            <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a> <br/> <br/>
 
             </Container>
         </>;
