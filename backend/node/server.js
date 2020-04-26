@@ -6,7 +6,8 @@ const mysql = require('mysql');
 /*
 *
 
-return ID of allergy on creating a new allergy type
+check /prescriptions/doctor/:id vs. /patient/records/:docID
+update a prescription
 */
 
 //Configure Connections
@@ -399,6 +400,20 @@ app.get('/pharmacist/:id', (req, res) => {
 	})
 })
 
+//gets all medications
+app.get('/medications', (req, res) => {
+	var query = 'select * from Medications';
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+})
+
 ////////
 //POST//
 ////////
@@ -733,6 +748,26 @@ app.post('/appointment', (req, res) => {
 	connection.query(query, function(err, result, fields){
 		if(err){
 			res.status(500).send("Failed to Create Appointment");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//Creates a new medication
+app.post('/medication', (req, res) => {
+	if(!(req.body.medName && req.body.dosage && req.body.quantity && req.body.details)){
+		res.status(400).send('Missing Medication Info');
+		return;
+	}
+	
+	var query = 'insert into Medications(medName, dosage, quantity, details) values(\"'+req.body.medName+'\", \"'+req.body.dosage+'\", '+req.body.medName+', \"'+req.body.details+'\")';
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to Create Medication");
 			return;
 		}
 		
