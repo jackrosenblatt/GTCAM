@@ -66,7 +66,7 @@ export class DrPrescriptionList extends React.Component {
             <div className = "card-deck">
             {
                 this.state.prescription.map((currentpres) => (
-                    <Card key={ currentpres.patientname } fluid style={{width: '90%'}}>
+                    <Card key={ currentpres.patient } fluid style={{width: '90%'}}>
                         <Card.Header>
                             <b>Pres. Name:</ b> {currentpres.medName} <br/>
                             <b>Patient Name:</b> {currentpres.patient}

@@ -23,6 +23,7 @@ export class DrPrescriptionForm extends React.Component {
             details: '',
             directions: '',
             redirect: '',
+            refillEveryXDays:'',
             doctors: []
         }
     }
@@ -37,6 +38,7 @@ export class DrPrescriptionForm extends React.Component {
             dosage: this.state.dosage,
             quantity: this.state.quantity,
             directions: this.state.directions,
+            refillEveryXDays: this.state.refillEveryXDays,
             doctorID: this.state.doctorID
         }
         console.log(pres);
@@ -52,6 +54,7 @@ export class DrPrescriptionForm extends React.Component {
                 pState.quantity = '';
                 pState.directions = '';
                 pState.medname = '';
+                pState.refillEveryXDays = '';
                 pState.redirect = '/DrAppointmentList';
                 return pState;
               });
@@ -75,13 +78,19 @@ export class DrPrescriptionForm extends React.Component {
             <Card fluid style={{width: '90%'}}>
                 <Card.Body id='request-pres-form'>
                 <form>
+
+                    <label htmlFor='prescription-name'>Prescription Name</label> <br/>
+                    <input id='prescription-name' type='text'></input> <br/>
+
                     <label htmlFor='patient-name'>Patient Name</label> <br/>
                     <input id='patient-name' type='text'></input> <br/>
 
-                    <label htmlFor='date' >Select a Date</label> <br/>
-                    <input id='date' type='date' value={this.state.date} onChange={ e => this.setState({ date: e.target.value})}></input> <br/>
-                    
-            
+                    <label htmlFor='dosage'>Dosage</label> <br/>
+                    <input id='dosage-name' type='text'></input> <br/>
+
+                    <label htmlFor="quantity">Quantity</label>
+                    <input className="form-control" type="number" value="0" id="example-number-input" /><br/>
+
                     <label htmlFor="details"> Details: </label>
                         <textarea 
                             className="form-control" 
@@ -89,9 +98,32 @@ export class DrPrescriptionForm extends React.Component {
                             rows="1"
                             value={this.state.details}
                             onChange={ e =>  this.setState({ details: e.target.value })}
-                            placeholder="Anything about the prescription can go here!"
+                            placeholder="Details about prescription!"
                         ></textarea><br/>
 
+                    <label htmlFor="directions"> Directions: </label>
+                        <textarea 
+                            className="form-control" 
+                            name="directions" 
+                            rows="1"
+                            value={this.state.directions}
+                            onChange={ e =>  this.setState({ directions: e.target.value })}
+                            placeholder="Directions about prescriptions!"
+                        ></textarea><br/>
+
+                    <label htmlFor="directions"> Directions: </label>
+                        <textarea 
+                            className="form-control" 
+                            name="directions" 
+                            rows="1"
+                            value={this.state.directions}
+                            onChange={ e =>  this.setState({ directions: e.target.value })}
+                            placeholder="Directions about prescriptions!"
+                        ></textarea><br/>
+
+                <label for="example-number-input" class="col-2 col-form-label">Number</label>
+                <input class="form-control" type="number" value="42" id="example-number-input" /><br/>
+  
                     <button type='button' id='request-submit' className='btn btn-primary' onClick={() => this.createPrescription()}>Request</button>
                 </form>
                 </Card.Body>
