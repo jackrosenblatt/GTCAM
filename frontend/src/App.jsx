@@ -22,13 +22,13 @@ import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
 
 import DrHome from './components/drhome/drhome';
-
 import DrAppointmentList from './components/drappointment/drappointmentList';
 
 import DrPatients from './components/drpatients/drpatients';
-import DrPrescriptionList from './components/drprescription/drprescriptionList';
-import DrNewPrescription from './components/drnewpres/drnewpres';
 
+import DrPrescriptionList from './components/drprescription/drprescriptionList';
+import DrPrescriptionForm from './components/drprescription/drprescriptionForm';
+import DrPrescriptionEdit from './components/drprescription/drprescriptionEdit';
 
 class App extends Component {
   render() {
@@ -53,11 +53,13 @@ class App extends Component {
 
             {/* DOCTOR ROUTING */}
             <Route exact path="/DrHome" component={ DrHome }   />
-
             <Route exact path="/DrAppointmentList" component={ DrAppointmentList } />
+
             <Route exact path="/DrPatients" component={ DrPatients } />
+
             <Route exact path="/DrPrescriptionList" component={ DrPrescriptionList } />
-            <Route exact path="/DrNewPrescription" component={ DrNewPrescription } />
+            <Route exact path="/DrPrescriptionList/request" component={ DrPrescriptionForm } />
+            <Route exact path="/DrPrescriptionList/edit/:presid" render={(props) => <DrPrescriptionEdit {...props} />} />
 
           </Switch>
         </Router>

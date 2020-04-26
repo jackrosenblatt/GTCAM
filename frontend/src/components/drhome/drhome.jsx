@@ -70,7 +70,7 @@ export class DrHome extends React.Component {
                         <p class="card-text"> Here you can see past prescriptions, current prescriptions, and 
                                             make a new prescriptions <br/>
                                             Click the link below to see all of your prescriptions!</p>
-                        <a href="/DrPrescription" class="btn btn-info">Click Here!</a>
+                        <a href="/DrPrescriptionList" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>

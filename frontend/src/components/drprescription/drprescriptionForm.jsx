@@ -1,7 +1,7 @@
 import React from 'react';
 import DrNav from '../drnav/drnav'; 
 
-export class DrNewPrescription extends React.Component {
+export class DrPrescriptionForm extends React.Component {
 
     state = { }
 
@@ -19,4 +19,4 @@ export class DrNewPrescription extends React.Component {
 
 }
 
-export default DrNewPrescription;
+export default DrPrescriptionForm;

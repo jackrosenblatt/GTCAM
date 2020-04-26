@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export class PrescriptionRepository {
+export class DrPrescriptionRepository {
     url='http://localhost:8000'
     config = {
 
