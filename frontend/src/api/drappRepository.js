@@ -1,22 +1,11 @@
 import axios from 'axios';
 
-export class AppointmentRepository {
+export class DrAppointmentRepository {
     url = 'http://localhost:8000'
 
     config ={
 
     };
-
-    getAppointmentsPatient(id) {
-        return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/appointments/patient/${id}`, this.config)
-                .then(x => resolve(x.data))
-                .catch(x => {
-                    alert(x);
-                    reject(x);
-                });
-        });
-    }
 
     getAppointmentsDoctor(id) {
         return new Promise((resolve, reject) => {
@@ -42,7 +31,7 @@ export class AppointmentRepository {
 
     cancelAppointmentById(id) {
         return new Promise((resolve, reject) => {
-            axios.delete(`${this.url}/appointment/${id}`, this.config)
+            axios.delete(`${this.url}/appointments/delete/${id}`, this.config)
                 .then(x=> resolve(x.data))
                 .catch(x => {
                     alert(x);

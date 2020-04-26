@@ -43,7 +43,7 @@ export class DrHome extends React.Component {
                         <p class="card-text"> Here you can check for upcoming appointments, make an appointment,
                                             cancel an appointmnent, as well as view past appointments. <br/>
                                             Click the link below to see your calendar and appointments!</p>
-                        <a href="/DrAppointment" class="btn btn-info">Click Here!</a>
+                        <a href="/DrAppointmentList" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>

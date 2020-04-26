@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Card } from 'react-bootstrap';
 import Nav from '../nav/nav';
-import './appointment.css';
+import './drapp.css';
 import { Appointment } from '../../models/appointment';
-import { AppointmentRepository } from '../../api/appointmentRepository';
+import { DrAppointmentRepository } from '../../api/drappRepository';
 
 export class AppointmentList extends React.Component {
 
-    apptRepo = new AppointmentRepository();
+  drapptRepo = new DrAppointmentRepository();
 
   constructor(props) {
       super(props);
@@ -38,13 +38,13 @@ export class AppointmentList extends React.Component {
             this.state.appointments.map((appointment) => (
                 <Card key={ appointment.ID } fluid style={{width: '90%'}}>
                     <Card.Header>
-                        Appointment with : { appointment.doctor }
+                        Appointment with : { appointment.patient }
                     </Card.Header>
                     <Card.Body>
                         <Card.Title style={{float: 'right'}}>
-                        <Link to={'/appointment/edit/' + appointment.ID } id='edit-appt' className="btn btn-primary  mt-auto">
-                                     Edit
-                                      </Link> 
+                        <Link to={'/appointment/edit/' + appointment.ID } id='edit-appt' className="btn btn-primary mt-auto">
+                          Edit
+                        </Link> 
                         </Card.Title>
                         <Card.Title>
                             { appointment.time }
@@ -52,7 +52,6 @@ export class AppointmentList extends React.Component {
                         <Card.Text>
                             { appointment.details }
                         </Card.Text>
-                        
                     </Card.Body>
                 </Card>
             ))
@@ -63,9 +62,8 @@ export class AppointmentList extends React.Component {
     </>;
   }
   componentWillMount() {
-        this.apptRepo.getAppointmentsPatient(localStorage.getItem('id'))
+        this.drapptRepo.getAppointmentsDoctor(localStorage.getItem('id'))
             .then(appointments => this.setState({ appointments }));
    }
 }
 export default AppointmentList;
-
