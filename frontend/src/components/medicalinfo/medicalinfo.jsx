@@ -16,6 +16,7 @@ export class MedicalInfo extends React.Component {
     userRepo = new UserRepository();
     pharmRepo = new PharmacyRepository();
     allergyRepo = new AllergyRepository();
+    abortController = new AbortController();
     
     constructor(props) {
         super(props);
@@ -49,7 +50,7 @@ export class MedicalInfo extends React.Component {
             <Card.Body>
             {
             this.state.allergies.map((allergy) =>
-              <p key={ allergy.ID }>{ allergy.allergyName }</p>)
+              <Card.Text key={ allergy.ID }>{ allergy.allergyName }</Card.Text>)
             }
             </Card.Body>
             </>
@@ -115,15 +116,12 @@ export class MedicalInfo extends React.Component {
                     <button type='button' className='btn btn-primary' disabled= { ! this.state.disabled } onClick={ () => this.editProfile()  }>Edit </button> <br/> <br/>
                     <button type='button' className='btn btn-primary' disabled={ this.state.disabled } onClick={ () => this.onUpdateProfile() }> Save </button>
                 </div>
-                <Card border="dark">
 
                     {
-                        this.state.allergies.length !== 0 ? this.myAllergies() : ''
+                        this.state.allergies.length !== 0 ? <Card border="dark"> {this.myAllergies()} </Card>  : ''
                     }
-
-                </Card>
-
-            <AllergyForm/>
+                    <br/>
+            <a href="/medicalinfo/allergies" className="btn btn-primary">Edit Allergies</a>
 
             <p></p>
             <a href="/dashboard" className="btn btn-primary"> Back to Dashboard</a>
@@ -132,7 +130,7 @@ export class MedicalInfo extends React.Component {
         </>;
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.userRepo.getPatientById(localStorage.getItem('id'))
             .then(patient => this.setState({ patient }));
 
@@ -140,7 +138,11 @@ export class MedicalInfo extends React.Component {
             .then(pharmacies => this.setState({ pharmacies: pharmacies }));
 
         this.allergyRepo.getAllergiesByPatient(localStorage.getItem('id'))
-        .then(allergies => this.setState({ allergies: allergies }));
+            .then(allergies => this.setState({ allergies: allergies }));
+    }
+
+    componentWillUnmount() {
+        this.AbortController.abort();
     }
 }
 

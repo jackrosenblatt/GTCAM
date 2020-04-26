@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { AllergyRepository } from '../../api/allergyRepository';
+import Nav from '../nav/nav';
 import { BrowserRouter as Router, 
     Route, 
     Switch,
@@ -28,14 +29,12 @@ export class AllergyForm extends React.Component {
         }
         this.allergyRepo.addAllergyForPatient(allergy)
             .then(resp => {
-                var allergies = this.state.patientAllergies;
-                allergies.push(allergy);
-                this.setState({ patientAllergies: allergies });
-                this.setState({ addedallergy: ''});
+                this.setState({ redirect: '/medicalinfo'});
             });
         
-        this.allergyRepo.getAllergiesByPatient(localStorage.getItem('id'))
-            .then(allergies => this.setState({ patientAllergies: allergies }));
+
+        // this.allergyRepo.getAllergiesByPatient(localStorage.getItem('id'))
+        //     .then(allergies => this.setState({ patientAllergies: allergies }));
     }
     
     onAllergyCreated() {
@@ -43,20 +42,25 @@ export class AllergyForm extends React.Component {
             var allergy = {
                 allergyName: this.state.newAllergy
             }
-            console.log(allergy.allergyName);
+            var newAll;
             this.allergyRepo.createNewAllergy(allergy)
                 .then(resp => {
+                    console.log(resp);
+                    newAll = resp.insertId;
                     this.setState({ newAllergy: ''});
                 }); 
-            
-            this.get
-        }
-       
-       this.allergyRepo.getAllergies()
-        .then(allergies => { 
-            this.setState({ allergies: allergies });
-        }); 
 
+                var allergyforPatient = {
+                    allergyID: newAll,
+                    patientID: localStorage.getItem('id')
+                }
+            
+            this.allergyRepo.addAllergyForPatient(allergyforPatient)
+                .then(resp => {
+                    this.setState({ redirect: '/medicalinfo'});
+                });
+        }
+        this.setState({ redirect: '/medicalinfo'});
     }
 
     render() {
@@ -64,6 +68,8 @@ export class AllergyForm extends React.Component {
             return <Redirect to={{ pathname: this.state.redirect }} />
         }
         return<>
+        <Nav/>
+        <br/>
             <Card border="dark">
             <Form onSubmit={this.handleSubmit}>
 
