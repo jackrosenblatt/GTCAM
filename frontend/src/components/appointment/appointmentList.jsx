@@ -37,13 +37,13 @@ export class AppointmentList extends React.Component {
         }
         {
             this.state.appointments.map((appointment) => (
-                <Card fluid style={{width: '90%'}}>
+                <Card key={ appointment.ID } fluid style={{width: '90%'}}>
                     <Card.Header>
                         Appointment with : { appointment.doctor }
                     </Card.Header>
                     <Card.Body>
                         <Card.Title style={{float: 'right'}}>
-                        <Link to={'/appointment/edit/' + appointment.id } id='edit-appt' className="btn btn-primary  mt-auto">
+                        <Link to={'/appointment/edit/' + appointment.ID } id='edit-appt' className="btn btn-primary  mt-auto">
                                      Edit
                                       </Link> 
                         </Card.Title>

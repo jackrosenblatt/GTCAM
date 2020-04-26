@@ -2,6 +2,11 @@ import React from 'react';
 import { Container, Row, Card} from 'react-bootstrap';
 import Nav from '../nav/nav';
 import { AppointmentRepository } from '../../api/appointmentRepository';
+import { BrowserRouter as Router, 
+    Route, 
+    Switch,
+    Redirect
+  } from 'react-router-dom';
 
 export class AppointmentEdit extends React.Component {
 
@@ -10,7 +15,7 @@ export class AppointmentEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: +this.props.match.params.id,
+            id: +this.props.match.params.apptid,
             patient: '',
             doctor: '',
             time:'',
@@ -20,13 +25,16 @@ export class AppointmentEdit extends React.Component {
     }
 
     onAppointmentDeleted() {
-        this.apptRepo.cancelAppointmentById(+this.props.match.params.id)
+        this.apptRepo.cancelAppointmentById(+this.props.match.params.apptid)
             .then(resp => {
                 this.setState({ redirect: '/appointment'})
             });
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={{ pathname: this.state.redirect }} />
+        }
     return <>
         <Nav></Nav>
         <Container>
@@ -61,13 +69,11 @@ export class AppointmentEdit extends React.Component {
     }
 
     componentDidMount() {
-        console.log(+this.props);
          let apptid = +this.props.match.params.apptid;
          if(apptid) {
              this.apptRepo.getAppointmentById(apptid)
                  .then(appt => this.setState({appt}));
          }
-         console.log(apptid);
     }
 }
 

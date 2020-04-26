@@ -42,7 +42,7 @@ export class AppointmentRepository {
 
     cancelAppointmentById(id) {
         return new Promise((resolve, reject) => {
-            axios.delete(`${this.url}/appointments/delete/${id}`, this.config)
+            axios.delete(`${this.url}/appointment/${id}`, this.config)
                 .then(x=> resolve(x.data))
                 .catch(x => {
                     alert(x);
