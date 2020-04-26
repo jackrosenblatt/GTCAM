@@ -12,7 +12,7 @@ export class AllergyRepository {
              axios.post(`${this.url}/allergy`, allergy, this.config)
                 .then(resp => resolve(resp.data))
                 .catch(resp => reject(resp));
-         })
+         });
     }
 
     getAllergies() {
@@ -31,8 +31,12 @@ export class AllergyRepository {
         });
     }
 
-    addAllergyForPatient(id, allergy) {
-        
+    addAllergyForPatient(allergy) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/patient/allergy`, allergy, this.config)
+               .then(resp => resolve(resp.data))
+               .catch(resp => reject(resp));
+        });
     }
 
 }
