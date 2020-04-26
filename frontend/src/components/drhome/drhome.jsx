@@ -21,6 +21,7 @@ export class DrHome extends React.Component {
         if (!localStorage.getItem('id')) {
             return <Redirect to="/login" />
         }
+        
         return <>
 
              <DrNav></DrNav>
@@ -42,7 +43,7 @@ export class DrHome extends React.Component {
                         <p class="card-text"> Here you can check for upcoming appointments, make an appointment,
                                             cancel an appointmnent, as well as view past appointments. <br/>
                                             Click the link below to see your calendar and appointments!</p>
-                        <a href="/drappointment" class="btn btn-info">Click Here!</a>
+                        <a href="/DrAppointment" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
@@ -55,7 +56,7 @@ export class DrHome extends React.Component {
                         <p class="card-text" >  Here you will find all of your patients 
                                                 and their medical information. <br/>
                                                 Click the link below to see your all of your patients!</p>
-                        <a href="#" class="btn btn-info">Click Here!</a>
+                        <a href="/DrPatients" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
@@ -69,7 +70,7 @@ export class DrHome extends React.Component {
                         <p class="card-text"> Here you can see past prescriptions, current prescriptions, and 
                                             make a new prescriptions <br/>
                                             Click the link below to see all of your prescriptions!</p>
-                        <a href="#" class="btn btn-info">Click Here!</a>
+                        <a href="/DrPrescription" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>

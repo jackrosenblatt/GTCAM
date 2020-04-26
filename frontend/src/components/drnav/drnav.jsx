@@ -19,15 +19,19 @@ export class DrNav extends React.Component {
                         </li>
 
                         <li className='nav-item nav-list-item'>
-                           <a href="/drappointment">Appointments</a>
+                           <a href="/DrAppointment">Appointments</a>
+                        </li>
+
+                        <li class="nav-item nav-list-item">
+                            <a href="/DrPatients">Patients</a>
                         </li>
 
                         <li className='nav-item nav-list-item'>
-                            <a href="#">Prescriptions</a>
+                            <a href="/DrPrescription">Prescriptions</a>
                         </li>
 
                         <li className='nav-item nav-list-item'>
-                            <a href="#">New Prescription Form</a>
+                            <a href="/DrNewPrescription">New Prescription Form</a>
                         </li>
 
                     </ul>

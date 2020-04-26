@@ -72,7 +72,7 @@ export class Home extends React.Component {
 
                 <div className="card-body">
                     <p className="card-text"> Here you can check for upcoming appointments, make an appointment,
-                                        cancel an appointmnent, as well as view past appointments. <br/>
+                                        cancel an appointment, as well as view past appointments. <br/>
                                         Click the link below to see your calendar and appointments!</p>
                     <a href="/appointment" className="btn btn-info">Click Here!</a>
                 </div>
