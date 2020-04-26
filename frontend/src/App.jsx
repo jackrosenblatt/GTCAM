@@ -24,9 +24,6 @@ import AppointmentEdit from './components/appointment/appointmentEdit';
 import DrHome from './components/drhome/drhome';
 
 import DrAppointmentList from './components/drappointment/drappointmentList';
-import DrAppointmentForm from './components/drappointment/drapptForm';
-import DrAppointmentEdit from './components/drappointment/drapptEdit';
-
 
 import DrPatients from './components/drpatients/drpatients';
 import DrPrescriptionList from './components/drprescription/drprescriptionList';
@@ -58,9 +55,6 @@ class App extends Component {
             <Route exact path="/DrHome" component={ DrHome }   />
 
             <Route exact path="/DrAppointmentList" component={ DrAppointmentList } />
-            <Route exact path="/DrAppointmentList/request" component={ DrAppointmentForm } />
-            <Route exact path="/DrAppointmentList/edit/:apptid" render={(props) => < DrAppointmentEdit {...props} />} />
-
             <Route exact path="/DrPatients" component={ DrPatients } />
             <Route exact path="/DrPrescriptionList" component={ DrPrescriptionList } />
             <Route exact path="/DrNewPrescription" component={ DrNewPrescription } />

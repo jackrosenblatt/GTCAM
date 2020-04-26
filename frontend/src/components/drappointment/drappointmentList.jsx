@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import { Card, Container } from 'react-bootstrap';
 import DrNav from '../drnav/drnav';
 import './drapp.css';
@@ -62,12 +61,6 @@ export class DrAppointmentList extends React.Component {
                           <b>Appointment with:</b> {appointment.patient}
                       </Card.Header>
                       <Card.Body>
-                          <Card.Title style={{float: 'right'}}>
-                          <Link to={'/DrAppointmentList/edit/' + appointment.ID } 
-                                  id='edit-appt' className="btn btn-primary mt-auto">
-                              Edit
-                          </Link> 
-                          </Card.Title>
                           <Card.Text>
                           <b>Time:</b> { appointment.time } <br/>
                             <b>Details:</b> { appointment.details }
@@ -88,8 +81,6 @@ export class DrAppointmentList extends React.Component {
                             <b>Appointment with:</b> {pastapt.patient}
                         </Card.Header>
                         <Card.Body>
-                            <Card.Title style={{float: 'right'}}>
-                            </Card.Title>
                             <Card.Text>
                             <b>Time:</b> { pastapt.time } <br/>
                               <b>Details:</b> { pastapt.details }
@@ -104,7 +95,6 @@ export class DrAppointmentList extends React.Component {
 
         </Container>
         <br/>
-        <a href="/DrAppointmentList/request" id='makeappt' className='btn btn-primary'>Request Appointment</a> <br/>
         <a href="/DrHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
     </>;
   }
