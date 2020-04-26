@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Card} from 'react-bootstrap';
 import Nav from '../nav/nav';
 import { AppointmentRepository } from '../../api/appointmentRepository';
+import { DcotorRepository, DoctorRepository } from '../../api/doctorRepository';
 import { BrowserRouter as Router, 
     Route, 
     Switch,
@@ -11,6 +12,7 @@ import { BrowserRouter as Router,
 export class AppointmentEdit extends React.Component {
 
     apptRepo = new AppointmentRepository();
+    doctorRepo = new DoctorRepository();
 
     constructor(props) {
         super(props);
@@ -18,8 +20,10 @@ export class AppointmentEdit extends React.Component {
             id: +this.props.match.params.apptid,
             patient: '',
             doctor: '',
+            docID: '',
             time:'',
             details: '',
+            doctors: [],
             redirect: ''
         }
     }
@@ -29,6 +33,32 @@ export class AppointmentEdit extends React.Component {
             .then(resp => {
                 this.setState({ redirect: '/appointment'})
             });
+    }
+
+    editAppointment() {
+        var appt = {
+            patientID: localStorage.getItem('id'),
+            docID: this.state.docID,
+            time: this.state.date +' '+ this.state.time + ':00',
+            details: this.state.details,
+        }
+        this.apptRepo.updateAppointmentById(localStorage.getItem('id'), appt)
+        .then(resp => {
+            this.setState(pState => {
+                pState.patient = '';
+                pState.doctor = '';
+                pState.doctorID = '';
+                pState.date = '';
+                pState.time = '';
+                pState.details = '';
+                pState.redirect = '/appointment';
+                return pState;
+              });
+          })
+        .catch(resp => {
+            console.log(resp);
+            alert(resp);
+        });
     }
 
     render() {
@@ -51,16 +81,27 @@ export class AppointmentEdit extends React.Component {
                     <label htmlFor='patient-name'>Edit Name</label> <br/>
                     <input type='text' id='patient-name' placeholder={ this.state.patient }></input> <br/>
                     <label htmlFor='doctor-name'>Change Doctor</label> <br/>
-                    <select id='doctor-name'>
-                        <option></option>
+                    <select id='doctor-name' value={ this.state.docID } onChange={e => this.setState({ docID: e.target.value })}>
+                        {
+                            this.state.doctors.map((doctor) => 
+                            <option key={ doctor.ID } value={ doctor.ID }>{ doctor.name }</option>)
+                        }
                     </select> <br/>
                     <label htmlFor=''>Select a New Date</label> <br/>
-                    <input type='date' placeholder={ this.state.date }></input> <br/>
+                    <input type='date' placeholder={ this.state.date } value={ this.state.date } onChange={ e => this.setState({ date: e.target.value })}></input> <br/>
                     <label htmlFor=''>Select a New Time</label> <br/>
-                    <input type='time' placeholder= { this.state.time }></input> <br/>
-                    <label htmlFor='details' placeholder={this.state.details }></label>
+                    <input type='time' placeholder= { this.state.time } value={ this.state.time } onChange={e => this.setState({ time: e.target.value })}></input> <br/>
+                    <label htmlFor='details'>Edit Details: </label>
+                    <textarea 
+                            className="form-control" 
+                            name="details" 
+                            rows="1"
+                            value={this.state.details}
+                            onChange={ e =>  this.setState({ details: e.target.value })}
+                            placeholder={ this.state.details }
+                        ></textarea>
                     <br/>
-                    <a href="/appointment/edit" id='edit-submit' className='btn btn-primary'>Confirm</a>
+                    <button type='button' id='edit-submit' className='btn btn-primary' onClick={ () => this.editAppointment() }>Confirm</button>
                 </form>
                 </Card.Body>
             </Card>
@@ -74,7 +115,10 @@ export class AppointmentEdit extends React.Component {
          if(apptid) {
              this.apptRepo.getAppointmentById(apptid)
                  .then(appt => this.setState({appt}));
-         }
+        }
+
+        this.doctorRepo.getDoctors()
+            .then(doctors => this.setState({ doctors: doctors }));
     }
 }
 
