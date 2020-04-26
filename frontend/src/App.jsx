@@ -22,10 +22,16 @@ import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
 
 import DrHome from './components/drhome/drhome';
+
 import DrAppointmentList from './components/drappointment/drappointmentList';
+import DrAppointmentForm from './components/drappointment/drapptForm';
+import DrAppointmentEdit from './components/drappointment/drapptEdit';
+
+
 import DrPatients from './components/drpatients/drpatients';
 import DrPrescription from './components/drprescription/drprescription';
 import DrNewPrescription from './components/drnewpres/drnewpres';
+
 
 class App extends Component {
   render() {
@@ -38,18 +44,23 @@ class App extends Component {
             <Route exact path="/login" component={ Login } />
             <Route exact path="/DashBoard" component={ Home } />
             <Route exact path="/medicalinfo" component={ MedicalInfo} />
-            <Route exact path="/appointment" component= { AppointmentList } />
             <Route exact path="/prescriptions" component={ PrescriptionList } />
             <Route exact path="/pharmacies" component= { Pharmacies} />
             <Route exact path="/message" component= { Message }/>
             <Route exact path="/PharmHome" component={ pharmHome }   />
+
+            <Route exact path="/appointment" component= { AppointmentList } />
             <Route exact path="/appointment/request" component={ AppointmentForm } />
             <Route exact path="/appointment/edit/:apptid" render={(props) => <AppointmentEdit {...props} />} />
 
 
             {/* DOCTOR ROUTING */}
             <Route exact path="/DrHome" component={ DrHome }   />
+
             <Route exact path="/DrAppointmentList" component={ DrAppointmentList } />
+            <Route exact path="/DrAppointmentList/request" component={ DrAppointmentForm } />
+            <Route exact path="/DrAppointmentList/edit/:apptid" render={(props) => < DrAppointmentEdit {...props} />} />
+
             <Route exact path="/DrPatients" component={ DrPatients } />
             <Route exact path="/DrPrescription" component={ DrPrescription } />
             <Route exact path="/DrNewPrescription" component={ DrNewPrescription } />

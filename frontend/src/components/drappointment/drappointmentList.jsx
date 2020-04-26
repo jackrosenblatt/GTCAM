@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Card } from 'react-bootstrap';
-import Nav from '../nav/nav';
+import { Card, Container } from 'react-bootstrap';
+import DrNav from '../drnav/drnav';
 import './drapp.css';
-import { Appointment } from '../../models/appointment';
 import { DrAppointmentRepository } from '../../api/drappRepository';
+import { Appointment } from '../../models/appointment';
+
 
 export class AppointmentList extends React.Component {
 
@@ -29,36 +30,83 @@ export class AppointmentList extends React.Component {
   }
   render() {
     return <>
-    <Nav></Nav>
-     <h3 id='appointment-header'>Your Appointments</h3>
-        {
+    <DrNav></DrNav>
+    <p></p>
+
+        <Container>
+          <div className="card card bg-light mb-3 border-secondary">
+            <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
+                <h4>Welcome to Your Appointment View!</h4>
+            </div>
+            
+            <div className="card-body">
+                <p className="card-text text-center">
+                Here you can check for upcoming appointments, 
+                make an appointment, cancel an appointment, and view past appointments!
+                </p>
+            </div>
+          </div>
+
+          {
             this.state.appointments.length === 0 ? this.onEmpty() : ""
-        }
-        {
-            this.state.appointments.map((appointment) => (
-                <Card key={ appointment.ID } fluid style={{width: '90%'}}>
-                    <Card.Header>
-                        Appointment with : { appointment.patient }
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Title style={{float: 'right'}}>
-                        <Link to={'/appointment/edit/' + appointment.ID } id='edit-appt' className="btn btn-primary mt-auto">
-                          Edit
-                        </Link> 
-                        </Card.Title>
-                        <Card.Title>
-                            { appointment.time }
-                        </Card.Title>
-                        <Card.Text>
-                            { appointment.details }
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            ))
-        }
+          }
+
+          <h4><span className="float-center badge badge-info">Upcoming Appointments!</span></h4>
+  
+          <div className = "card-deck">
+          {
+              this.state.appointments.map((appointment) => (
+                  <Card key={ appointment.ID } fluid style={{width: '90%'}}>
+                      <Card.Header>
+                          <b>Appointment with:</b> {appointment.patient}
+                      </Card.Header>
+                      <Card.Body>
+                          <Card.Title style={{float: 'right'}}>
+                          <Link to={'/DrAppointmentList/edit/' + appointment.ID } 
+                                id='edit-appt' className="btn btn-primary mt-auto">
+                            Edit
+                          </Link> 
+                          </Card.Title>
+                          <Card.Text>
+                          <b>Time:</b> { appointment.time } <br/>
+                            <b>Details:</b> { appointment.details }
+                          </Card.Text>
+                      </Card.Body>
+                  </Card>
+              ))
+          }
+          </div> <p></p>
+
+          <h4><span className="float-center badge badge-info">Past Appointments!</span></h4>
+            <div className = "card-deck">
+            {
+                this.state.appointments.map((appointment) => (
+                    <Card key={ appointment.ID } fluid style={{width: '90%'}}>
+                        <Card.Header>
+                            <b>Appointment with:</b> {appointment.patient}
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Title style={{float: 'right'}}>
+                            <Link to={'/DrAppointmentList/edit/' + appointment.ID } 
+                                  id='edit-appt' className="btn btn-primary mt-auto">
+                              Edit
+                            </Link> 
+                            </Card.Title>
+                            <Card.Text>
+                            <b>Time:</b> { appointment.time } <br/>
+                              <b>Details:</b> { appointment.details }
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                ))
+            }
+            </div> <p></p>
+
+
+        </Container>
         <br/>
-        <a href="/appointment/request" id='makeappt' className='btn btn-primary'>Request Appointment</a> <br/>
-        <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
+        <a href="/DrAppointmentList/request" id='makeappt' className='btn btn-primary'>Request Appointment</a> <br/>
+        <a href="/DrHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
     </>;
   }
   componentWillMount() {

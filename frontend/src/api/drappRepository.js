@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export class DrAppointmentRepository {
+    
     url = 'http://localhost:8000'
 
     config ={
