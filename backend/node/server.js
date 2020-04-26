@@ -91,7 +91,7 @@ app.get('/appointments/:id', (req, res) => {
 
 //get appointments for a patient
 app.get('/appointments/patient/:id', (req,  res) => {
-	var query = "select * from Appointments where patientID=\""+req.params.id+"\"";
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.patientID="+req.params.id+"";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
