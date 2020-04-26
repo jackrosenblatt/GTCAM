@@ -2,19 +2,17 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import MessageForm from './messageform';
 import Nav from '../nav/nav.jsx';
+import { MessageRepository } from '../../api/messageRepository';
 
 export class Message extends React.Component {
-    state = {
-        toUser: [],
-        message: []
-    };
-
-    addMessage = log => {
-        this.setState(state => ({
-          toUser: [...state.toUser, log],
-          message: [...state.message, log]
-        }));
-      };
+    
+    messageRepo = new MessageRepository();
+    constructor(props) {
+        super(props);
+        this.state = {
+            messages: []
+        }
+    }
 
     render() {
         return<>
@@ -40,19 +38,16 @@ export class Message extends React.Component {
                 </h5>
                     <div className="card-body">
                         <p className="card-text">
-                            <b>To: </b> message.toUser <br/>
-                            <b>Message: </b> message.message <br/>
-
-                            {this.state.toUser.map(toUser => (
+                            {
+                                this.state.messages.map(message => (
                                 <div>
-                                    <b>To:</b>{toUser.newMessage}
+                                    <b>To: </b>{ message.receiver } <br/>
+                                    <b>From: </b>{ message.sender } <br/>
+                                    <b>Message: </b>{ message.message } <br/>
+                                    <b>Time: </b>{ message.time }
                                 </div>))
                             }
-                            {this.state.message.map(message => (
-                                <div>
-                                    <b>Message:</b>{message.newMessage}
-                                </div>))
-                            }<br/>
+                            <br/>
                         </p>
                     </div>
                 </div>
@@ -64,6 +59,11 @@ export class Message extends React.Component {
 
             </Container>
         </>;
+    }
+
+    componentDidMount() {
+        this.messageRepo.getMessagesForUser(localStorage.getItem('id'))
+            .then(messages => this.setState({ messages: messages}));
     }
 }
 

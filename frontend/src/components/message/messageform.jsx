@@ -1,31 +1,25 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
+import { MessageRepository } from '../../api/messageRepository';
+import { DoctorRepository } from '../../api/doctorRepository';
+// import { PharmacistRepository } from '../../api/'
 
 export class MessageForm extends React.Component {
 
-  state = {
-      newMessage: ""
-    };
+    messageRepo = new MessageRepository();
+    doctorRepo = new DoctorRepository();
+
+    constructor(props) {
+      super(props);
+      this.state = {
+          sender: '',
+          receiver: '',
+          message: '',
+          time: '',
+          doctors: []
+      }
+    }
     
-    handleChange = event => {
-      this.setState({
-        [event.target.name]: event.target.value
-      });
-    };
-  
-    handleSubmit = event => {
-      event.preventDefault();
-
-      this.props.onSubmit({
-        newMessage: this.state.newMessage
-      });
-
-      this.setState({
-        newMessage: ""
-      });
-
-    };
-
   render() {
       return<>
           <Card border="dark">
@@ -39,12 +33,20 @@ export class MessageForm extends React.Component {
                 <div className="col-8">
                     <div className="form-group">
                     <label htmlFor="userName"><b>Addressed To: </b></label>
-                        <input type="text"
+                        <select
                             id="userName"
                             name="userName"
+                            value={ this.state.receiver}
                             className="form-control"
+                            onChange={ e => this.setState({ receiver: e.target.value})}
                             placeholder="doctor or pharmacist"
-                        />
+                        >
+                        {
+                          this.state.doctors.map(doctor => (
+                            <option key={ doctor.ID } value={ doctor.name }>{ doctor.name }</option>
+                          ))
+                        }
+                      </select>
                     </div>
                 </div>
 
@@ -74,6 +76,11 @@ export class MessageForm extends React.Component {
           </Form>
           </Card>
       </>;
+  }
+
+  componentDidMount() {
+    this.doctorRepo.getDoctors()
+      .then(doctors => this.setState({ doctors: doctors}));
   }
 }
 
