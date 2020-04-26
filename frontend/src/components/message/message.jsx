@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import MessageForm from './messageform';
 import Nav from '../nav/nav.jsx';
+import './message.css';
 import { MessageRepository } from '../../api/messageRepository';
 
 export class Message extends React.Component {
@@ -37,7 +38,7 @@ export class Message extends React.Component {
                     Log Board
                 </h5>
                     <div className="card-body">
-                        <p className="card-text">
+                        <div className="card-text">
                             {
                                 this.state.messages.map(message => (
                                 <div>
@@ -45,17 +46,16 @@ export class Message extends React.Component {
                                     <b>From: </b>{ message.sender } <br/>
                                     <b>Message: </b>{ message.message } <br/>
                                     <b>Time: </b>{ message.time }
+                                    <hr></hr>
                                 </div>))
                             }
                             <br/>
-                        </p>
+                        </div>
                     </div>
                 </div>
 
-            <MessageForm  onSubmit={this.addMessage}/>
-
-            <p></p>
-            <a href="/DashBoard" className="btn btn-primary"> Back to DashBoard</a>
+            <a href='/message/new' id='message' className='btn btn-primary'> Add A Message</a> <br/>
+            <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a> <br/> <br/>
 
             </Container>
         </>;

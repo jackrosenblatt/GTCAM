@@ -1,0 +1,14 @@
+#message:hover, #return:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+}
+
+#message, #return {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    border-style: none;
+}
+
+#message {
+    margin-left: 2.5rem;
+}
