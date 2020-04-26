@@ -20,6 +20,7 @@ import Message from './components/message/message';
 import pharmHome from './components/pharmHome/pharmHome';
 import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
+import AllergyForm from './components/medicalinfo/allergyform';
 
 import DrHome from './components/drhome/drhome';
 import DrAppointmentList from './components/drappointment/drappointmentList';
@@ -45,7 +46,7 @@ class App extends Component {
             <Route exact path="/pharmacies" component= { Pharmacies} />
             <Route exact path="/message" component= { Message }/>
             <Route exact path="/PharmHome" component={ pharmHome }   />
-
+            <Route exact path="/medicalinfo/allergies" component={ AllergyForm } />
             <Route exact path="/appointment" component= { AppointmentList } />
             <Route exact path="/appointment/request" component={ AppointmentForm } />
             <Route exact path="/appointment/edit/:apptid" render={(props) => <AppointmentEdit {...props} />} />

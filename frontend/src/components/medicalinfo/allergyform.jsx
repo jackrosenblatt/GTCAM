@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { AllergyRepository } from '../../api/allergyRepository';
 import { Redirect } from 'react-router-dom';
+import Nav from '../nav/nav';
 
 export class AllergyForm extends React.Component {
 
@@ -18,19 +19,44 @@ export class AllergyForm extends React.Component {
    }
     
     onAllergyAdded() {
-        this.allergyRepo.addAllergyForPatient(localStorage.getItem('id'), this.state.addedallergy);
-        var allergies1 = this.state.patientAllergies;
-        allergies1.push(this.state.addedallergy)
-        this.setState({patientAllergies: allergies1 });
-        this.setState({ redirect: '/medicalinfo'});
+        var allergy = {
+            allergyID: this.state.addedallergy,
+            patientID: localStorage.getItem('id')
+        }
+        this.allergyRepo.addAllergyForPatient(allergy)
+            .then(resp => {
+                this.setState({ redirect: '/medicalinfo'});
+            });
+        
+
+        // this.allergyRepo.getAllergiesByPatient(localStorage.getItem('id'))
+        //     .then(allergies => this.setState({ patientAllergies: allergies }));
     }
     
     onAllergyCreated() {
-       this.allergyRepo.createNewAllergy(this.state.newAllergy);
-       var allergies = this.state.allergies;
-       allergies.push(this.state.newAllergy)
-       this.setState({ allergies: allergies }); 
-       this.setState({ redirect: '/medicalinfo'});
+        if(this.state.newAllergy !== '') {
+            var allergy = {
+                allergyName: this.state.newAllergy
+            }
+            var newAll;
+            this.allergyRepo.createNewAllergy(allergy)
+                .then(resp => {
+                    console.log(resp);
+                    newAll = resp.insertId;
+                    this.setState({ newAllergy: ''});
+                }); 
+
+                var allergyforPatient = {
+                    allergyID: newAll,
+                    patientID: localStorage.getItem('id')
+                }
+            
+            this.allergyRepo.addAllergyForPatient(allergyforPatient)
+                .then(resp => {
+                    this.setState({ redirect: '/medicalinfo'});
+                });
+        }
+        
     }
 
     render() {
@@ -38,6 +64,8 @@ export class AllergyForm extends React.Component {
             return <Redirect to={{ pathname: this.state.redirect }} />
         }
         return<>
+        <Nav/>
+        <br/>
             <Card border="dark">
             <Form onSubmit={this.handleSubmit}>
 
@@ -47,8 +75,8 @@ export class AllergyForm extends React.Component {
 
                 <Card.Body>
                     <div className="col-12">
-                        <label htmlFor='allergies' value={ this.state.addedallergy } onChange={ e => this.setState({ addedallergy: e.target.value })}>Select an Allergy</label> <br/>
-                        <select id='allergies'>
+                        <label htmlFor='allergies' >Select an Allergy</label> <br/>
+                        <select id='allergies' value={ this.state.addedallergy } onChange={ e => this.setState({ addedallergy: e.target.value })}>
                             <option disabled>Allergies</option>
                           {
                              this.state.allergies.map((allergy) => 
@@ -61,7 +89,7 @@ export class AllergyForm extends React.Component {
                             name="newAllergy" 
                             rows="1"
                             value={this.state.newAllergy}
-                            onChange={ e => { this.setState({ newAllergy: e.target.value }); this.onAllergyCreated() }}
+                            onChange={ e => { this.setState({ newAllergy: e.target.value }) }}
                             placeholder="Other Allergy"
                         ></textarea>
                         <p></p>
@@ -71,7 +99,7 @@ export class AllergyForm extends React.Component {
                         <button
                             type="button"
                             className="btn btn-info"
-                            onClick={ () => this.onAllergyAdded() }>
+                            onClick={ () => { this.onAllergyAdded(); this.onAllergyCreated() }}>
                             Add
                         </button>
                     </div>
