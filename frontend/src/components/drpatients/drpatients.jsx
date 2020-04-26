@@ -11,6 +11,8 @@ export class DrPatients extends React.Component {
         super(props);
           this.state = {
               patients: [],
+              allergies: [],
+              prescriptions: []
           }
       }
   
@@ -44,26 +46,39 @@ export class DrPatients extends React.Component {
             <h4><span className="float-center badge badge-info">Patient Information!</span></h4>
   
             {
-              this.state.patients.length === 0 ? this.onEmpty() : ""
+                this.state.patients.length === 0 ? this.onEmpty() : ""
             }
-    
-            <div className = "card-deck">
+            
             {
                 this.state.patients.map((patient) => (
-                    <Card key={ patient.ID } fluid style={{width: '90%'}}>
+                    <Card key={ patient.ID } className="card mb-3" fluid style={{width: '90%'}}>
                         <Card.Header>
-                            <b>Appointment with:</b> {patient.patient}
+                            <b>Patient Name:</b> {patient.name}
                         </Card.Header>
                         <Card.Body>
                             <Card.Text>
-                            <b>Time:</b> { patient.time } <br/>
-                              <b>Details:</b> { patient.details }
+                                <b>Email:</b> { patient.email } <br/>
+                                <b>Prescriptions:</b> 
+                                { 
+                                    this.state.prescriptions.map((prescription) => (
+                                        <ul key={ prescription.patient }>
+                                            <li>{ prescription.medName}</li>
+                                        </ul> 
+                                ))}
+
+                                <b>Allegries:</b> 
+                                { 
+                                    this.state.allergies.map((allergy) => (
+                                        <ul key={ allergy.patient }> <br/>
+                                            <li>{allergy.allergyName}</li>
+                                        </ul> 
+                                ))}
+
                             </Card.Text>
                         </Card.Body>
                     </Card>
                 ))
             }
-            </div> <p></p>
   
           </Container>
           <br/>
@@ -72,11 +87,14 @@ export class DrPatients extends React.Component {
     }
 
     componentDidMount() {
-        var patientid = +this.props.match.params.id;
-        if(patientid) {
-            patientid.drpatetientRepo.getPatientById(patientid)
-                .then(patients => this.setState({patients}))
-        }
+        this.drpatetientRepo.getPatientById(localStorage.getItem('id'))
+            .then(patients => this.setState({ patients }));
+
+        this.drpatetientRepo.getPatientAllgergiesById(localStorage.getItem('id'))
+        .then(allergies => this.setState({ allergies }));
+
+        this.drpatetientRepo.getPatientPrescriptionsById(localStorage.getItem('id'))
+        .then(prescriptions => this.setState({ prescriptions }));
     }
 }
 
