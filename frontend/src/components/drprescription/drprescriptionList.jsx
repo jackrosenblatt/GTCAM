@@ -3,6 +3,7 @@ import DrNav from '../drnav/drnav';
 import { Card, Container } from 'react-bootstrap';
 import { DrPrescriptionRepository } from '../../api/drprescriptionRepository';
 import './drpres.css';
+import { Link } from "react-router-dom";
 import { Prescription } from '../../models/prescription';
 
 export class DrPrescriptionList extends React.Component {
@@ -32,7 +33,7 @@ export class DrPrescriptionList extends React.Component {
         return <>
         <Card>
             <Card.Header>
-                You have no new prescriptions!
+                Add a new prescription!
             </Card.Header>
         </Card>
         </>;
@@ -62,16 +63,20 @@ export class DrPrescriptionList extends React.Component {
             {
               this.state.prescription.length === 0 ? this.onEmpty() : ""
             }
-  
-            <div className = "card-deck">
+            
             {
                 this.state.prescription.map((currentpres) => (
-                    <Card key={ currentpres.patient } fluid style={{width: '90%'}}>
+                    <Card key={ currentpres.patient } className="card mb-3" fluid style={{width: '90%'}}>
                         <Card.Header>
-                            <b>Pres. Name:</ b> {currentpres.medName} <br/>
+                            <b>Prescription Name:</b> {currentpres.medName}  <br/> 
                             <b>Patient Name:</b> {currentpres.patient}
                         </Card.Header>
                         <Card.Body>
+                            <Card.Title style={{float: 'right'}}>
+                            <Link to={'/DrPrescriptionList/edit/' + currentpres.ID } id='edit-appt' className="btn btn-primary  mt-auto">
+                                        Edit
+                            </Link> 
+                            </Card.Title>
                             <Card.Text>
                                 <b>Dosage:</b> { currentpres.dosage } <br/>
                                 <b>Quantity:</b> { currentpres.quantity } <br/>
@@ -83,18 +88,16 @@ export class DrPrescriptionList extends React.Component {
                     </Card>
                 ))
             }
-            </div> <p></p>
-  
+            
             <h4><span className="float-center badge badge-info">New Prescriptions!</span></h4>
   
             {
               this.state.newprescriptions.length === 0 ? this.onNewEmpty() : ""
             }
     
-            <div className = "card-deck">
             {
                 this.state.newprescriptions.map((newpres) => (
-                    <Card key={ newpres.id } fluid style={{width: '90%'}}>
+                    <Card key={ newpres.id } className="card mb-3" fluid style={{width: '90%'}}>
                         <Card.Header>
                             <b>Prescrtion Name:</b> {newpres.medname} <br/>
                             <b>Patient Name:</b> {newpres.patientname}
@@ -110,8 +113,7 @@ export class DrPrescriptionList extends React.Component {
                     </Card>
                 ))
             }
-            </div> <p></p>
-
+            
           </Container>
           <br/>
           <a href="/DrPrescriptionList/request" id='makepres' className='btn btn-primary'>Make a New Prescription</a> <br/>
