@@ -82,15 +82,6 @@ export class DrAppointmentEdit extends React.Component {
                     <button type='button' id='editappt-return' className='btn btn-primary' onClick={ () => this.onAppointmentDeleted() }>Cancel Appointment</button> 
                 </Card.Title>
                 <form>
-                    <label htmlFor='patient-name'>Edit Name</label> <br/>
-                    <input type='text' id='patient-name' placeholder={ this.state.patient }></input> <br/>
-                    <label htmlFor='doctor-name'>Change Doctor</label> <br/>
-                    <select id='doctor-name' value={ this.state.docID } onChange={e => this.setState({ docID: e.target.value })}>
-                        {
-                            this.state.doctors.map((doctor) => 
-                            <option key={ doctor.ID } value={ doctor.ID }>{ doctor.name }</option>)
-                        }
-                    </select> <br/>
                     <label htmlFor=''>Select a New Date</label> <br/>
                     <input type='date' placeholder={ this.state.date } value={ this.state.date } onChange={ e => this.setState({ date: e.target.value })}></input> <br/>
                     <label htmlFor=''>Select a New Time</label> <br/>
@@ -113,6 +104,7 @@ export class DrAppointmentEdit extends React.Component {
         </Container>
         </>
     }
+    
     componentDidMount() {
          let apptid = +this.props.match.params.apptid;
          if(apptid) {

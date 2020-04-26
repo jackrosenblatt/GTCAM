@@ -15,6 +15,7 @@ export class AppointmentList extends React.Component {
       super(props);
         this.state = {
             appointments: [],
+            pastappt: [],
             redirect: ''
         }
     }
@@ -41,17 +42,17 @@ export class AppointmentList extends React.Component {
             
             <div className="card-body">
                 <p className="card-text text-center">
-                Here you can check for upcoming appointments, 
+                Here you can check for upcoming appointments, edit an appointment, <br/>
                 make an appointment, cancel an appointment, and view past appointments!
                 </p>
             </div>
           </div>
 
+          <h4><span className="float-center badge badge-info">Upcoming Appointments!</span></h4>
+
           {
             this.state.appointments.length === 0 ? this.onEmpty() : ""
           }
-
-          <h4><span className="float-center badge badge-info">Upcoming Appointments!</span></h4>
   
           <div className = "card-deck">
           {
@@ -63,8 +64,8 @@ export class AppointmentList extends React.Component {
                       <Card.Body>
                           <Card.Title style={{float: 'right'}}>
                           <Link to={'/DrAppointmentList/edit/' + appointment.ID } 
-                                id='edit-appt' className="btn btn-primary mt-auto">
-                            Edit
+                                  id='edit-appt' className="btn btn-primary mt-auto">
+                              Edit
                           </Link> 
                           </Card.Title>
                           <Card.Text>
@@ -78,23 +79,20 @@ export class AppointmentList extends React.Component {
           </div> <p></p>
 
           <h4><span className="float-center badge badge-info">Past Appointments!</span></h4>
+
             <div className = "card-deck">
             {
-                this.state.appointments.map((appointment) => (
-                    <Card key={ appointment.ID } fluid style={{width: '90%'}}>
+                this.state.pastappt.map((pastapt) => (
+                    <Card key={ pastapt.ID } fluid style={{width: '90%'}}>
                         <Card.Header>
-                            <b>Appointment with:</b> {appointment.patient}
+                            <b>Appointment with:</b> {pastapt.patient}
                         </Card.Header>
                         <Card.Body>
                             <Card.Title style={{float: 'right'}}>
-                            <Link to={'/DrAppointmentList/edit/' + appointment.ID } 
-                                  id='edit-appt' className="btn btn-primary mt-auto">
-                              Edit
-                            </Link> 
                             </Card.Title>
                             <Card.Text>
-                            <b>Time:</b> { appointment.time } <br/>
-                              <b>Details:</b> { appointment.details }
+                            <b>Time:</b> { pastapt.time } <br/>
+                              <b>Details:</b> { pastapt.details }
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -112,6 +110,9 @@ export class AppointmentList extends React.Component {
   componentWillMount() {
         this.drapptRepo.getAppointmentsDoctor(localStorage.getItem('id'))
             .then(appointments => this.setState({ appointments }));
+
+        this.drapptRepo.getPastAppointmentsDoctor(localStorage.getItem('id'))
+            .then(pastappt => this.setState({ pastappt }));
    }
 }
 export default AppointmentList;

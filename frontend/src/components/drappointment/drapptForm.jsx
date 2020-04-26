@@ -74,10 +74,13 @@ export class DrAppointmentForm extends React.Component {
             <Card fluid style={{width: '90%'}}>
                 <Card.Body id='request-appt-form'>
                 <form>
-                    <label htmlFor='patient-name'>Your Name</label> <br/>
+
+                    <label htmlFor='patient-name'>Patient Name</label> <br/>
                     <input id='patient-name' type='text'></input> <br/>
+
                     <label htmlFor='doctor-name'>Select a Doctor</label> <br/>
                     <select id='doctor-name' value={this.state.doctorID} onChange={ e => this.setState({ doctorID: e.target.value})}>
+                    
                     <option value='' disabled>Doctor</option>
                         {
                             this.state.doctors.map((doctor) => 
