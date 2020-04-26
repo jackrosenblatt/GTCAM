@@ -2,15 +2,15 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import AllergyForm from './allergyform';
 import Nav from '../nav/nav.jsx';
-import { AllergyRepository } from '../../api/allergyRepository';
 import { UserRepository } from '../../api/userRepository';
 import { PharmacyRepository } from '../../api/pharmacyRepository';
+import { AllergyRepository } from '../../api/allergyRepository';
 
 export class MedicalInfo extends React.Component {
-    
-    allergyRepo = new AllergyRepository();
+
     userRepo = new UserRepository();
     pharmRepo = new PharmacyRepository();
+    allergyRepo = new AllergyRepository();
     
     constructor(props) {
         super(props);
@@ -30,12 +30,20 @@ export class MedicalInfo extends React.Component {
         }
     }
 
-    addAllergy(allergy) {
-        
-    }
-
     editProfile() {
         this.setState({ disabled: false });
+    }
+
+    myAllergies() {
+        return (
+            <>
+            <p>Your Allergies:</p>
+            {
+            this.state.allergies.map((allergy) =>
+              <p key={ allergy.ID }>{ allergy.allergyName }</p>)
+            }
+            </>
+          );
     }
 
     onUpdateProfile() {
@@ -93,8 +101,15 @@ export class MedicalInfo extends React.Component {
                     <button type='button' className='btn btn-primary' disabled= { ! this.state.disabled } onClick={ () => this.editProfile()  }>Edit </button> <br/> <br/>
                     <button type='button' className='btn btn-primary' disabled={ this.state.disabled } onClick={ () => this.onUpdateProfile() }> Save </button>
                 </div>
+                <div>
 
-            <AllergyForm onSubmit={this.addAllergy} />
+                    {
+                        this.state.allergies.length !== 0 ? this.myAllergies() : ''
+                    }
+
+                </div>
+
+            <AllergyForm/>
 
             <p></p>
             <a href="/dashboard" className="btn btn-primary"> Back to Dashboard</a>
@@ -106,12 +121,12 @@ export class MedicalInfo extends React.Component {
     componentDidMount() {
         this.userRepo.getPatientById(localStorage.getItem('id'))
             .then(patient => this.setState({ patient }));
-        
-        this.allergyRepo.getAllergiesByPatient(localStorage.getItem('id'))
-            .then(allergies => this.setState({ allergies: allergies}));
 
         this.pharmRepo.getPharmacies()
             .then(pharmacies => this.setState({ pharmacies: pharmacies }));
+
+        this.allergyRepo.getAllergiesByPatient(localStorage.getItem('id'))
+        .then(allergies => this.setState({ allergies: allergies }));
     }
 }
 
