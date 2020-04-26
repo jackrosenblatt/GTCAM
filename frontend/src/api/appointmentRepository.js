@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export class AppointmentRepository {
-    url = 'localhost:8000'
+    url = 'http://localhost:8000'
 
     config ={
 
