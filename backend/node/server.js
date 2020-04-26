@@ -2,7 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
-const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
+
+/*
+*
+*get all patients and medical info by doctor id
+*
+*/
 
 //Configure Connections
 var connection = mysql.createPool({
@@ -320,6 +325,35 @@ app.get('/patient/:id', (req, res) => {
 		res.status(200).send(result[0]);
 		return;
 	})
+})
+
+//get all patient medical records for a given doctor
+app.get('/patient/records/:docID', (req, res) => {
+	var query = 'select * from DoctorPatientLookup dp join Patients p on dp.patientID=p.ID join Users u on p.userID=u.ID left join PatientAllergies pa on pa.patientID=p.ID left join Allergies a on pa.allergyID=a.ID where dp.doctorID='+req.params.docID;
+
+	connection.query(query, (err, result, fields) => {
+		if(err){
+			res.status(500).send('Database Error');
+			return;
+		}
+		
+		res.status(200).send(result);
+	})
+})
+
+//get all doctors
+app.get('/doctors', (req, res) => {
+	var query = 'select * from Users u join Doctors d on u.ID=d.userID';
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+
 })
 
 //get a doctor by id
