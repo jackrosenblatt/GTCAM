@@ -5,8 +5,6 @@ const mysql = require('mysql');
 
 /*
 *
-*get past prescriptions given doctor
-*make prescriptions/doctor/:id only be current prescriptions
 
 return ID of allergy on creating a new allergy type
 */
@@ -370,6 +368,21 @@ app.get('/doctor/:id', (req, res) => {
 		res.status(200).send(result[0]);
 		return;
 	})
+})
+
+//get all pharmacists
+app.get('/pharmacists', (req, res) => {
+	var query = 'select * from Pharmacists p join Users u on p.userID=u.ID';
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+
 })
 
 //get a pharmacist by id
