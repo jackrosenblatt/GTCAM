@@ -198,7 +198,7 @@ app.get('/appointments/:docID/:patientID', (req,  res) => {
 
 //get prescriptions to be picked up given a patient
 app.get('/prescriptions/pickup/:id', (req,  res) => {
-	var query = "select u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.readyForPickup=1 and pd.patientID="+req.params.id;
+	var query = "select pd.ID, u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.readyForPickup=1 and pd.patientID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -208,7 +208,7 @@ app.get('/prescriptions/pickup/:id', (req,  res) => {
 
 //get prescriptions given a patient
 app.get('/prescriptions/patient/:id', (req,  res) => {
-	var query = "select u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.patientID="+req.params.id;
+	var query = "select pd.ID, u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.patientID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -218,7 +218,7 @@ app.get('/prescriptions/patient/:id', (req,  res) => {
 
 //get prescriptions given a doctor
 app.get('/prescriptions/doctor/:id', (req,  res) => {
-	var query = "select u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.docID="+req.params.id;
+	var query = "select pd.ID, u.name as patient, m.medName, m.dosage, m.quantity, m.details, ph.pharmName, ph.pharmHours, ph.address as pharmAddress, ph.phoneNumber as pharmPhoneNumber, di.directions, u2.name as doctor, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, r.numDays as refillEveryXDays from PrescriptionDetails pd join Patients p on p.ID=pd.patientID join Users u on p.userID=u.ID join Doctors d on d.ID=pd.docID join Users u2 on d.userID=u2.ID join Directions di on pd.directions=di.ID join Medications m on pd.medID=m.ID join Pharmacies ph on pd.pharmID=ph.ID join RefillOccurence r on pd.refillEvery=r.ID where pd.docID="+req.params.id;
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -697,7 +697,7 @@ app.post('/notification', (req, res) => {
 	
 	var query = "insert into Notifications(message, sender, receiver, time) v"+
 				"alues(\""+req.body.message+"\", "+req.body.sender+", "+
-				req.body.receiver+", "+req.body.time+");";
+				req.body.receiver+", \""+req.body.time+"\");";
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
