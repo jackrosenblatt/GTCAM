@@ -12,6 +12,10 @@
     text-align: center;
 }
 
+#prescription-card {
+    margin-bottom: 1rem;
+}
+
 #return {
     margin-left: 2.5rem;
     background-color: rgb(25, 25, 73);

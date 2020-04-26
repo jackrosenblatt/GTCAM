@@ -61,17 +61,17 @@ export class DrPatients extends React.Component {
                                 <b>Prescriptions:</b> 
                                 { 
                                     this.state.prescriptions.map((prescription) => (
-                                        <ul key={ prescription.patient }>
-                                            <li>{ prescription.medName}</li>
-                                        </ul> 
+                                        <li key={prescription.patient }>
+                                            { prescription.medName}
+                                        </li> 
                                 ))}
 
                                 <b>Allegries:</b> 
                                 { 
                                     this.state.allergies.map((allergy) => (
-                                        <ul key={ allergy.patient }> <br/>
-                                            <li>{allergy.allergyName}</li>
-                                        </ul> 
+                                        <li key={allergy.patient}>
+                                            {allergy.allergyName}
+                                        </li> 
                                 ))}
 
                             </Card.Text>
