@@ -31,7 +31,7 @@ export class AppointmentRepository {
 
     createAppointment(appointment) {
         return new Promise((resolve, reject) => {
-            axios.post(`${this.url}/appointments`, appointment, this.config)
+            axios.post(`${this.url}/appointment`, appointment, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);

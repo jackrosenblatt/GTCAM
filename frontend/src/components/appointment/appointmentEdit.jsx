@@ -10,10 +10,9 @@ export class AppointmentEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
-            patientName: '',
-            doctorName: '',
-            date: '',
+            id: +this.props.match.params.id,
+            patient: '',
+            doctor: '',
             time:'',
             details: '',
             redirect: ''
@@ -21,7 +20,7 @@ export class AppointmentEdit extends React.Component {
     }
 
     onAppointmentDeleted() {
-        this.apptRepo.cancelAppointment(this.state.id)
+        this.apptRepo.cancelAppointmentById(+this.props.match.params.id)
             .then(resp => {
                 this.setState({ redirect: '/appointment'})
             });
@@ -42,7 +41,7 @@ export class AppointmentEdit extends React.Component {
                 </Card.Title>
                 <form>
                     <label htmlFor='patient-name'>Edit Name</label> <br/>
-                    <input type='text' id='patient-name' placeholder={ this.state.patientName }></input> <br/>
+                    <input type='text' id='patient-name' placeholder={ this.state.patient }></input> <br/>
                     <label htmlFor='doctor-name'>Change Doctor</label> <br/>
                     <select id='doctor-name'>
                         <option></option>
@@ -62,11 +61,13 @@ export class AppointmentEdit extends React.Component {
     }
 
     componentDidMount() {
-        // let apptid = +this.props.match.params.id;
-        // if(apptid) {
-        //     this.apptRepo.g
-        //         .then(product => this.setState(product));
-        // }
+        console.log(+this.props);
+         let apptid = +this.props.match.params.apptid;
+         if(apptid) {
+             this.apptRepo.getAppointmentById(apptid)
+                 .then(appt => this.setState({appt}));
+         }
+         console.log(apptid);
     }
 }
 
