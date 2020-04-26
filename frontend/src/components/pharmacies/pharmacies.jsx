@@ -6,6 +6,7 @@ import { PharmacyRepository } from '../../api/pharmacyRepository';
 export class Pharmacies extends React.Component {
     
     pharmacyRepo = new PharmacyRepository();
+    
     state = {
         pharmacies: []
     }

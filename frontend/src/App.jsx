@@ -17,11 +17,15 @@ import AppointmentList from './components/appointment/appointmentList';
 import PrescriptionList from './components/prescription/prescriptionList';
 import Pharmacies from './components/pharmacies/pharmacies';
 import Message from './components/message/message';
-import DrHome from './components/drhome/drhome';
 import pharmHome from './components/pharmHome/pharmHome';
 import AppointmentForm from './components/appointment/appointmentForm';
 import AppointmentEdit from './components/appointment/appointmentEdit';
-import DrAppointmentList from './components/drappointment/drappointmentList';
+
+import DrHome from './components/drhome/drhome';
+import DrAppointment from './components/drappointment/drappointment';
+import DrPatients from './components/drpatients/drpatients';
+import DrPrescription from './components/drprescription/drprescription';
+import DrNewPrescription from './components/drnewpres/drnewpres';
 
 class App extends Component {
   render() {
@@ -38,11 +42,18 @@ class App extends Component {
             <Route exact path="/prescriptions" component={ PrescriptionList } />
             <Route exact path="/pharmacies" component= { Pharmacies} />
             <Route exact path="/message" component= { Message }/>
-            <Route exact path="/DrHome" component={ DrHome }   />
             <Route exact path="/PharmHome" component={ pharmHome }   />
             <Route exact path="/appointment/request" component={ AppointmentForm } />
             <Route exact path="/appointment/edit/:id" render={(props) => <AppointmentEdit {...props} />} />
-            <Route exact path="/drappointment" component={ DrAppointmentList } />
+
+
+            {/* DOCTOR ROUTING */}
+            <Route exact path="/DrHome" component={ DrHome }   />
+            <Route exact path="/DrAppointment" component={ DrAppointment } />
+            <Route exact path="/DrPatients" component={ DrPatients } />
+            <Route exact path="/DrPrescription" component={ DrPrescription } />
+            <Route exact path="/DrNewPrescription" component={ DrNewPrescription } />
+
           </Switch>
         </Router>
       </>
