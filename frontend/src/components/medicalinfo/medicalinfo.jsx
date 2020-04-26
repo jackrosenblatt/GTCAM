@@ -5,11 +5,7 @@ import Nav from '../nav/nav.jsx';
 import { UserRepository } from '../../api/userRepository';
 import { PharmacyRepository } from '../../api/pharmacyRepository';
 import { AllergyRepository } from '../../api/allergyRepository';
-import { BrowserRouter as Router, 
-    Route, 
-    Switch,
-    Redirect
-  } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export class MedicalInfo extends React.Component {
 

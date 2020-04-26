@@ -10,11 +10,11 @@ export class DrNav extends React.Component {
         <Container id='nav-container' fluid style={{width: '100%'}}>
                 <div id='gtcam-logo-container'>   
                 </div>
-                <nav class="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="nav nav-pills nav-fill" id='nav-list'>
+                <nav className="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="nav nav-pills nav-fill" id='nav-list'>
 
-                        <li class="nav-item nav-list-item">
+                        <li className="nav-item nav-list-item">
                             <a href="/DrHome">Home</a>
                         </li>
 
@@ -22,7 +22,7 @@ export class DrNav extends React.Component {
                            <a href="/DrAppointmentList">Appointments</a>
                         </li>
 
-                        <li class="nav-item nav-list-item">
+                        <li className="nav-item nav-list-item">
                             <a href="/DrPatients">Patients</a>
                         </li>
 

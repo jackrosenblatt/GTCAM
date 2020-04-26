@@ -3,11 +3,7 @@ import { Container, Row, Jumbotron } from 'react-bootstrap';
 import './register.css';
 import { UserRepository } from '../../api/userRepository';
 import { PharmacyRepository } from '../../api/pharmacyRepository';
-import { BrowserRouter as Router, 
-    Route, 
-    Switch,
-    Redirect
-  } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export class Register extends React.Component {
 

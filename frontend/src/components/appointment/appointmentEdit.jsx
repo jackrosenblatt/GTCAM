@@ -3,11 +3,7 @@ import { Container, Row, Card} from 'react-bootstrap';
 import Nav from '../nav/nav';
 import { AppointmentRepository } from '../../api/appointmentRepository';
 import { DcotorRepository, DoctorRepository } from '../../api/doctorRepository';
-import { BrowserRouter as Router, 
-    Route, 
-    Switch,
-    Redirect
-  } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export class AppointmentEdit extends React.Component {
 

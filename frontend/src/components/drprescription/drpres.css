@@ -1,0 +1,31 @@
+* {
+    
+}
+
+#pres-header, #request-header {
+    padding: 1rem;
+    text-align: center;
+}
+
+#return, #makepres, #editpres {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    margin-left: 2.5rem;
+    border-style: none;
+}
+
+#editpres-return {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    border-style: none;
+}
+
+#request-submit, #edit-submit {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    border-style: none;
+}
+
+#request-pres-form {
+    
+}
