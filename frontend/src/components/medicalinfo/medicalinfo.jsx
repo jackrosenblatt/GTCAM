@@ -1,10 +1,15 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import AllergyForm from './allergyform';
 import Nav from '../nav/nav.jsx';
 import { UserRepository } from '../../api/userRepository';
 import { PharmacyRepository } from '../../api/pharmacyRepository';
 import { AllergyRepository } from '../../api/allergyRepository';
+import { BrowserRouter as Router, 
+    Route, 
+    Switch,
+    Redirect
+  } from 'react-router-dom';
 
 export class MedicalInfo extends React.Component {
 
@@ -26,6 +31,7 @@ export class MedicalInfo extends React.Component {
             type: '',
             allergies: [],
             pharmacies: [],
+            redirect: '',
             disabled: true
         }
     }
@@ -37,11 +43,15 @@ export class MedicalInfo extends React.Component {
     myAllergies() {
         return (
             <>
-            <p>Your Allergies:</p>
+            <Card.Header>
+                My Allergies:
+                </Card.Header>
+            <Card.Body>
             {
             this.state.allergies.map((allergy) =>
               <p key={ allergy.ID }>{ allergy.allergyName }</p>)
             }
+            </Card.Body>
             </>
           );
     }
@@ -55,15 +65,19 @@ export class MedicalInfo extends React.Component {
             password: this.state.password,
             email: this.state.email
         }
-        this.userRepo.editUserById(this.state.userID, user)
+        this.userRepo.editUserById(localStorage.getItem('id'), user)
             .then(() => {
                 localStorage.setItem('name', this.state.name);
                 localStorage.setItem('email', this.state.email);
+                this.setState({ redirect: '/medicalinfo'});
             })
             .catch(() => this.setState({ user }));
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={{ pathname: this.state.redirect }} />
+        }
         return <>
         <Nav></Nav>
         <p></p>
@@ -101,13 +115,13 @@ export class MedicalInfo extends React.Component {
                     <button type='button' className='btn btn-primary' disabled= { ! this.state.disabled } onClick={ () => this.editProfile()  }>Edit </button> <br/> <br/>
                     <button type='button' className='btn btn-primary' disabled={ this.state.disabled } onClick={ () => this.onUpdateProfile() }> Save </button>
                 </div>
-                <div>
+                <Card border="dark">
 
                     {
                         this.state.allergies.length !== 0 ? this.myAllergies() : ''
                     }
 
-                </div>
+                </Card>
 
             <AllergyForm/>
 

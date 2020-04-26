@@ -1,6 +1,11 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { AllergyRepository } from '../../api/allergyRepository';
+import { BrowserRouter as Router, 
+    Route, 
+    Switch,
+    Redirect
+  } from 'react-router-dom';
 
 export class AllergyForm extends React.Component {
 
@@ -21,7 +26,7 @@ export class AllergyForm extends React.Component {
         var allergies1 = this.state.patientAllergies;
         allergies1.push(this.state.addedallergy)
         this.setState({patientAllergies: allergies1 });
-        
+        this.setState({ redirect: '/medicalinfo'});
     }
     
     onAllergyCreated() {
@@ -29,9 +34,13 @@ export class AllergyForm extends React.Component {
        var allergies = this.state.allergies;
        allergies.push(this.state.newAllergy)
        this.setState({ allergies: allergies }); 
+       this.setState({ redirect: '/medicalinfo'});
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={{ pathname: this.state.redirect }} />
+        }
         return<>
             <Card border="dark">
             <Form onSubmit={this.handleSubmit}>
@@ -44,7 +53,7 @@ export class AllergyForm extends React.Component {
                     <div className="col-12">
                         <label htmlFor='allergies' value={ this.state.addedallergy } onChange={ e => this.setState({ addedallergy: e.target.value })}>Select an Allergy</label> <br/>
                         <select id='allergies'>
-                            <option value='' disabled>Allergies</option>
+                            <option disabled>Allergies</option>
                           {
                              this.state.allergies.map((allergy) => 
                               <option key={ allergy.ID } value={ allergy.ID }>{ allergy.allergyName }</option> )

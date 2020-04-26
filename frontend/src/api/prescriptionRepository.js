@@ -52,7 +52,7 @@ export class PrescriptionRepository {
 
     createDirectionsForPrescription() {
         return new Promise((resolve, reject) => {
-            axios.post(`${this.url}/prescription`, prescrip, this.config)
+            axios.post(`${this.url}/prescription`, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);
