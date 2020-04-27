@@ -11,45 +11,39 @@ export class DrPrescriptionForm extends React.Component {
     drpresRep = new DrPrescriptionRepository();
     doctorRepo = new DoctorRepository();
 
+
     constructor(props) {
         super(props);
         this.state = {
             id: '',
             patientname: '',
-            doctor: '',
-            doctorID: '',
             medname: '',
             dosage: '',
             quantity: '',
             details: '',
             directions: '',
-            redirect: '',
             refillEveryXDays:'',
-            doctors: []
+            doctors: [],
+            redirect: ''
         }
     }
 
     createPrescription() {
         var pres = {
             patientID: localStorage.getItem('id'),
-            patientname: this.state.patientname,
-            docID: this.state.doctorID,
+            patientnames: this.state.patientnames,
             details: this.state.details,
             medname: this.state.medname,
             dosage: this.state.dosage,
             quantity: this.state.quantity,
             directions: this.state.directions,
             refillEveryXDays: this.state.refillEveryXDays,
-            doctorID: this.state.doctorID
         }
         console.log(pres);
         this.drpresRep.createPrescription(pres)
         .then(resp => {
             this.setState(pState => {
-                pState.patientname = '';
-                pState.doctor = '';
-                pState.doctorID = '';
-                pState.date = '';
+                pState.patientnames = '';
                 pState.details = '';
                 pState.dosage = '';
                 pState.quantity = '';
@@ -89,8 +83,8 @@ export class DrPrescriptionForm extends React.Component {
                     </div> 
 
                     <div className="form-group col-md-4">
-                        <label htmlFor='patient-name'>Prescription's Name:</label> <br/>
-                        <input id='patientname' type='patientname' value={this.state.medname} onChange={ e => this.setState({ medname: e.target.value})}></input> <br/>
+                        <label htmlFor='medname'>Prescription's Name:</label> <br/>
+                        <input id='medname' type='medname' value={this.state.medname} onChange={ e => this.setState({ medname: e.target.value})}></input> <br/>
                     </div> 
 
                     <div class="form-group col-md-4">

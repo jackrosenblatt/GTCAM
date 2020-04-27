@@ -9,39 +9,40 @@ import { Redirect} from 'react-router-dom';
 export class DrPrescriptionEdit extends React.Component {
 
     drpresRep = new DrPrescriptionRepository();
-    doctorRepo = new DoctorRepository();
 
     constructor(props) {
         super(props);
         this.state = {
-            id: +this.props.match.params.apptid,
-            patient: '',
-            doctor: '',
-            docID: '',
-            time:'',
+            id: '',
+            dosage: '',
+            quantity: '',
             details: '',
-            doctors: [],
+            directions: '',
+            refillEvery:'',
             redirect: ''
         }
     }
 
-    editAppointment() {
-        var appt = {
-            patientID: localStorage.getItem('id'),
-            docID: this.state.docID,
-            time: this.state.date +' '+ this.state.time + ':00',
+    createPrescription() {
+        var pres = {
+            presID: localStorage.getItem('id'),
             details: this.state.details,
+            dosage: this.state.dosage,
+            quantity: this.state.quantity,
+            directions: this.state.directions,
+            refillEvery: this.state.refillEvery,
         }
-        this.apptRepo.updateAppointmentById(localStorage.getItem('id'), appt)
+        console.log(pres);
+        this.drpresRep.createPrescription(pres)
         .then(resp => {
             this.setState(pState => {
-                pState.patient = '';
-                pState.doctor = '';
-                pState.doctorID = '';
-                pState.date = '';
-                pState.time = '';
+                pState.presID = '';
                 pState.details = '';
-                pState.redirect = '/appointment';
+                pState.dosage = '';
+                pState.quantity = '';
+                pState.directions = '';
+                pState.refillEvery = '';
+                pState.redirect = '/DrAppointmentList';
                 return pState;
               });
           })
@@ -59,51 +60,67 @@ export class DrPrescriptionEdit extends React.Component {
         <DrNav></DrNav>
         <Container>
             <Row className='justify-content-md-center'>
-                <h3 id='request-header'>Edit An Appointment</h3>
+                <h3 id='request-header'>Edit A Prescription</h3>
             </Row>
             <Card fluid style={{width: '90%'}}>
                 <Card.Body id='request-appt-form'>
                 <form>
-                    <label htmlFor='patient-name'>Edit Name</label> <br/>
-                    <input type='text' id='patient-name' placeholder={ this.state.patient }></input> <br/>
-                    <label htmlFor='doctor-name'>Change Doctor</label> <br/>
-                    <select id='doctor-name' value={ this.state.docID } onChange={e => this.setState({ docID: e.target.value })}>
-                        {
-                            this.state.doctors.map((doctor) => 
-                            <option key={ doctor.ID } value={ doctor.ID }>{ doctor.name }</option>)
-                        }
-                    </select> <br/>
-                    <label htmlFor=''>Select a New Date</label> <br/>
-                    <input type='date' placeholder={ this.state.date } value={ this.state.date } onChange={ e => this.setState({ date: e.target.value })}></input> <br/>
-                    <label htmlFor=''>Select a New Time</label> <br/>
-                    <input type='time' placeholder= { this.state.time } value={ this.state.time } onChange={e => this.setState({ time: e.target.value })}></input> <br/>
-                    <label htmlFor='details'>Edit Details: </label>
-                    <textarea 
+                <div className="form-row"> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Dosage</label> <br/>
+                        <input id='dosage' type='dosage' value={this.state.dosage} onChange={ e => this.setState({ dosage: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Quantity:</label> <br/>
+                        <input id='quantity' type='quantity' value={this.state.quantity} onChange={ e => this.setState({ quantity: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Refill:</label> <br/>
+                        <input id='refillEveryXDays' type='refillEveryXDays' value={this.state.refillEvery} onChange={ e => this.setState({ refillEvery: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-12">
+                        <label htmlFor='patient-name'>Directions:</label> <br/>
+                        <textarea 
+                            className="form-control" 
+                            name="directions" 
+                            rows="1"
+                            value={this.state.directions}
+                            onChange={ e =>  this.setState({ directions: e.target.value })}
+                            placeholder="Type the directions of the prescription here..."
+                        ></textarea>
+                    </div> <br/>
+
+                    <div className="form-group col-md-12">
+                        <label htmlFor='patient-name'>Details:</label> <br/>
+                        <textarea 
                             className="form-control" 
                             name="details" 
                             rows="1"
                             value={this.state.details}
                             onChange={ e =>  this.setState({ details: e.target.value })}
-                            placeholder={ this.state.details }
+                            placeholder="Type the details of the prescription here.."
                         ></textarea>
-                    <br/>
-                    <button type='button' id='edit-submit' className='btn btn-primary' onClick={ () => this.editAppointment() }>Confirm</button>
+                    </div><br/>
+
+                    <button type='button' id='request-submit' className='btn btn-primary' onClick={() => this.createPrescription()}>Request</button>
+                </div>  
                 </form>
                 </Card.Body>
             </Card>
-
         </Container>
         </>
     }
+    
     componentDidMount() {
-         let apptid = +this.props.match.params.apptid;
-         if(apptid) {
-             this.apptRepo.getAppointmentById(apptid)
-                 .then(appt => this.setState({appt}));
+        var presid = +this.props.match.params.id;
+        if(presid) {
+            this.drapptRepo.getPrescriptionsForDoctor(presid)
+                .then(pres => this.setState({pres}))
         }
-
-        this.doctorRepo.getDoctors()
-            .then(doctors => this.setState({ doctors: doctors }));
     }
 }
 export default DrPrescriptionEdit;
