@@ -25,7 +25,7 @@ export class PharmPharmacist extends React.Component {
             </div>
             
         {
-            this.state.pharmacies.map(pharmacy =>
+            this.state.pharmacies.map((pharmacy) => (
                 <div key={ pharmacy.ID } className="card mb-3" id='pharm'>
                     <h5 className="card-header text-dark mb-3">
                         {pharmacy.pharmName}
@@ -44,7 +44,7 @@ export class PharmPharmacist extends React.Component {
                     </div>
                 </div>
                         
-                    )
+            ))
                 }
             <a href="/PharmHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
                 <br/><br/>

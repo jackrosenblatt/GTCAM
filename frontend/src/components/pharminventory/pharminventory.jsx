@@ -2,6 +2,7 @@ import React from 'react';
 import { PharmacyRepository } from '../../api/pharmacyRepository';
 import { Container } from 'react-bootstrap';
 import PharmNav from '../pharmNav/pharmNav';
+import './pharminv.css';
 
 export class PharmInventory extends React.Component {
     
@@ -23,7 +24,7 @@ export class PharmInventory extends React.Component {
             </div>
             
         {
-            this.state.medications.map(medication =>
+            this.state.medications.map((medication) => (
                 <div key={ medication.medName } className="card mb-3" id='pharm'>
                     <h5 className="card-header text-dark mb-3">
                         { medication.medName }
@@ -39,9 +40,10 @@ export class PharmInventory extends React.Component {
                     </div>
                 </div>
                         
-                    )
+                ))
                 }
-            <a href="/PharmHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
+                <a href="/Pharm/pharmacies" id='back' className="btn btn-primary"> Back to Pharmacies</a> <br/>
+                <a href="/PharmHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
                 <br/><br/>
             </Container>
 
@@ -50,8 +52,11 @@ export class PharmInventory extends React.Component {
     }
 
     componentDidMount() {
-        this.pharmRepo.getMedicationsInPharmacy()
-            .then(medications => this.setState({medications}));
+        let pharmId = +this.props.match.params.pharmid;
+        if(pharmId) {
+        this.pharmRepo.getMedicationsInPharmacy(pharmId)
+            .then(medications => this.setState({medications: medications}));
+        }
     }
 }
 

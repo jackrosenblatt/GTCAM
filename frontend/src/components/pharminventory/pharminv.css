@@ -1,0 +1,14 @@
+#back, #return {
+    background-color: rgb(25, 25, 73);
+    margin-top: 1rem;
+    border-style:none;
+}
+
+#back {
+    margin-left: 2.5rem;
+}
+
+#back:hover, #return:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+}
