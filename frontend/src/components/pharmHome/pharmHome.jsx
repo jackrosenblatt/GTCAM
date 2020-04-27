@@ -48,7 +48,7 @@ export class PharmHome extends React.Component {
                     <div class="card-body">
                         <p class="card-text"> Here is a list of all the medications that need to be made<br/>
                                             Click the link below to see all of the perscriptions</p>
-                        <a href="" class="btn btn-info">Click Here!</a>
+                        <a href="/Pharm/medications" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>

@@ -13,13 +13,14 @@
     margin-bottom: 1rem;
 }
 
-#inventory-btn, #return {
+#inventory-btn, #return-phaarm {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;
+    margin-left: 2.5rem;
     border-style: none;
 }
 
-#return:hover {
+#return-phaarm:hover {
     background-color: #E1C299;
     color: rgb(25, 25, 73);
 }

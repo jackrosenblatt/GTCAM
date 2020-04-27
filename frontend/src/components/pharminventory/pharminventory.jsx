@@ -10,6 +10,11 @@ export class PharmInventory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            ID: '',
+            pharmName: '',
+            pharmHours: '',
+            address: '',
+            phoneNumber: '',
             medications: []
         }
     }
@@ -20,7 +25,7 @@ export class PharmInventory extends React.Component {
         <br/>
         <Container>
             <div className="font-weight-bold text-center mb-3" id='pharm-h'>
-                <h4>Welcome to Your Pharmacy Inventory!</h4>
+            <h4>Inventory for { this.state.pharmName } </h4>
             </div>
             
         {
@@ -42,8 +47,8 @@ export class PharmInventory extends React.Component {
                         
                 ))
                 }
-                <a href="/Pharm/pharmacies" id='back' className="btn btn-primary"> Back to Pharmacies</a> <br/>
-                <a href="/PharmHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
+                <a href="/Pharm/pharmacies" id='back-pharm' className="btn btn-primary"> Back to Pharmacies</a> <br/>
+                <a href="/PharmHome" id='return-phdash' className="btn btn-primary"> Back to Dashboard</a>
                 <br/><br/>
             </Container>
 
@@ -56,6 +61,10 @@ export class PharmInventory extends React.Component {
         if(pharmId) {
         this.pharmRepo.getMedicationsInPharmacy(pharmId)
             .then(medications => this.setState({medications: medications}));
+
+        this.pharmRepo.getPharmacy(pharmId)
+            .then(pharmacy => this.setState({ pharmName: pharmacy.pharmName }));
+        
         }
     }
 }

@@ -11,7 +11,7 @@ export class PharmNav extends React.Component {
                 <div id='gtcam-logo-container'>   
                 </div>
                 <nav class="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-collapse" id="navbarNav">
                     <ul class="nav nav-pills nav-fill" id='nav-list'>
 
                         <li class="nav-item nav-list-item">
@@ -25,7 +25,7 @@ export class PharmNav extends React.Component {
                             <a href="/Pharm/pharmacies">Pharmacies</a>
                         </li>
                         <li className='nav-item nav-list-item'>
-                            <a href="#">Medications</a>
+                            <a href="/Pharm/medications">Medications</a>
                         </li>
                     </ul>
                 </div>
