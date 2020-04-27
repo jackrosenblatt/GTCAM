@@ -1207,7 +1207,7 @@ app.put('/user/:id', (req, res) => {
 			})
 		}
 		
-		res.status(200).send("Success in Updating User");
+		res.status(200).send(result);
 		return;
 	})
 })
