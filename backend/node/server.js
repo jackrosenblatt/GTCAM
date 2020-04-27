@@ -3,13 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
 
-/*
-*
-
-check /prescriptions/doctor/:id vs. /patient/records/:docID
-update a prescription
-*/
-
 //Configure Connections
 var connection = mysql.createPool({
   host: 'backend-db',
@@ -609,7 +602,7 @@ app.post('/inventory', (req,  res) => {
 });
 
 //Creates a new Prescription
-app.post('/prescription', (req, res) => {
+/*app.post('/prescription', (req, res) => {
 	let patientID = req.body.patientID
 	let medID = req.body.medID
 	let pharmID = req.body.pharmID
@@ -667,11 +660,176 @@ app.post('/prescription', (req, res) => {
 				res.status(200).send(result);
 				return;
 			})
-			
-			/*res.status(200).send(result);
-			return;*/
 		}
 	})
+})*/
+
+//
+app.post('/prescription', (req, res) => {
+	let patientID = req.body.patientID
+	let medName = req.body.medName
+	let dosage = req.body.dosage
+	let quantity = req.body.quantity
+	let details = req.body.details
+	let pharmName = req.body.pharmName
+	let pharmHours = req.body.pharmHours
+	let pharmAddress = req.body.pharmAddress
+	let pharmPhoneNumber = req.body.pharmPhoneNumber
+	let directions = req.body.directions
+	let docID = req.body.docID
+	let subRetriever = req.body.subRetriever
+	let readyForPickup = req.body.readyForPickup
+	let pickupPrefTime = req.body.pickupPrefTime
+	let refillEveryXDays = req.body.refillEveryXDays
+
+	if (!(patientID && medName && dosage && quantity && details && pharmName &&
+		pharmHours && pharmAddress && pharmPhoneNumber && directions && docID &&
+		subRetriever, readyForPickup, pickupPrefTime, refillEveryXDays)) {
+		res.status(400).send("Missing prescription Information");
+		return;
+	}
+	
+	var medID;
+	var pharmID;
+	var directionsID;
+	var refillEveryID;
+	
+	
+	//gets the refillEveryID
+	var query = 'select ID from RefillOccurence where numDays='+refillEveryXDays;
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send('Failed to get RefillOccurence.ID');
+			return;
+		}
+		
+		if(result.length == 0){
+			var query2 = 'insert into RefillOccurence(numDays) values('+refillEveryXDays+')';
+			
+			connection.query(query2, function(err2, result2, fields2){
+				if(err2){
+					res.status(501).send('Failed to Create new RefillOccurence');
+					return;
+				}
+				refillEveryID = result2.insertId;
+			})
+		} else {
+			refillEveryID = result[0].ID;
+		}
+	})
+	
+	//gets the directionsID
+	query = 'select ID from Directions where directions=\"'+directions+'\"';
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(502).send('Failed to get Directions.ID');
+			return;
+		}
+		
+		if(result.length == 0){
+			var query2 = 'insert into Directions(directions) values(\"'+directions+'\")';
+			
+			connection.query(query2, function(err2, result2, fields2){
+				if(err2){
+					res.status(503).send('Failed to Create new Directions');
+					return;
+				}
+				directionsID = result2.insertId;
+			})
+		} else {
+			directionsID = result[0].ID;
+		}
+	})
+	
+	//gets the pharmID
+	query = 'select ID from Pharmacies where pharmName=\"'+pharmName+'\" and pharmHours=\"'+pharmHours+'\" and address=\"'+pharmAddress+'\" and phoneNumber=\"'+pharmPhoneNumber+'\"';
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(504).send('Failed to get Pharmacy.ID');
+			return;
+		}
+		
+		if(result.length == 0){
+			var query2 = 'insert into Pharmacies(pharmName, pharmHours, address, phoneNumber) values(\"'+pharmName+'\", \"'+pharmHours+'\", \"'+pharmAddress+'\", \"'+pharmPhoneNumber+'\")';
+			
+			connection.query(query2, function(err2, result2, fields2){
+				if(err2){
+					res.status(505).send('Failed to Create new Pharmacy');
+					return;
+				}
+				pharmID = result2.insertId;
+			})
+		} else {
+			pharmID = result[0].ID;
+		}
+	})
+	
+	//gets the medID
+	query = 'select ID from Medications where medName=\"'+medName+'\" and dosage=\"'+dosage+'\" and quantity='+quantity+' and details=\"'+details+'\"';
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(506).send('Failed to get Medications.ID');
+			return;
+		}
+		
+		if(result.length == 0){
+			var query2 = 'insert into Medications(medName, dosage, quantity, details) values(\"'+medName+'\", \"'+dosage+'\", '+quantity+', \"'+details+'\")';
+			
+			connection.query(query2, function(err2, result2, fields2){
+				if(err2){
+					res.status(507).send('Failed to Create new Medication');
+					return;
+				}
+				medID = result2.insertId;
+			})
+		} else {
+			medID = result[0].ID;
+		}
+	})
+	
+	setTimeout(()=>{
+		//creates the new prescription
+		query = 'insert into PrescriptionDetails(patientID, medID, pharmID, direc'+
+				'tions, docID, needRefill, subRetriever, readyForPickup, pickupPr'+
+				'efTime, refillEvery) values('+patientID+', '+medID+', '+pharmID+
+				', '+directionsID+', '+docID+', 0, \"'+subRetriever+'\", '+
+				readyForPickup+', \"'+pickupPrefTime+'\", '+refillEveryID+')';
+		
+		connection.query(query, function(err, result, fields){
+			if(err){
+				if(err.code == "ER_DUP_ENTRY")
+					res.status(508).send("Duplicate Entry");
+				else
+					res.status(509).send("Failed to Create Prescription");
+				return;
+			} else{
+				var date = new Date();
+				dateStr = date.getYear() + 1900
+				+ '-'
+				+ ((date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+				+ '-' + date.getDate()
+				+ ' ' + date.getHours()
+				+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
+				+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
+				
+				
+				var query2 = "insert into Notifications(message, sender, receiver, time) v"+
+					"alues(\"Your Doctor added a new medication\", "+docID+", "+
+					patientID+", \""+dateStr+"\");";
+		
+				connection.query(query2, function(err2, result2, fields2){
+					if(err2){
+						res.status(510).send("Failed to Create Notification");
+						return;
+					}
+					
+					res.status(200).send(result);
+					return;
+				})
+				
+			}
+		})
+	}, 10);
 })
 
 //creates new directions for prescriptions
