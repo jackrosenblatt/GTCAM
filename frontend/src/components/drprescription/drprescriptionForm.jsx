@@ -3,52 +3,47 @@ import { Container, Row, Card } from 'react-bootstrap';
 import DrNav from '../drnav/drnav';
 import './drpres.css';
 import { DrPrescriptionRepository } from '../../api/drprescriptionRepository';
+import { DoctorRepository } from '../../api/doctorRepository';
 import { Redirect} from 'react-router-dom';
 
 export class DrPrescriptionForm extends React.Component {
 
     drpresRep = new DrPrescriptionRepository();
+    doctorRepo = new DoctorRepository();
+
 
     constructor(props) {
         super(props);
         this.state = {
             id: '',
             patientname: '',
-            doctor: '',
-            doctorID: '',
             medname: '',
-            date: '',
             dosage: '',
             quantity: '',
             details: '',
             directions: '',
-            redirect: '',
             refillEveryXDays:'',
-            doctors: []
+            doctors: [],
+            redirect: ''
         }
     }
 
     createPrescription() {
         var pres = {
             patientID: localStorage.getItem('id'),
-            docID: this.state.doctorID,
+            patientnames: this.state.patientnames,
             details: this.state.details,
             medname: this.state.medname,
-            date: this.state.date,
             dosage: this.state.dosage,
             quantity: this.state.quantity,
             directions: this.state.directions,
             refillEveryXDays: this.state.refillEveryXDays,
-            doctorID: this.state.doctorID
         }
         console.log(pres);
         this.drpresRep.createPrescription(pres)
         .then(resp => {
             this.setState(pState => {
-                pState.patient = '';
-                pState.doctor = '';
-                pState.doctorID = '';
-                pState.date = '';
+                pState.patientnames = '';
                 pState.details = '';
                 pState.dosage = '';
                 pState.quantity = '';
@@ -71,64 +66,82 @@ export class DrPrescriptionForm extends React.Component {
         }
         return <>
         <DrNav></DrNav>
-        <Container>
+        <Container> 
+
             <Row className='justify-content-md-center'>
                 <h3 id='request-header'>Request A New Prescription</h3>
             </Row>
+
             <Card fluid style={{width: '90%'}}>
-                <Card.Body id='request-pres-form'>
+                <Card.Body id='request-appt-form'>
                 <form>
+                <div className="form-row"> 
 
-                    <label htmlFor='prescription-name'>Prescription Name</label> <br/>
-                    <input id='prescription-name' type='text'></input> <br/>
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Patient's Name:</label> <br/>
+                        <input id='patientname' type='patientname' value={this.state.patientname} onChange={ e => this.setState({ patientname: e.target.value})}></input> <br/>
+                    </div> 
 
-                    <label htmlFor='patient-name'>Patient Name</label> <br/>
-                    <input id='patient-name' type='text'></input> <br/>
+                    <div className="form-group col-md-4">
+                        <label htmlFor='medname'>Prescription's Name:</label> <br/>
+                        <input id='medname' type='medname' value={this.state.medname} onChange={ e => this.setState({ medname: e.target.value})}></input> <br/>
+                    </div> 
 
-                    <label htmlFor='dosage'>Dosage</label> <br/>
-                    <input id='dosage-name' type='text'></input> <br/>
+                    <div class="form-group col-md-4">
+                        <label htmlFor='doctor-name'>Select a Doctor</label> <br/>
+                        <select id='doctor-name' value={this.state.doctorID} onChange={ e => this.setState({ doctorID: e.target.value})}>
+                        <option value='' disabled>Doctor</option>
+                            {
+                                this.state.doctors.map((doctor) => 
+                                <option key={ doctor.ID } value={ doctor.ID }>{ doctor.name }</option>)
+                            }
+                        </select> <br/>
+                    </div> 
 
-                    <label htmlFor="quantity">Quantity</label>
-                    <input className="form-control" type="number" value="0" id="example-number-input" /><br/>
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Dosage</label> <br/>
+                        <input id='dosage' type='dosage' value={this.state.dosage} onChange={ e => this.setState({ dosage: e.target.value})}></input> <br/>
+                    </div> 
 
-                    <label htmlFor="details"> Details: </label>
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Quantity:</label> <br/>
+                        <input id='quantity' type='quantity' value={this.state.quantity} onChange={ e => this.setState({ quantity: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Refill:</label> <br/>
+                        <input id='refillEveryXDays' type='refillEveryXDays' value={this.state.refillEveryXDays} onChange={ e => this.setState({ refillEveryXDays: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-12">
+                        <label htmlFor='patient-name'>Directions:</label> <br/>
+                        <textarea 
+                            className="form-control" 
+                            name="directions" 
+                            rows="1"
+                            value={this.state.directions}
+                            onChange={ e =>  this.setState({ directions: e.target.value })}
+                            placeholder="Type the directions of the prescription here..."
+                        ></textarea>
+                    </div> <br/>
+
+                    <div className="form-group col-md-12">
+                        <label htmlFor='patient-name'>Details:</label> <br/>
                         <textarea 
                             className="form-control" 
                             name="details" 
                             rows="1"
                             value={this.state.details}
                             onChange={ e =>  this.setState({ details: e.target.value })}
-                            placeholder="Details about prescription!"
-                        ></textarea><br/>
+                            placeholder="Type the details of the prescription here.."
+                        ></textarea>
+                    </div><br/>
 
-                    <label htmlFor="directions"> Directions: </label>
-                        <textarea 
-                            className="form-control" 
-                            name="directions" 
-                            rows="1"
-                            value={this.state.directions}
-                            onChange={ e =>  this.setState({ directions: e.target.value })}
-                            placeholder="Directions about prescriptions!"
-                        ></textarea><br/>
-
-                    <label htmlFor="directions"> Directions: </label>
-                        <textarea 
-                            className="form-control" 
-                            name="directions" 
-                            rows="1"
-                            value={this.state.directions}
-                            onChange={ e =>  this.setState({ directions: e.target.value })}
-                            placeholder="Directions about prescriptions!"
-                        ></textarea><br/>
-
-                <label for="example-number-input" class="col-2 col-form-label">Number</label>
-                <input class="form-control" type="number" value="42" id="example-number-input" /><br/>
-  
                     <button type='button' id='request-submit' className='btn btn-primary' onClick={() => this.createPrescription()}>Request</button>
+                </div>  
                 </form>
                 </Card.Body>
             </Card>
-
         </Container>
         </>
     }
@@ -140,6 +153,8 @@ export class DrPrescriptionForm extends React.Component {
                 .then(pres => this.setState({pres}))
         }
 
+        this.doctorRepo.getDoctors()
+            .then(doctors => this.setState({ doctors: doctors }));
     }
 }
 

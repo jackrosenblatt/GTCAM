@@ -6,7 +6,8 @@ const mysql = require('mysql');
 /*
 *
 
-return ID of allergy on creating a new allergy type
+check /prescriptions/doctor/:id vs. /patient/records/:docID
+update a prescription
 */
 
 //Configure Connections
@@ -399,6 +400,20 @@ app.get('/pharmacist/:id', (req, res) => {
 	})
 })
 
+//gets all medications
+app.get('/medications', (req, res) => {
+	var query = 'select * from Medications';
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Database error");
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+})
+
 ////////
 //POST//
 ////////
@@ -741,6 +756,26 @@ app.post('/appointment', (req, res) => {
 	})
 })
 
+//Creates a new medication
+app.post('/medication', (req, res) => {
+	if(!(req.body.medName && req.body.dosage && req.body.quantity && req.body.details)){
+		res.status(400).send('Missing Medication Info');
+		return;
+	}
+	
+	var query = 'insert into Medications(medName, dosage, quantity, details) values(\"'+req.body.medName+'\", \"'+req.body.dosage+'\", '+req.body.medName+', \"'+req.body.details+'\")';
+	
+	connection.query(query, function(err, result, fields){
+		if(err){
+			res.status(500).send("Failed to Create Medication");
+			return;
+		}
+		
+		res.status(200).send(result);
+		return;
+	})
+})
+
 ///////
 //PUT//
 ///////
@@ -801,6 +836,74 @@ app.put('/prescriptions/updatePickup/:id', (req, res) => {
 		return;
 	})
 	
+})
+
+//updates a prescription
+app.put('/prescription/:id', (req, res) => {
+	var updateTable = true;
+	var query = 'update PrescriptionDetails set ';
+	
+	if(req.body.patientID){
+		query += 'patientID='+req.body.patientID;
+	}
+	
+	if(req.body.medID){
+		query += 'medID='+req.body.medID;
+	}
+	
+	if(req.body.pharmID){
+		query += 'pharmID='+req.body.pharmID;
+	}
+	
+	if(req.body.directions){
+		query += 'directions='+req.body.directions;
+	}
+	
+	if(req.body.docID){
+		query += 'docID='+req.body.docID;
+	}
+	
+	if(req.body.needRefill){
+		query += 'needRefill='+req.body.needRefill;
+	}
+	
+	if(req.body.subRetriever){
+		query += 'subRetriever='+req.body.subRetriever;
+	}
+	
+	if(req.body.readyForPickup){
+		query += 'readyForPickup='+req.body.readyForPickup;
+	}
+	
+	if(req.body.pickupPrefTime){
+		query += 'pickupPrefTime='+req.body.pickupPrefTime;
+	}
+	
+	if(req.body.refillEvery){
+		query += 'refillEvery='+req.body.refillEvery;
+	}
+	
+	if(query.slice(-4) == 'set '){
+		updateTable = false;
+	}
+	else{
+		query = query.slice(0, -2);
+		query += ' where ID='+req.params.id
+	}
+	
+	if(updateTable){
+		connection.query(query, function(err, result, fields){
+			if(err2){
+				res.status(500).send("Database Error");
+				return;
+			}
+			res.status(200).send(result);
+			return;
+		})
+	} else {
+		res.status(400).send('Missing Prescription Info');
+		return;
+	}
 })
 
 //Update Stock of a given med at a given pharmacy

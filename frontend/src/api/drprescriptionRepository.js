@@ -39,6 +39,17 @@ export class DrPrescriptionRepository {
             });
         }
 
+    updatePrescriptionById(id, pres) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${this.url}/prescription/${id}`, pres, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
+
     createDirectionsForPrescription() {
         return new Promise((resolve, reject) => {
             axios.post(`${this.url}/prescription`, this.config)
