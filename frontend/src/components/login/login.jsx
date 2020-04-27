@@ -37,6 +37,7 @@ export class Login extends React.Component {
         })
         .catch(resp => {
             console.log(resp);
+            alert("Incorrect Email or Password!");
             this.setState({ showError:true });
         });   
     }

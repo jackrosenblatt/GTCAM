@@ -70,7 +70,6 @@ export class AppointmentEdit extends React.Component {
             <Card fluid style={{width: '90%'}}>
                 <Card.Body id='request-appt-form'>
                 <Card.Title style={{float: 'right'}}>
-                    {/* add an alert: are you sure you want to cancel? */}
                     <button type='button' id='editappt-return' className='btn btn-primary' onClick={ () => this.onAppointmentDeleted() }>Cancel Appointment</button> 
                 </Card.Title>
                 <form>

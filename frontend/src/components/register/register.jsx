@@ -23,6 +23,7 @@ export class Register extends React.Component {
             pharmID: '',
             isPatient: 'false',
             isPharmacist: 'false',
+            redirect: '',
             pharmacies: []
         }
     }
@@ -82,6 +83,7 @@ export class Register extends React.Component {
                 console.log(resp);
                 alert(resp);
             });
+        this.setState({redirect: '/login'});
     }
     
     render() {
@@ -150,7 +152,7 @@ export class Register extends React.Component {
                                 <option value='' disabled>Pharmacies</option>
                                 {
                                     this.state.pharmacies.map((pharmacy) => 
-                                <option value={ pharmacy.pharmID }>{ pharmacy.pharmName }</option>)
+                                <option value={ pharmacy.ID }>{ pharmacy.pharmName }</option>)
                                 }
                             </select> <br/>
                             </div>
