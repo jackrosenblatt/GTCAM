@@ -45,7 +45,7 @@ export class AppointmentList extends React.Component {
                         <Card.Title style={{float: 'right'}}>
                         <Link to={'/appointment/edit/' + appointment.ID } id='edit-appt' className="btn btn-primary  mt-auto">
                                      Edit
-                                      </Link> 
+                        </Link> 
                         </Card.Title>
                         <Card.Title>
                             { appointment.time }

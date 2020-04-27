@@ -3,7 +3,7 @@ import DrNav from '../drnav/drnav';
 import { Card, Container } from 'react-bootstrap';
 import { DrPrescriptionRepository } from '../../api/drprescriptionRepository';
 import './drpres.css';
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Prescription } from '../../models/prescription';
 
 export class DrPrescriptionList extends React.Component {
@@ -15,7 +15,6 @@ export class DrPrescriptionList extends React.Component {
           this.state = {
                 prescription: [],
                 newprescriptions: [],
-                redirect: '',
                 id: '',
                 patient: '',
                 patientID: '',
@@ -35,6 +34,7 @@ export class DrPrescriptionList extends React.Component {
                 readyForPickup: '',
                 pickupPrefTime: '',
                 refillEveryXDays: '',
+                redirect: '',
                 disabled: true
           }
       }
@@ -44,7 +44,12 @@ export class DrPrescriptionList extends React.Component {
     }
 
     onUpdatePrescription() {
+        if(this.state.medName !== '') {
+            localStorage.setItem('medName', this.state.medName);
+        }
+        
         var pres = {
+            patient: this.state.patient,
             patientID: this.state.patientID,
             medName: this.state.medName,
             dosage: this.state.dosage,
@@ -55,11 +60,13 @@ export class DrPrescriptionList extends React.Component {
             pharmAddress: this.state.pharmAddress,
             pharmPhoneNumber: this.state.pharmPhoneNumber,
             directions: this.state.directions,
+            doctor: this.state.doctor,
             docID: this.state.docID,
+            needRefill: this.state.needRefill,
             subRetriever: this.state.subRetriever,
             readyForPickup: this.state.readyForPickup,
             pickupPrefTime: this.state.pickupPrefTime,
-            refillEveryXDays: this.state.refillEveryXDays,
+            refillEveryXDays: this.state.refillEveryXDays
         }
 
         this.drpresRepo.updatePrescriptionById(localStorage.getItem('id'), pres)
@@ -68,7 +75,7 @@ export class DrPrescriptionList extends React.Component {
             })
             .catch(() => this.setState({ pres }));
     }
-  
+
     onEmpty(){
       return <>
       <Card>
@@ -81,11 +88,11 @@ export class DrPrescriptionList extends React.Component {
 
     onNewEmpty(){
         return <>
-        <Card>
-            <Card.Header>
-                Add a new prescription!
-            </Card.Header>
-        </Card>
+            <Card>
+                <Card.Header>
+                    Add a new prescription!
+                </Card.Header>
+            </Card>
         </>;
     }
 
@@ -93,78 +100,53 @@ export class DrPrescriptionList extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={{ pathname: this.state.redirect }} />
         }
+        return <>
+        <DrNav></DrNav>
+        <p></p>
+            <Container>
 
-      return <>
-      <DrNav></DrNav>
-      <p></p>
-  
-          <Container>
-            <div className="card card mb-3">
-              <div className="card-header font-weight-bold text-center text-light mb-3" id='prescrip-head'>
-                  <h4 id='prescrip-welcome'>Welcome to Prescription View!</h4>
-              </div>
-              
-              <div className="card-body">
-                  <p className="card-text text-center">
-                  Here you can see current prescription and make a new prescriptions!
-                  </p>
-              </div>
-            </div>
+                <div className="card card mb-3">
+                    <div className="card-header font-weight-bold text-center text-light mb-3" id='prescrip-head'>
+                        <h4 id='prescrip-welcome'>Welcome to Prescription View!</h4>
+                    </div>
 
+                    <div className="card-body">
+                        <p className="card-text text-center">
+                            Here you can see current prescription and make a new prescriptions!
+                        </p>
+                    </div>
+                </div>
 
-            <h4><span id="badge-prescrip" className="float-center badge badge-info">Current Prescriptions:</span></h4>
+                <h4><span id="badge-prescrip" className="float-center badge badge-info">Current Prescriptions:</span></h4>
 
-            {
-              this.state.prescription.length === 0 ? this.onEmpty() : ""
-            }
+                {
+                    this.state.prescription.length === 0 ? this.onEmpty() : ""
+                }
             
-            {
-                this.state.prescription.map((currentpres) => (
-                    
-                    <Card id='prescrip-card' key={ currentpres.patient } className="card mb-3" fluid style={{width: '93%'}}>
-                        <Card.Header>
-                            <b>Prescription Name:</b> {currentpres.medName}<br/> 
-                            <b>Patient Name:</b> {currentpres.patient}
-                        </Card.Header>
-                        <form>
-                        <div className="form-row"> 
-                        <Card.Body>
-                            <Card.Title style={{float: 'right'}}>
-                                <button type='button' id='edit-btn' className='btn btn-primary' disabled= { ! this.state.disabled } onClick={ () => this.editPrescription()  }>Edit </button><br/>
-                                <button type='button' id='save-btn' className='btn btn-primary' disabled={ this.state.disabled } onClick={ () => this.onUpdatePrescription() }> Save </button>
-                            </Card.Title>
-                            <Card.Text>
-                                <div className="form-group col-md-4">
-                                    <label htmlFor='dosage'>Dosage</label> <br/>
-                                    <input className="form-control" type='text' disabled={ this.state.disabled } id='dosage' value={this.state.dosage} onChange={ e => this.setState({ dosage: e.target.value })} placeholder={ currentpres.dosage }></input> 
-                                </div> 
-
-                                <div className="form-group col-md-4">
-                                    <label htmlFor='quantity'>Quantity:</label> <br/>
-                                    <input className="form-control" type='number' disabled={ this.state.disabled } id='quantity' value={this.state.quantity} onChange={ e => this.setState({ quantity: e.target.value })} placeholder={ currentpres.quantity }></input> 
-                                </div> 
-
-                                <div className="form-group col-md-4">
-                                    <label htmlFor='refillEveryXDays'>Refill:</label> <br/>
-                                    <input className="form-control" type='number' disabled={ this.state.disabled } id='refillEveryXDays' value={this.state.refillEveryXDays} onChange={ e => this.setState({ refillEveryXDays: e.target.value })} placeholder={ currentpres.refillEveryXDays }></input> 
-                                </div> 
-
-                                <div className="form-group col-md-12">
-                                    <label htmlFor='directions'>Directions:</label> <br/>
-                                    <input className="form-control" type='text' rows="1" disabled={ this.state.disabled } id='directions' value={this.state.directions} onChange={ e => this.setState({ directions: e.target.value })} placeholder={ currentpres.directions }></input>
-                                </div> 
-
-                                <div className="form-group col-md-12">
-                                    <label htmlFor='details'>Details:</label> <br/>
-                                    <input className="form-control" type='text' rows="1" disabled={ this.state.disabled } id='details' value={this.state.details} onChange={ e => this.setState({ details: e.target.value })} placeholder={ currentpres.details }></input>
-                                </div> 
-                            </Card.Text>
-                        </Card.Body>
-                        </div> 
-                        </form>
-                    </Card>
-                ))
-            }
+                {
+                    this.state.prescription.map((currentpres) => (
+                        <Card id='prescrip-card' key={ currentpres.patient } className="card mb-3" fluid style={{width: '93%'}}>
+                            <Card.Header>
+                                <b>Prescription Name:</b> {currentpres.medName}  <br/> 
+                                <b>Patient Name:</b> {currentpres.patient}
+                            </Card.Header>
+                            <Card.Body>
+                                <Card.Title style={{float: 'right'}}>
+                                <Link to={'/DrPrescriptionList/edit/' + currentpres.ID } id='edit-appt' className="btn btn-primary  mt-auto">
+                                    Edit
+                                </Link> 
+                                </Card.Title>
+                                <Card.Text>
+                                    <b>Dosage:</b> { currentpres.dosage } <br/>
+                                    <b>Quantity:</b> { currentpres.quantity } <br/>
+                                    <b>Details:</b> { currentpres.details } <br/>
+                                    <b>Directions:</b> { currentpres.directions } <br/>
+                                    <b>Refill:</b> { currentpres.refillEveryXDays } <br/>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    ))
+                }
             
             <h4><span id="prescrip-badge" className="float-center badge badge-info">New Prescriptions:</span></h4>
   

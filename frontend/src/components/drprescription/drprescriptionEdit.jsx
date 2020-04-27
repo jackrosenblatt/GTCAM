@@ -42,7 +42,6 @@ export class DrPrescriptionEdit extends React.Component {
     }
 
     onUpdatePrescription() {
-
         var pres = {
             patientID: this.state.patientID,
             medName: this.state.medName,
@@ -63,10 +62,10 @@ export class DrPrescriptionEdit extends React.Component {
         }
 
         this.drpresRep.updatePrescriptionById(localStorage.getItem('id'), pres)
-            .then(() => {
+            .then((pres) => {
                 this.setState({ disabled: true });
             })
-            .catch(() => this.setState({ pres }));
+            .catch((pres) => this.setState({ pres }));
     }
 
     render() {
@@ -80,8 +79,7 @@ export class DrPrescriptionEdit extends React.Component {
                 <h3 id='request-header'>Edit A Prescription</h3>
             </Row>
 
-            { this.state.prescription.map((prescription) => (
-
+            
                 <Card fluid style={{width: '90%'}}>
                     <Card.Body id='request-appt-form'>
                     <form id="presinfo">
@@ -89,27 +87,27 @@ export class DrPrescriptionEdit extends React.Component {
 
                         <div className="form-group col-md-4">
                             <label htmlFor='dosage'>Dosage</label> <br/>
-                            <input type='text' disabled={ this.state.disabled } id='dosage' value={this.state.dosage} onChange={ e => this.setState({ dosage: e.target.value })} placeholder={ prescription.dosage }></input> <br/> 
+                            <input type='text' disabled={ this.state.disabled } id='dosage' value={this.state.dosage} onChange={ e => this.setState({ dosage: e.target.value })} placeholder={ this.state.dosage }></input> <br/> 
                         </div> 
 
                         <div className="form-group col-md-4">
                             <label htmlFor='quantity'>Quantity:</label> <br/>
-                            <input type='text' disabled={ this.state.disabled } id='quantity' value={this.state.quantity} onChange={ e => this.setState({ quantity: e.target.value })} placeholder={ prescription.quantity }></input> <br/> 
+                            <input type='text' disabled={ this.state.disabled } id='quantity' value={this.state.quantity} onChange={ e => this.setState({ quantity: e.target.value })} placeholder={ this.state.quantity }></input> <br/> 
                         </div> 
 
                         <div className="form-group col-md-4">
                             <label htmlFor='refillEveryXDays'>Refill:</label> <br/>
-                            <input type='text' disabled={ this.state.disabled } id='refillEveryXDays' value={this.state.refillEveryXDays} onChange={ e => this.setState({ refillEveryXDays: e.target.value })} placeholder={ prescription.refillEveryXDays }></input> <br/> 
+                            <input type='text' disabled={ this.state.disabled } id='refillEveryXDays' value={this.state.refillEveryXDays} onChange={ e => this.setState({ refillEveryXDays: e.target.value })} placeholder={ this.state.refillEveryXDays }></input> <br/> 
                         </div> 
 
                         <div className="form-group col-md-12">
                             <label htmlFor='directions'>Directions:</label> <br/>
-                            <input className="form-control" type='text' rows="1" disabled={ this.state.disabled } id='directions' value={this.state.directions} onChange={ e => this.setState({ directions: e.target.value })} placeholder={ prescription.directions }></input>
+                            <input className="form-control" type='text' rows="1" disabled={ this.state.disabled } id='directions' value={this.state.directions} onChange={ e => this.setState({ directions: e.target.value })} placeholder={ this.state.directions }></input>
                         </div> 
 
                         <div className="form-group col-md-12">
                             <label htmlFor='details'>Details:</label> <br/>
-                            <input className="form-control" type='text' rows="1" disabled={ this.state.disabled } id='details' value={this.state.details} onChange={ e => this.setState({ details: e.target.value })} placeholder={ prescription.details }></input> <br/> 
+                            <input className="form-control" type='text' rows="1" disabled={ this.state.disabled } id='details' value={this.state.details} onChange={ e => this.setState({ details: e.target.value })} placeholder={ this.state.details }></input> <br/> 
                         </div>
 
                         <button type='button' id='edit-btn' className='btn btn-primary' disabled= { ! this.state.disabled } onClick={ () => this.editPrescription()  }>Edit </button><br/>
@@ -119,17 +117,17 @@ export class DrPrescriptionEdit extends React.Component {
                     </form>
                     </Card.Body>
                 </Card>
-            ))}         
-
 
         </Container>
         </>
     }
     
     componentWillMount() {
-        this.drpresRep.getPrescriptionsForDoctor(localStorage.getItem('id'))
-            .then(prescription => this.setState({ prescription }));
-   
+        let presid = +this.props.match.params.presid;
+         if(presid) {
+             this.drpresRep.getPrescriptionsForDoctor(presid)
+                 .then(pres => this.setState({pres}));
         }
+    }
 }
 export default DrPrescriptionEdit;
