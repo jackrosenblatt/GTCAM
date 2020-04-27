@@ -34,9 +34,9 @@ export class DrAppointmentList extends React.Component {
     <p></p>
 
         <Container>
-          <div className="card card bg-light mb-3 border-secondary">
-            <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
-                <h4>Welcome to Your Appointment View!</h4>
+          <div className="card card bg-light mb-3">
+            <div className="card-header font-weight-bold text-center text-light mb-3" id='appt-h'>
+                <h4 id='appt-view'>Welcome to Your Appointment View!</h4>
             </div>
             
             <div className="card-body">
@@ -47,7 +47,7 @@ export class DrAppointmentList extends React.Component {
             </div>
           </div>
 
-          <h4><span className="float-center badge badge-info">Upcoming Appointments!</span></h4>
+          <h4><span id='badge-upcoming' className="float-center badge badge-info">Upcoming Appointments:</span></h4>
 
           {
             this.state.appointments.length === 0 ? this.onEmpty() : ""
@@ -56,7 +56,7 @@ export class DrAppointmentList extends React.Component {
           <div className = "card-deck">
           {
               this.state.appointments.map((appointment) => (
-                  <Card key={ appointment.ID } fluid style={{width: '90%'}}>
+                  <Card key={ appointment.ID } fluid style={{width: '90%'}} id='appt-card'>
                       <Card.Header>
                           <b>Appointment with:</b> {appointment.patient}
                       </Card.Header>
@@ -71,12 +71,12 @@ export class DrAppointmentList extends React.Component {
           }
           </div> <p></p>
 
-          <h4><span className="float-center badge badge-info">Past Appointments!</span></h4>
+          <h4><span id='badge-past' className="float-center badge badge-info">Past Appointments:</span></h4>
 
             <div className = "card-deck">
             {
                 this.state.pastappt.map((pastapt) => (
-                    <Card key={ pastapt.ID } fluid style={{width: '90%'}}>
+                    <Card key={ pastapt.ID } fluid style={{width: '90%'}} id='appt-card-past'>
                         <Card.Header>
                             <b>Appointment with:</b> {pastapt.patient}
                         </Card.Header>
@@ -95,7 +95,9 @@ export class DrAppointmentList extends React.Component {
 
         </Container>
         <br/>
-        <a href="/DrHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
+        <a href="/DrHome" id='return-btn' className="btn btn-primary"> Back to Dashboard</a>
+        <br/>
+        <br/>
     </>;
   }
   componentWillMount() {

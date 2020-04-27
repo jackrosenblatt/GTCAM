@@ -2,30 +2,34 @@
     
 }
 
-#appointment-header, #request-header {
-    padding: 1rem;
-    text-align: center;
-}
-
-#return, #makeappt, #editappt {
+#return-btn {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;
-    margin-left: 2.5rem;
+    margin-left: 11rem;
     border-style: none;
 }
 
-#editappt-return {
-    background-color: rgb(25, 25, 73);
-    margin-bottom: 1rem;
-    border-style: none;
+#return-btn:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
 }
 
-#request-submit, #edit-submit {
-    background-color: rgb(25, 25, 73);
-    margin-bottom: 1rem;
-    border-style: none;
+#appt-h {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+    width: 100%;
 }
 
-#request-appt-form {
-    
+#appt-view {
+    color: rgb(25, 25, 73);
+}
+
+#badge-upcoming, #badge-past {
+    background-color: rgb(25, 25, 73);
+    color: white;
+}
+
+#appt-card, #appt-card-past {
+    margin-left: 3.5rem;
+    margin-right: 3.5rem;
 }

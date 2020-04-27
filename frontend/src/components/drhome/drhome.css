@@ -1,0 +1,9 @@
+#patient-btn, #appt-btn, #prescrip-btn {
+    background-color: rgb(25, 25, 73);
+    border-style: none;
+} 
+
+#patient-btn:hover, #appt-btn:hover, #prescrip-btn:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+}
