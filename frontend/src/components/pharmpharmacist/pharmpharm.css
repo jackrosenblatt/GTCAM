@@ -1,0 +1,25 @@
+#pharm-h {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #E1C299;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    border-radius: 2px;
+    color: rgb(25, 25, 73);
+}
+
+#pharm {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+#inventory-btn, #return {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    border-style: none;
+}
+
+#return:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+}

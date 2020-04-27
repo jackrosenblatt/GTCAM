@@ -1,9 +1,9 @@
 import React from 'react';
 import Calendar from 'react-calendar';
-import pharmNav from '../pharmNav/pharmNav'; 
+import PharmNav from '../pharmNav/pharmNav'; 
 import { Redirect } from 'react-router-dom';
 
-export class pharmHome extends React.Component {
+export class PharmHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,8 +18,7 @@ export class pharmHome extends React.Component {
             return <Redirect to="/login" />
         }
         return <>
-
-             <pharmNav></pharmNav>
+            <PharmNav></PharmNav>
 
             <div>
                 <Calendar id='userCal'></Calendar>
@@ -36,7 +35,7 @@ export class pharmHome extends React.Component {
                     <div class="card-body">
                         <p class="card-text" >  Here you will find all the patients picking up a medication at your pharmacy. <br/>
                                                 Click the link below to see your all of the patients!</p>
-                        <a href="#" class="btn btn-info">Click Here!</a>
+                        <a href="" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
@@ -49,7 +48,7 @@ export class pharmHome extends React.Component {
                     <div class="card-body">
                         <p class="card-text"> Here is a list of all the medications that need to be made<br/>
                                             Click the link below to see all of the perscriptions</p>
-                        <a href="#" class="btn btn-info">Click Here!</a>
+                        <a href="" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
@@ -64,4 +63,4 @@ export class pharmHome extends React.Component {
     }
 }
 
-export default pharmHome;
+export default PharmHome;

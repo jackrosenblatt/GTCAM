@@ -32,7 +32,7 @@ export class Pharmacies extends React.Component {
                 </div>
                 {
                     this.state.pharmacies.map(pharmacy =>
-                        <div className="card mb-3">
+                        <div key={pharmacy.ID } className="card mb-3">
                             <h5 className="card-header text-dark mb-3">
                                 {pharmacy.pharmName}
                             <svg class="bi bi-heart" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="float-right">

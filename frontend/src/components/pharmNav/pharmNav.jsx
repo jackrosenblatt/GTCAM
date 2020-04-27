@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import './pharmNav.css';
 
-export class pharmNav extends React.Component {
+export class PharmNav extends React.Component {
 
     render() {
         return <>
@@ -19,7 +19,10 @@ export class pharmNav extends React.Component {
                         </li>
 
                         <li className='nav-item nav-list-item'>
-                            <a href="#">Prescriptions</a>
+                            <a href="">Prescriptions</a>
+                        </li>
+                        <li className='nav-item nav-list-item'>
+                            <a href="/Pharm/pharmacies">Pharmacies</a>
                         </li>
                         <li className='nav-item nav-list-item'>
                             <a href="#">Patients</a>
@@ -32,4 +35,4 @@ export class pharmNav extends React.Component {
     }
 }
 
-export default pharmNav;
+export default PharmNav;

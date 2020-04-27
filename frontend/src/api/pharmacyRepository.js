@@ -29,4 +29,15 @@ export class PharmacyRepository {
         });
     }
 
+    getMedicationsInPharmacy(id) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/medications/inventory/${id}`, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
+
 }

@@ -25,12 +25,13 @@ import AllergyForm from './components/medicalinfo/allergyform';
 
 import DrHome from './components/drhome/drhome';
 import DrAppointmentList from './components/drappointment/drappointmentList';
-
 import DrPatients from './components/drpatients/drpatients';
-
 import DrPrescriptionList from './components/drprescription/drprescriptionList';
 import DrPrescriptionForm from './components/drprescription/drprescriptionForm';
 import DrPrescriptionEdit from './components/drprescription/drprescriptionEdit';
+
+import PharmPharmacist from './components/pharmpharmacist/pharmpharmacist';
+import PharmInventory from './components/pharminventory/pharminventory';
 
 class App extends Component {
   render() {
@@ -64,6 +65,8 @@ class App extends Component {
             <Route exact path="/DrPrescriptionList/request" component={ DrPrescriptionForm } />
             <Route exact path="/DrPrescriptionList/edit/:presid" render={(props) => <DrPrescriptionEdit {...props} />} />
 
+            <Route exact path="/Pharm/pharmacies" component={ PharmPharmacist } />
+            <Route exact path="/Pharm/pharmacies/:pharmid" render={(props) => <PharmInventory {...props} />} />
           </Switch>
         </Router>
       </>
