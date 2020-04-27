@@ -46,7 +46,7 @@ export class PharmPharmacist extends React.Component {
                         
             ))
                 }
-            <a href="/PharmHome" id='return' className="btn btn-primary"> Back to Dashboard</a>
+            <a href="/PharmHome" id='return-phaarm' className="btn btn-primary"> Back to Dashboard</a>
                 <br/><br/>
             </Container>
         </>;

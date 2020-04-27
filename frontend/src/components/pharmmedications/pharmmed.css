@@ -1,11 +1,10 @@
-#back-pharm, #return-phdash {
+#return-pharmhome {
     background-color: rgb(25, 25, 73);
-    margin-top: 1rem;
-    border-style:none;
     margin-left: 2.5rem;
+    border-style: none;
 }
 
-#back-pharm:hover, #return-phdash:hover {
+#return-pharmhome:hover {
     background-color: #E1C299;
     color: rgb(25, 25, 73);
 }
