@@ -55,7 +55,7 @@ export class Message extends React.Component {
                 </div>
 
             <a href='/message/new' id='message' className='btn btn-primary'> Add A Message</a> <br/>
-            <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a> <br/> <br/>
+            <a href="/DashBoard" id='return-dash' className="btn btn-primary"> Back to Dashboard</a> <br/> <br/>
 
             </Container>
         </>;

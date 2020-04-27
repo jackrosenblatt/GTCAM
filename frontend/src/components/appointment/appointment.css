@@ -7,10 +7,10 @@
     text-align: center;
 }
 
-#return, #makeappt, #editappt {
+#return-dAsh, #makeappt-btn, #editappt {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;
-    margin-left: 2.5rem;
+    margin-left: 3.5rem;
     border-style: none;
 }
 
@@ -30,7 +30,7 @@
     border-style: none;
 }
 
-#makeappt:hover, #return:hover {
+#makeappt-btn:hover, #return-dAsh:hover {
     background-color: #E1C299;
     color: rgb(25, 25, 73);
 }

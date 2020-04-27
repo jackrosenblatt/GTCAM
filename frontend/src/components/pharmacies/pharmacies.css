@@ -9,13 +9,14 @@ div#mess-h {
     border-width: 1px;
 }
 
-#return {
+#return-dash {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;
     border-style: none;
+    margin-left: 2.5rem;
 }
 
-#return:hover {
+#return-dash:hover {
     background-color: #E1C299;
     color: rgb(25, 25, 73);
 }

@@ -16,7 +16,17 @@
     margin-bottom: 1rem;
 }
 
-#return {
-    margin-left: 2.5rem;
+#badge-pickup, #badge-all {
     background-color: rgb(25, 25, 73);
+}
+
+#return-dashB {
+    margin-left: 8rem;
+    background-color: rgb(25, 25, 73);
+    border-style: none;
+}
+
+#return-dashB:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
 }

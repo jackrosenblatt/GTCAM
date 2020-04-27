@@ -59,8 +59,8 @@ export class AppointmentList extends React.Component {
             ))
         }
         <br/>
-        <a href="/appointment/request" id='makeappt' className='btn btn-primary'>Request Appointment</a> <br/>
-        <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
+        <a href="/appointment/request" id='makeappt-btn' className='btn btn-primary'>Request Appointment</a> <br/>
+        <a href="/DashBoard" id='return-dAsh' className="btn btn-primary"> Back to Dashboard</a>
         </div>
     </>;
   }
