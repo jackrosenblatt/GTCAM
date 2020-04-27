@@ -38,6 +38,14 @@ connection.getConnection(function (err) {
 //END POINTS/////
 /////////////////
 
+/*
+*Fix medication endpoints to update doctor patient lookup table
+*Fix the medical records endpoint to combine patient into one line
+*
+*
+*
+*/
+
 ///////
 //GET//
 ///////
@@ -105,6 +113,25 @@ app.get('/appointments/patient/past/:id', (req, res) => {
 	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
 	
 	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.patientID="+req.params.id+" and \""+dateStr+"\" > a.time";
+	
+	connection.query(query, function(err, result, fields){
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//Returns future appointments by patient id
+app.get('/appointments/patient/future/:id', (req, res) => {
+	var date = new Date();
+	dateStr = date.getYear() + 1900
+	+ '-'
+	+ ((date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+	+ '-' + date.getDate()
+	+ ' ' + date.getHours()
+	+ ':' + ((date.getMinutes() < 10) ? '0' + (date.getMinutes()) : date.getMinutes())
+	+ ':' + ((date.getSeconds() < 10) ? '0' + (date.getSeconds()) : date.getSeconds());
+	
+	var query = "select u2.name as patient, u.name as doctor, a.time, a.details, a.ID from Appointments a join Doctors d on a.docID=d.ID join Users u on d.userID=u.ID join Patients p on a.patientID=p.ID join Users u2 on p.userID=u2.ID where a.patientID="+req.params.id+" and \""+dateStr+"\" < a.time";
 	
 	connection.query(query, function(err, result, fields){
 		res.status(200).send(result);
@@ -331,6 +358,19 @@ app.get('/patient/records/:docID', (req, res) => {
 			return;
 		}
 		
+		res.status(200).send(result);
+	})
+})
+
+//get all patients for a given doctor
+app.get('/patients/:docID', (req, res) => {
+	var query = 'select * from DoctorPatientLookup dp join Patients p on dp.patientID=p.ID join Users u on p.userID=u.ID where dp.doctorID='+req.params.docID;
+	
+	connection.query(query, (err, result, fields) => {
+		if(err){
+			res.status(500).send('Database Error');
+			return;
+		}
 		res.status(200).send(result);
 	})
 })
