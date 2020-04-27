@@ -613,13 +613,12 @@ app.post('/prescription', (req, res) => {
 	let directions = req.body.directions
 	let docID = req.body.docID
 	let subRetriever = req.body.subRetriever
-	let readyForPickup = req.body.readyForPickup
 	let pickupPrefTime = req.body.pickupPrefTime
 	let refillEveryXDays = req.body.refillEveryXDays
 
 	if (!(patientID && medName && dosage && quantity && details && pharmName &&
 		pharmHours && pharmAddress && pharmPhoneNumber && directions && docID &&
-		subRetriever, readyForPickup, pickupPrefTime, refillEveryXDays)) {
+		subRetriever, pickupPrefTime, refillEveryXDays)) {
 		res.status(400).send("Missing prescription Information");
 		return;
 	}
@@ -726,8 +725,8 @@ app.post('/prescription', (req, res) => {
 		query = 'insert into PrescriptionDetails(patientID, medID, pharmID, direc'+
 				'tions, docID, needRefill, subRetriever, readyForPickup, pickupPr'+
 				'efTime, refillEvery) values('+patientID+', '+medID+', '+pharmID+
-				', '+directionsID+', '+docID+', 0, \"'+subRetriever+'\", '+
-				readyForPickup+', \"'+pickupPrefTime+'\", '+refillEveryID+')';
+				', '+directionsID+', '+docID+', 0, \"'+subRetriever+'\", 1, \"'+
+				pickupPrefTime+'\", '+refillEveryID+')';
 		
 		connection.query(query, function(err, result, fields){
 			if(err){
@@ -755,10 +754,34 @@ app.post('/prescription', (req, res) => {
 					if(err2){
 						res.status(510).send("Failed to Create Notification");
 						return;
+					} else {
+						var query3 = 'select * from DoctorPatientLookup where patientID='+patientID+' and doctorID='+docID;
+						
+						connection.query(query3, (err3, result3, fields3) =>{
+							if(err3){
+								res.status(511).send("Failed to Get Doctor Patient Lookup");
+								return;
+							}
+							
+							if(result3.length == 0){
+								var query4 = 'insert into DoctorPatientLookup(patientID, doctorID) values('+patientID+', '+docID+')';
+								
+								connection.query(query4, (err4, result4, fields4) => {
+									if(err4){
+										res.status(512).send("Failed to Create New Doctor Patient Relationship");
+										return;
+									}
+									
+									
+									res.status(200).send(result);
+									return;
+								})
+							} else {
+								res.status(200).send(result);
+								return;
+							}
+						})
 					}
-					
-					res.status(200).send(result);
-					return;
 				})
 				
 			}
