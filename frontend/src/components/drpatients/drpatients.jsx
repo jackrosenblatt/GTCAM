@@ -25,6 +25,13 @@ export class DrPatients extends React.Component {
       </Card>
       </>;
     }
+
+    onAllergiesEmpty(){
+        return <>
+            This patient does not have any allergies!
+        </>;
+      }
+
     render() {
       return <>
       <DrNav></DrNav>
@@ -59,21 +66,16 @@ export class DrPatients extends React.Component {
                             <Card.Text>
                                 <b>Email:</b> { patient.email } <br/>
                                 <b>Prescriptions:</b> 
-                                { 
-                                    this.state.prescriptions.map((prescription) => (
-                                        <li key={prescription.patient }>
-                                            { prescription.medName}
-                                        </li> 
-                                ))}
-
+                                    <li>
+                                        { patient.medName}
+                                    </li> 
                                 <b>Allegries:</b> 
-                                { 
-                                    this.state.allergies.map((allergy) => (
-                                        <li key={allergy.patient}>
-                                            {allergy.allergyName}
-                                        </li> 
-                                ))}
-
+                                    <li>
+                                        {
+                                            patient.allergyName === null ? this.onAllergiesEmpty() : ""
+                                        }
+                                        { patient.allergyName}
+                                    </li> 
                             </Card.Text>
                         </Card.Body>
                     </Card>
