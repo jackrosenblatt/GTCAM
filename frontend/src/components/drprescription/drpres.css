@@ -2,15 +2,33 @@
     
 }
 
+#prescrip-head {
+    background-color: #E1C299;
+    width: 100%;
+}
+
+#prescrip-welcome {
+    color: rgb(25, 25, 73);
+}
+
+#prescrip-card {
+    margin-left: 2.5rem;
+}
+
 #pres-header, #request-header {
     padding: 1rem;
     text-align: center;
 }
 
+#badge-prescrip, #prescrip-badge {
+    background-color: rgb(25, 25, 73);
+    color: white;
+}
+
 #return, #makepres, #editpres {
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;
-    margin-left: 2.5rem;
+    margin-left: 11rem;
     border-style: none;
 }
 
@@ -18,6 +36,11 @@
     background-color: rgb(25, 25, 73);
     margin-bottom: 1rem;
     border-style: none;
+}
+
+#return:hover, #makepres:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
 }
 
 #request-submit, #edit-submit {

@@ -1,0 +1,16 @@
+#patient-head {
+    background-color: #E1C299;
+    width: 100%;
+}
+
+#pat-header {
+    color: rgb(25, 25, 73);
+}
+
+#badge-patients {
+    background-color: rgb(25, 25, 73);
+}
+
+#patient-card {
+    margin-left: 2.5rem;
+}

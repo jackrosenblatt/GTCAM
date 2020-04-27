@@ -45,9 +45,9 @@ export class DrPrescriptionList extends React.Component {
       <p></p>
   
           <Container>
-            <div className="card card bg-light mb-3 border-secondary">
-              <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
-                  <h4>Welcome to Prescription View!</h4>
+            <div className="card card mb-3">
+              <div className="card-header font-weight-bold text-center text-light mb-3" id='prescrip-head'>
+                  <h4 id='prescrip-welcome'>Welcome to Prescription View!</h4>
               </div>
               
               <div className="card-body">
@@ -58,7 +58,7 @@ export class DrPrescriptionList extends React.Component {
             </div>
 
 
-            <h4><span className="float-center badge badge-info">Current Prescriptions!</span></h4>
+            <h4><span id="badge-prescrip" className="float-center badge badge-info">Current Prescriptions:</span></h4>
 
             {
               this.state.prescription.length === 0 ? this.onEmpty() : ""
@@ -66,7 +66,7 @@ export class DrPrescriptionList extends React.Component {
             
             {
                 this.state.prescription.map((currentpres) => (
-                    <Card key={ currentpres.patient } className="card mb-3" fluid style={{width: '90%'}}>
+                    <Card id='prescrip-card' key={ currentpres.patient } className="card mb-3" fluid style={{width: '93%'}}>
                         <Card.Header>
                             <b>Prescription Name:</b> {currentpres.medName}  <br/> 
                             <b>Patient Name:</b> {currentpres.patient}
@@ -89,7 +89,7 @@ export class DrPrescriptionList extends React.Component {
                 ))
             }
             
-            <h4><span className="float-center badge badge-info">New Prescriptions!</span></h4>
+            <h4><span id="prescrip-badge" className="float-center badge badge-info">New Prescriptions:</span></h4>
   
             {
               this.state.newprescriptions.length === 0 ? this.onNewEmpty() : ""

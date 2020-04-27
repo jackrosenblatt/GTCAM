@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Card } from 'react-bootstrap';
 import DrNav from '../drnav/drnav';
+import './drpatient.css';
 import { DrPatientRepository } from '../../api/drpatientsRepository';
 
 export class DrPatients extends React.Component {
@@ -38,9 +39,9 @@ export class DrPatients extends React.Component {
       <p></p>
   
           <Container>
-            <div className="card card bg-light mb-3 border-secondary">
-              <div className="card-header font-weight-bold text-center bg-secondary text-light border-secondary mb-3">
-                  <h4>Welcome to Your Patient View!</h4>
+            <div className="card card bg-light mb-3">
+              <div className="card-header font-weight-bold text-center text-light mb-3" id='patient-head'>
+                  <h4 id='pat-header'>Welcome to Your Patient View!</h4>
               </div>
               
               <div className="card-body">
@@ -50,7 +51,7 @@ export class DrPatients extends React.Component {
               </div>
             </div>
   
-            <h4><span className="float-center badge badge-info">Patient Information!</span></h4>
+            <h4><span id='badge-patients' className="float-center badge badge-info">Your Patients:</span></h4>
   
             {
                 this.state.patients.length === 0 ? this.onEmpty() : ""
@@ -58,7 +59,7 @@ export class DrPatients extends React.Component {
             
             {
                 this.state.patients.map((patient) => (
-                    <Card key={ patient.ID } className="card mb-3" fluid style={{width: '90%'}}>
+                    <Card key={ patient.ID } id='patient-card' className="card mb-3" fluid style={{width: '93%'}}>
                         <Card.Header>
                             <b>Patient Name:</b> {patient.name}
                         </Card.Header>
