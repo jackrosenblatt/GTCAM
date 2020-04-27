@@ -41,7 +41,7 @@ export class Pharmacies extends React.Component {
                             </h5>
                             <div className="card-body">
                                 <p className="card-text">
-                                    <b>Address: </b> { pharmacy.pharmAddress } <br/>
+                                    <b>Address: </b> { pharmacy.address } <br/>
                                     <b>Hours of Operation: </b> { pharmacy.pharmHours } <br/>
                                     <b>Contact: </b> { pharmacy.phoneNumber } <br/>
                                 </p>
@@ -51,7 +51,7 @@ export class Pharmacies extends React.Component {
                     )
                 }
                 <br/>
-                <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
+                <a href="/DashBoard" id='return-dash' className="btn btn-primary"> Back to Dashboard</a>
                 
             </Container>
         </>;

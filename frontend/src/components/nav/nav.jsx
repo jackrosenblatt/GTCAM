@@ -11,7 +11,7 @@ export class Nav extends React.Component {
                 <div id='gtcam-logo-container'>   
                 </div>
                 <nav className="navbar navbar-expand-sm navbar-light bg-light" id='top-nav'>
-                <div className="collapse navbar-collapse" id="navbarNav">
+                <div className="navbar-collapse" id="navbarNav">
                     <ul className="nav nav-pills nav-fill" id='nav-list'>
                         <li className="nav-item nav-list-item">
                             <a href="/dashboard">Home</a>

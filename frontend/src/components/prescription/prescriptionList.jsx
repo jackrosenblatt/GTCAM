@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Container } from 'react-bootstrap';
 import Nav from '../nav/nav';
 import { Prescription } from '../../models/prescription';
 import './prescription.css';
@@ -11,20 +11,26 @@ export class PrescriptionList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            prescriptions: []
+            all_prescriptions: [],
+            pickup_prescriptions: []
         }
     }
 
-    getMedInfo() {
-        
-    }
-
-    //routing here to get prescriptions from backend
     onEmpty() {
         return <>
-        <Card>
+        <Card fluid style={{width: '90%'}}>
             <Card.Header>
                 You have no prescriptions!
+            </Card.Header>
+        </Card>
+        </>;
+    }
+
+    onNoPickup() {
+        return <>
+        <Card fluid style={{width: '90%'}}>
+            <Card.Header>
+                You have no prescriptions to pick up!
             </Card.Header>
         </Card>
         </>;
@@ -33,12 +39,40 @@ export class PrescriptionList extends React.Component {
     render() {
         return <>
         <Nav></Nav>
+        <Container className='justify-content-md-center'>
         <h3 id='prescription-header'>Your Prescriptions</h3>
+        <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Prescriptions Ready for Pickup:</span></h4><br/>
         {
-            this.state.prescriptions.length === 0 ? this.onEmpty() : ""
+            this.state.pickup_prescriptions.length === 0 ? this.onNoPickup() : ""
         }
         {
-            this.state.prescriptions.map((prescription) => (
+            this.state.pickup_prescriptions.map((prescription) => (
+                <Card key={prescription.id} fluid style={{width: '90%'}} id='prescription-card'>
+                    <Card.Header id='prescription-card-header'>
+                            {prescription.medName}:  {prescription.dosage }
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Title id='prescription-title'>
+                            { prescription.directions }, total prescribed: { prescription.quantity } doses
+                        </Card.Title>
+                        <Card.Text id='prescription-text'>
+                            Prescribed by Dr. { prescription.doctor}. { prescription.details }.
+                            Ready for pickup at { prescription.pharmName }.
+                        </Card.Text>
+                        
+                    </Card.Body>
+                </Card>
+                
+            ))
+        }
+        <br/><h4><span id='badge-all' className="float-center badge badge-info">All Prescriptions:</span></h4><br/>
+
+        {
+            this.state.all_prescriptions.length === 0 ? this.onEmpty() : ""
+        }
+        {
+            
+            this.state.all_prescriptions.map((prescription) => (
                 <Card key={prescription.id} fluid style={{width: '90%'}} id='prescription-card'>
                     <Card.Header id='prescription-card-header'>
                             {prescription.medName}:  {prescription.dosage }
@@ -57,14 +91,19 @@ export class PrescriptionList extends React.Component {
                 
             ))
         }
+        </Container>
         <br/>
-        <a href="/DashBoard" id='return' className="btn btn-primary"> Back to Dashboard</a>
+        <a href="/DashBoard" id='return-dashB' className="btn btn-primary"> Back to Dashboard</a>
+        <br/> <br/>
         </>;
     }
 
     componentDidMount() {
         this.prescripRepo.getPrescriptionsForPatient(localStorage.getItem('id'))
-            .then(prescrip => this.setState({ prescriptions: prescrip }));
+            .then(prescrip => this.setState({ all_prescriptions: prescrip }));
+
+        this.prescripRepo.getPrescriptionsToPickupForPatient(localStorage.getItem('id'))
+            .then(prescrip => this.setState({ pickup_prescriptions: prescrip}));
 
     }
 
