@@ -33,6 +33,7 @@ import DrPrescriptionEdit from './components/drprescription/drprescriptionEdit';
 import PharmPharmacist from './components/pharmpharmacist/pharmpharmacist';
 import PharmInventory from './components/pharminventory/pharminventory';
 import PharmMedications from './components/pharmmedications/pharmmedications';
+import PharmNewMed from './components/pharmmedications/pharmnewmed';
 
 class App extends Component {
   render() {
@@ -69,6 +70,7 @@ class App extends Component {
             <Route exact path="/Pharm/pharmacies" component={ PharmPharmacist } />
             <Route exact path="/Pharm/pharmacies/:pharmid" render={(props) => <PharmInventory {...props} />} />
             <Route exact path="/Pharm/medications" component={ PharmMedications} />
+            <Route exact path="/Pharm/medications/create" component={ PharmNewMed }/>
           </Switch>
         </Router>
       </>

@@ -1,6 +1,8 @@
 import React from 'react';
 import PharmNav from '../pharmNav/pharmNav';
 import { PharmacyRepository } from '../../api/pharmacyRepository';
+import { Redirect} from 'react-router-dom';
+import { Container, Row, Card } from 'react-bootstrap';
 
 export class PharmNewMed extends React.Component {
     
@@ -16,11 +18,37 @@ export class PharmNewMed extends React.Component {
         }
     }
 
+    createMed() {
+        var med = {
+            medName: this.state.medName,
+            dosage: this.state.dosage,
+            details: this.state.details,
+            quantity: this.state.quantity
+        }
+        console.log(med);
+        this.pharmRepo.addMedicineToInventory(med)
+            .then(resp => {
+                this.setState(pState => {
+                    pState.medName = '';
+                    pState.dosage = '';
+                    pState.quantity = '';
+                    pState.details = '';
+                    pState.redirect = '/Pharm/medications';
+                    return pState;
+              });
+          })
+        .catch(resp => {
+            console.log(resp);
+            alert(resp);
+        });
+    }
+
     render() {
         if (this.state.redirect) {
             return <Redirect to={{ pathname: this.state.redirect }} />
         }
         return <>
+        <PharmNav></PharmNav>
         <Container>
             <Row className='justify-content-md-center'>
                 <h3 id='request-header'>Enter New Medication</h3>
@@ -41,10 +69,10 @@ export class PharmNewMed extends React.Component {
                             rows="1"
                             value={this.state.details}
                             onChange={ e =>  this.setState({ details: e.target.value })}
-                            placeholder="Any questions, comments, or concerns you'd like your doctor to know beforehand can be submitted here!"
+                            placeholder="Any instructions or special directions that need to be added can be entered here"
                         ></textarea>
                     <br/>
-                    <button type='button' id='request-submit' className='btn btn-primary' onClick={() => this.createAppt()}>Request</button>
+                    <button type='button' id='request-submit' className='btn btn-primary' onClick={() => this.createMed()}>Create</button>
                 </form>
                 </Card.Body>
             </Card>
@@ -57,3 +85,5 @@ export class PharmNewMed extends React.Component {
         
     }
 }
+
+export default PharmNewMed;

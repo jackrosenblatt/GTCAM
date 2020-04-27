@@ -1,10 +1,11 @@
-#return-pharmhome {
+#return-pharmhome, #new-medication {
     background-color: rgb(25, 25, 73);
     margin-left: 2.5rem;
+    margin-bottom: 1rem;
     border-style: none;
 }
 
-#return-pharmhome:hover {
+#return-pharmhome:hover, #new-medication:hover {
     background-color: #E1C299;
     color: rgb(25, 25, 73);
 }
