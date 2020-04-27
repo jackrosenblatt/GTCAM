@@ -39,7 +39,6 @@ connection.getConnection(function (err) {
 /////////////////
 
 /*
-*Fix medication endpoints to update doctor patient lookup table
 *Fix the medical records endpoint to combine patient into one line
 *
 *
@@ -878,7 +877,7 @@ app.post('/medication', (req, res) => {
 		return;
 	}
 	
-	var query = 'insert into Medications(medName, dosage, quantity, details) values(\"'+req.body.medName+'\", \"'+req.body.dosage+'\", '+req.body.medName+', \"'+req.body.details+'\")';
+	var query = 'insert into Medications(medName, dosage, quantity, details) values(\"'+req.body.medName+'\", \"'+req.body.dosage+'\", '+req.body.quantity+', \"'+req.body.details+'\")';
 	
 	connection.query(query, function(err, result, fields){
 		if(err){
