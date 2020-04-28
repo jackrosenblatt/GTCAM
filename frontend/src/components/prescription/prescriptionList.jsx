@@ -14,7 +14,8 @@ export class PrescriptionList extends React.Component {
         super(props);
         this.state = {
             all_prescriptions: [],
-            pickup_prescriptions: []
+            pickup_prescriptions: [],
+            redirect: ''
         }
     }
 

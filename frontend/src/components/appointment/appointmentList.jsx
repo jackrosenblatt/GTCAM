@@ -18,7 +18,7 @@ export class AppointmentList extends React.Component {
         }
     }
 
-  onEmpty(){
+    onEmpty(){
     return <>
     <Card>
         <Card.Header>
@@ -26,11 +26,12 @@ export class AppointmentList extends React.Component {
         </Card.Header>
     </Card>
     </>;
-  }
-  render() {
+    }
+    
+    render() {
     return <>
     <Nav></Nav>
-     <h3 id='appointment-header'>Your Appointments</h3>
+        <h3 id='appointment-header'>Your Appointments</h3>
         {
             this.state.appointments.length === 0 ? this.onEmpty() : ""
         }
@@ -44,7 +45,7 @@ export class AppointmentList extends React.Component {
                     <Card.Body>
                         <Card.Title style={{float: 'right'}}>
                         <Link to={'/appointment/edit/' + appointment.ID } id='edit-appt' className="btn btn-primary  mt-auto">
-                                     Edit
+                                        Edit
                         </Link> 
                         </Card.Title>
                         <Card.Title>
@@ -63,11 +64,12 @@ export class AppointmentList extends React.Component {
         <a href="/DashBoard" id='return-dAsh' className="btn btn-primary"> Back to Dashboard</a>
         </div>
     </>;
-  }
-  componentWillMount() {
+    }
+
+    componentWillMount() {
         this.apptRepo.getAppointmentsPatient(localStorage.getItem('id'))
             .then(appointments => this.setState({ appointments }));
-   }
-}
+        }   
+    }
 export default AppointmentList;
 

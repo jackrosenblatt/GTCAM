@@ -46,10 +46,10 @@ export class EditSub extends React.Component {
         <Nav></Nav>
         <Container>
             <Row className='justify-content-md-center'>
-                <h3 id='request-header'>Update Your Substitute Retriever</h3>
+                <h3 id='edit-header'>Update Your Substitute Retriever</h3>
             </Row>
             <Card fluid style={{width: '90%'}}>
-                <Card.Body id='request-pres-form'>
+                <Card.Body id='edit-sub-form'>
                 <form>
                     <label htmlFor='name'>Edit Sub Retriever: </label>
                     <textarea 
