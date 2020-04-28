@@ -33,6 +33,12 @@ export class DrPatients extends React.Component {
         </>;
       }
 
+      onPresergiesEmpty(){
+        return <>
+            This patient does not have any allergies!
+        </>;
+      }
+
     render() {
       return <>
       <DrNav></DrNav>
@@ -67,16 +73,27 @@ export class DrPatients extends React.Component {
                             <Card.Text>
                                 <b>Email:</b> { patient.email } <br/>
                                 <b>Prescriptions:</b> 
-                                    <li>
-                                        { patient.medName}
-                                    </li> 
+                                    {
+                                        patient.prescriptions === null ? this.onPresergiesEmpty() : ""
+                                    }
+
+                                    {this.state.prescriptions.map((pres) => (
+                                        <li>
+                                            { pres.medName}
+                                        </li> 
+                                    ))}
+                                    
                                 <b>Allegries:</b> 
-                                    <li>
-                                        {
-                                            patient.allergyName === null ? this.onAllergiesEmpty() : ""
-                                        }
-                                        { patient.allergyName}
-                                    </li> 
+                                    {
+                                        patient.allergies === null ? this.onAllergiesEmpty() : ""
+                                    }
+
+                                    {this.state.allergies.map((all) => (
+                                        <li>
+                                            { all.allergyName}
+                                        </li> 
+                                    ))}
+
                             </Card.Text>
                         </Card.Body>
                     </Card>
