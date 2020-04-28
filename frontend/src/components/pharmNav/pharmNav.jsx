@@ -17,10 +17,6 @@ export class PharmNav extends React.Component {
                         <li class="nav-item nav-list-item">
                             <a href="/pharmHome">Home</a>
                         </li>
-
-                        <li className='nav-item nav-list-item'>
-                            <a href="">Prescriptions</a>
-                        </li>
                         <li className='nav-item nav-list-item'>
                             <a href="/Pharm/pharmacies">Pharmacies</a>
                         </li>

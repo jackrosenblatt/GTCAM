@@ -1,0 +1,9 @@
+#pharm-med-home, #pharm-pharm-home {
+    background-color: rgb(25, 25, 73);
+    border-style: none;
+}
+
+#pharm-med-home:hover, #pharm-pharm-home:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+}

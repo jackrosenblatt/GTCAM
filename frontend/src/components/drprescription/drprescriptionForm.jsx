@@ -11,7 +11,6 @@ export class DrPrescriptionForm extends React.Component {
     drpresRep = new DrPrescriptionRepository();
     doctorRepo = new DoctorRepository();
 
-
     constructor(props) {
         super(props);
         this.state = {
@@ -22,10 +21,56 @@ export class DrPrescriptionForm extends React.Component {
             quantity: '',
             details: '',
             directions: '',
-            refillEveryXDays:'',
             doctors: [],
-            redirect: ''
+
+            patient: '',
+            patientID: '',
+            pharmName: '',
+            pharmHours: '',
+            pharmAddress: '',
+            pharmPhoneNumber: '',
+            doctor: '',
+            docID: '',
+            needRefill: '',
+            subRetriever: '',
+            readyForPickup: '',
+            pickupPrefTime: '',
+            refillEveryXDays: '',
+            redirect: '',
+            disabled: true
         }
+    }
+
+    editPrescription() {
+        this.setState({ disabled: false });
+    }
+
+    onUpdatePrescription() {
+
+        var pres = {
+            patientID: this.state.patientID,
+            medName: this.state.medName,
+            dosage: this.state.dosage,
+            quantity: this.state.quantity,
+            details: this.state.details,
+            pharmName: this.state.pharmName,
+            pharmHours: this.state.pharmHours,
+            pharmAddress: this.state.pharmAddress,
+            pharmPhoneNumber: this.state.pharmPhoneNumber,
+            directions: this.state.directions,
+            docID: this.state.docID,
+            subRetriever: this.state.subRetriever,
+            readyForPickup: this.state.readyForPickup,
+            pickupPrefTime: this.state.pickupPrefTime,
+            refillEveryXDays: this.state.refillEveryXDays,
+            redirect: '/DrAppointmentList'
+        }
+
+        this.drpresRep.updatePrescriptionById(localStorage.getItem('id'), pres)
+            .then(() => {
+                this.setState({ disabled: true });
+            })
+            .catch(() => this.setState({ pres }));
     }
 
     createPrescription() {
@@ -147,11 +192,8 @@ export class DrPrescriptionForm extends React.Component {
     }
 
     componentDidMount() {
-        var presid = +this.props.match.params.id;
-        if(presid) {
-            this.drapptRepo.getPrescriptionsForDoctor(presid)
-                .then(pres => this.setState({pres}))
-        }
+        this.drpresRep.getPrescriptionsForDoctor(localStorage.getItem('id'))
+            .then(prescription => this.setState({ prescription }));
 
         this.doctorRepo.getDoctors()
             .then(doctors => this.setState({ doctors: doctors }));
