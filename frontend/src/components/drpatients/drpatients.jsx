@@ -11,9 +11,9 @@ export class DrPatients extends React.Component {
     constructor(props) {
         super(props);
           this.state = {
-              patients: [],
-              allergies: [],
-              prescriptions: []
+              patient: [],
+              prescriptions: [],
+              allergies: []
           }
       }
   
@@ -33,7 +33,7 @@ export class DrPatients extends React.Component {
         </>;
       }
 
-      onPresergiesEmpty(){
+      onPresEmpty(){
         return <>
             This patient does not have any allergies!
         </>;
@@ -60,45 +60,44 @@ export class DrPatients extends React.Component {
             <h4><span id='badge-patients' className="float-center badge badge-info">Your Patients:</span></h4>
   
             {
-                this.state.patients.length === 0 ? this.onEmpty() : ""
+                this.state.patient.length === 0 ? this.onEmpty() : ""
             }
             
             {
-                this.state.patients.map((patient) => (
-                    <Card key={ patient.ID } id='patient-card' className="card mb-3" fluid style={{width: '93%'}}>
+                this.state.patient.map((pat) => (
+                    <Card key={ pat.ID } id='patient-card' className="card mb-3" fluid style={{width: '93%'}}>
                         <Card.Header>
-                            <b>Patient Name:</b> {patient.name}
+                            <b>Patient Name:</b> {pat.name}
                         </Card.Header>
                         <Card.Body>
                             <Card.Text>
-                                <b>Email:</b> { patient.email } <br/>
+                                <b>Email:</b> { pat.email } <br/>
                                 <b>Prescriptions:</b> 
                                     {
-                                        patient.prescriptions === null ? this.onPresergiesEmpty() : ""
+                                        pat.prescriptions === null ? this.onPresEmpty() : ""
                                     }
 
-                                    {this.state.prescriptions.map((pres) => (
-                                        <li>
-                                            { pres.medName}
-                                        </li> 
-                                    ))}
-                                    
-                                <b>Allegries:</b> 
                                     {
-                                        patient.allergies === null ? this.onAllergiesEmpty() : ""
+                                         this.state.prescriptions.map((pres) => (
+                                            <li key={pres.medID}> 
+                                                {pres.medName}
+                                            </li>
+                                    ))}
+                                <b>Allergies:</b> 
+                                    {
+                                        pat.llergies === null ? this.onEmpty() : ""
                                     }
 
-                                    {this.state.allergies.map((all) => (
-                                        <li>
-                                            { all.allergyName}
-                                        </li> 
+                                    {
+                                         this.state.allergies.map((alg) => (
+                                            <li key={alg.allergyID}> 
+                                                {alg.allergyName}
+                                            </li>
                                     ))}
-
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                ))
-            }
+            ))}
   
           </Container>
           <br/>
@@ -108,13 +107,13 @@ export class DrPatients extends React.Component {
 
     componentDidMount() {
         this.drpatetientRepo.getPatientById(localStorage.getItem('id'))
-            .then(patients => this.setState({ patients }));
+            .then(patient => this.setState({ patient }));
 
         this.drpatetientRepo.getPatientAllgergiesById(localStorage.getItem('id'))
-        .then(allergies => this.setState({ allergies }));
+            .then(allergies => this.setState({ allergies }));
 
         this.drpatetientRepo.getPatientPrescriptionsById(localStorage.getItem('id'))
-        .then(prescriptions => this.setState({ prescriptions }));
+            .then(prescriptions => this.setState({ prescriptions }));
     }
 }
 

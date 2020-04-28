@@ -41,14 +41,9 @@ export class DrPrescriptionForm extends React.Component {
         }
     }
 
-    editPrescription() {
-        this.setState({ disabled: false });
-    }
-
-    onUpdatePrescription() {
-
+    createPrescription() {
         var pres = {
-            patientID: this.state.patientID,
+            patientID: localStorage.getItem('id'),
             medName: this.state.medName,
             dosage: this.state.dosage,
             quantity: this.state.quantity,
@@ -60,40 +55,26 @@ export class DrPrescriptionForm extends React.Component {
             directions: this.state.directions,
             docID: this.state.docID,
             subRetriever: this.state.subRetriever,
-            readyForPickup: this.state.readyForPickup,
             pickupPrefTime: this.state.pickupPrefTime,
-            refillEveryXDays: this.state.refillEveryXDays,
-            redirect: '/DrAppointmentList'
-        }
-
-        this.drpresRep.updatePrescriptionById(localStorage.getItem('id'), pres)
-            .then(() => {
-                this.setState({ disabled: true });
-            })
-            .catch(() => this.setState({ pres }));
-    }
-
-    createPrescription() {
-        var pres = {
-            patientID: localStorage.getItem('id'),
-            patientnames: this.state.patientnames,
-            details: this.state.details,
-            medname: this.state.medname,
-            dosage: this.state.dosage,
-            quantity: this.state.quantity,
-            directions: this.state.directions,
             refillEveryXDays: this.state.refillEveryXDays,
         }
         console.log(pres);
         this.drpresRep.createPrescription(pres)
         .then(resp => {
             this.setState(pState => {
-                pState.patientnames = '';
-                pState.details = '';
+                pState.patientname = '';
+                pState.medName = '';
                 pState.dosage = '';
                 pState.quantity = '';
+                pState.details = '';
+                pState.pharmName = '';
+                pState.pharmHours = '';
+                pState.pharmAddress = '';
+                pState.pharmPhoneNumber = '';
                 pState.directions = '';
-                pState.medname = '';
+                pState.docID = '';
+                pState.subRetriever = '';
+                pState.pickupPrefTime = '';
                 pState.refillEveryXDays = '';
                 pState.redirect = '/DrAppointmentList';
                 return pState;
@@ -124,38 +105,68 @@ export class DrPrescriptionForm extends React.Component {
 
                     <div className="form-group col-md-4">
                         <label htmlFor='patient-name'>Patient's Name:</label> <br/>
-                        <input id='patientname' type='patientname' value={this.state.patientname} onChange={ e => this.setState({ patientname: e.target.value})}></input> <br/>
+                        <input id='patient-name' type='text' value={this.state.patient} onChange={ e => this.setState({ patient: e.target.value})}></input> <br/>
                     </div> 
 
                     <div className="form-group col-md-4">
                         <label htmlFor='medname'>Prescription's Name:</label> <br/>
-                        <input id='medname' type='medname' value={this.state.medname} onChange={ e => this.setState({ medname: e.target.value})}></input> <br/>
-                    </div> 
-
-                    <div class="form-group col-md-4">
-                        <label htmlFor='doctor-name'>Select a Doctor</label> <br/>
-                        <select id='doctor-name' value={this.state.doctorID} onChange={ e => this.setState({ doctorID: e.target.value})}>
-                        <option value='' disabled>Doctor</option>
-                            {
-                                this.state.doctors.map((doctor) => 
-                                <option key={ doctor.ID } value={ doctor.ID }>{ doctor.name }</option>)
-                            }
-                        </select> <br/>
+                        <input id='med-name' type='text' value={this.state.medName} onChange={ e => this.setState({ medName: e.target.value})}></input> <br/>
                     </div> 
 
                     <div className="form-group col-md-4">
-                        <label htmlFor='patient-name'>Dosage</label> <br/>
-                        <input id='dosage' type='dosage' value={this.state.dosage} onChange={ e => this.setState({ dosage: e.target.value})}></input> <br/>
+                        <label htmlFor='medname'>Prescription's Name:</label> <br/>
+                        <input id='med-name' type='text' value={this.state.docID} onChange={ e => this.setState({ docID: e.target.value})}></input> <br/>
+                    </div> 
+
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='dosage'>Dosage</label> <br/>
+                        <input id='dosage' type='text' value={this.state.dosage} onChange={ e => this.setState({ dosage: e.target.value})}></input> <br/>
                     </div> 
 
                     <div className="form-group col-md-4">
                         <label htmlFor='patient-name'>Quantity:</label> <br/>
-                        <input id='quantity' type='quantity' value={this.state.quantity} onChange={ e => this.setState({ quantity: e.target.value})}></input> <br/>
+                        <input id='quantity' type='number' value={this.state.quantity} onChange={ e => this.setState({ quantity: e.target.value})}></input> <br/>
                     </div> 
 
                     <div className="form-group col-md-4">
                         <label htmlFor='patient-name'>Refill:</label> <br/>
-                        <input id='refillEveryXDays' type='refillEveryXDays' value={this.state.refillEveryXDays} onChange={ e => this.setState({ refillEveryXDays: e.target.value})}></input> <br/>
+                        <input id='med-name' type='number' value={this.state.refillEveryXDays} onChange={ e => this.setState({ refillEveryXDays: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Need Refill?</label> <br/>
+                        <input id='med-name' type='test' value={this.state.needRefill} onChange={ e => this.setState({ needRefill: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='dosage'>Pharmacy Name</label> <br/>
+                        <input id='pharmName' type='text' value={this.state.pharmName} onChange={ e => this.setState({ pharmName: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Pharmacy Hours:</label> <br/>
+                        <input id='qupharmHoursantity' type='text' value={this.state.pharmHours} onChange={ e => this.setState({ pharmHours: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Pharmacy Address:</label> <br/>
+                        <input id='pharmAddress' type='text' value={this.state.pharmAddress} onChange={ e => this.setState({ pharmAddress: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>Sub Retriever</label> <br/>
+                        <input id='subRetriever' type='text' value={this.state.subRetriever} onChange={ e => this.setState({ subRetriever: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>readyForPickup</label> <br/>
+                        <input id='readyForPickup' type='text' value={this.state.readyForPickup} onChange={ e => this.setState({ readyForPickup: e.target.value})}></input> <br/>
+                    </div> 
+
+                    <div className="form-group col-md-4">
+                        <label htmlFor='patient-name'>pickupPrefTime</label> <br/>
+                        <input id='pickupPrefTime' type='text' value={this.state.pickupPrefTime} onChange={ e => this.setState({ pickupPrefTime: e.target.value})}></input> <br/>
                     </div> 
 
                     <div className="form-group col-md-12">
@@ -164,8 +175,8 @@ export class DrPrescriptionForm extends React.Component {
                             className="form-control" 
                             name="directions" 
                             rows="1"
-                            value={this.state.directions}
-                            onChange={ e =>  this.setState({ directions: e.target.value })}
+                            value={this.state.medNdirectionsame} 
+                            onChange={ e => this.setState({ directions: e.target.value})}
                             placeholder="Type the directions of the prescription here..."
                         ></textarea>
                     </div> <br/>
@@ -176,8 +187,8 @@ export class DrPrescriptionForm extends React.Component {
                             className="form-control" 
                             name="details" 
                             rows="1"
-                            value={this.state.details}
-                            onChange={ e =>  this.setState({ details: e.target.value })}
+                            value={this.state.details} 
+                            onChange={ e => this.setState({ details: e.target.value})}
                             placeholder="Type the details of the prescription here.."
                         ></textarea>
                     </div><br/>

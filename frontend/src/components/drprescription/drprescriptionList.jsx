@@ -14,67 +14,10 @@ export class DrPrescriptionList extends React.Component {
         super(props);
           this.state = {
                 prescription: [],
-                newprescriptions: [],
-                id: '',
-                patient: '',
-                patientID: '',
-                medName: '',
-                dosage: '',
-                quantity: '',
-                details: '',
-                pharmName: '',
-                pharmHours: '',
-                pharmAddress: '',
-                pharmPhoneNumber: '',
-                directions: '',
-                doctor: '',
-                docID: '',
-                needRefill: '',
-                subRetriever: '',
-                readyForPickup: '',
-                pickupPrefTime: '',
-                refillEveryXDays: '',
-                redirect: '',
-                disabled: true
+                redirect: ''
+
           }
       }
-
-    editPrescription() {
-        this.setState({ disabled: false });
-    }
-
-    onUpdatePrescription() {
-        if(this.state.medName !== '') {
-            localStorage.setItem('medName', this.state.medName);
-        }
-        
-        var pres = {
-            patient: this.state.patient,
-            patientID: this.state.patientID,
-            medName: this.state.medName,
-            dosage: this.state.dosage,
-            quantity: this.state.quantity,
-            details: this.state.details,
-            pharmName: this.state.pharmName,
-            pharmHours: this.state.pharmHours,
-            pharmAddress: this.state.pharmAddress,
-            pharmPhoneNumber: this.state.pharmPhoneNumber,
-            directions: this.state.directions,
-            doctor: this.state.doctor,
-            docID: this.state.docID,
-            needRefill: this.state.needRefill,
-            subRetriever: this.state.subRetriever,
-            readyForPickup: this.state.readyForPickup,
-            pickupPrefTime: this.state.pickupPrefTime,
-            refillEveryXDays: this.state.refillEveryXDays
-        }
-
-        this.drpresRepo.updatePrescriptionById(localStorage.getItem('id'), pres)
-            .then(() => {
-                this.setState({ disabled: true });
-            })
-            .catch(() => this.setState({ pres }));
-    }
 
     onEmpty(){
       return <>
@@ -86,15 +29,6 @@ export class DrPrescriptionList extends React.Component {
       </>;
     }
 
-    onNewEmpty(){
-        return <>
-            <Card>
-                <Card.Header>
-                    Add a new prescription!
-                </Card.Header>
-            </Card>
-        </>;
-    }
 
     render() {
         if (this.state.redirect) {
@@ -147,32 +81,6 @@ export class DrPrescriptionList extends React.Component {
                         </Card>
                     ))
                 }
-            
-            <h4><span id="prescrip-badge" className="float-center badge badge-info">New Prescriptions:</span></h4>
-  
-            {
-              this.state.newprescriptions.length === 0 ? this.onNewEmpty() : ""
-            }
-    
-            {
-                this.state.newprescriptions.map((newpres) => (
-                    <Card key={ newpres.id } className="card mb-3" fluid style={{width: '90%'}}>
-                        <Card.Header>
-                            <b>Prescrtion Name:</b> {newpres.medname} <br/>
-                            <b>Patient Name:</b> {newpres.patientname}
-                        </Card.Header>
-                        <Card.Body>
-                            <Card.Text>
-                                <b>Dosage:</b> { newpres.dosage } <br/>
-                                <b>Quantity:</b> { newpres.quantity } <br/>
-                                <b>Details:</b> { newpres.details } <br/>
-                                <b>Directions:</b> { newpres.directions } <br/>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                ))
-            }
-            
           </Container>
           <br/>
           <a href="/DrPrescriptionList/request" id='makepres' className='btn btn-primary'>Make a New Prescription</a> <br/>

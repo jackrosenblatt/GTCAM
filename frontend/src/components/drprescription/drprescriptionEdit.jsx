@@ -39,8 +39,7 @@ export class DrPrescriptionEdit extends React.Component {
 
     onUpdatePrescription() {
         var pres = {
-            presID: localStorage.getItem('id'),
-            patientID: this.state.patientID,
+            patientID: localStorage.getItem('id'),
             medName: this.state.medName,
             dosage: this.state.dosage,
             quantity: this.state.quantity,
@@ -64,12 +63,12 @@ export class DrPrescriptionEdit extends React.Component {
                     pState.medName = '';
                     pState.dosage = '';
                     pState.quantity = '';
+                    pState.details = '';
+                    pState.directions = '';
                     pState.pharmName = '';
                     pState.pharmHours = '';
-                    pState.details = '';
                     pState.pharmAddress = '';
                     pState.pharmPhoneNumber = '';
-                    pState.directions = '';
                     pState.docID = '';
                     pState.subRetriever = '';
                     pState.readyForPickup = '';
