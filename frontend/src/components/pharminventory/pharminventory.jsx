@@ -61,13 +61,28 @@ export class PharmInventory extends React.Component {
         let pharmId = +this.props.match.params.pharmid;
         if(pharmId) {
         this.pharmRepo.getMedicationsInPharmacy(pharmId)
-            .then(medications => this.setState({medications: medications}));
+            .then(medications => {sortByName(medications);this.setState({medications: medications})});
 
         this.pharmRepo.getPharmacy(pharmId)
             .then(pharmacy => this.setState({ pharmName: pharmacy.pharmName }));
         
         }
     }
+}
+
+function sortByName(medications){
+	medications.sort((a, b) =>{
+		if(a.medName > b.medName)
+			return 1;
+		return -1;
+	})
+}
+function sortByQuantity(medications){
+	medications.sort((a, b) =>{
+		if(a.quantity > b.quantity)
+			return 1;
+		return -1;
+	})
 }
 
 export default PharmInventory;
