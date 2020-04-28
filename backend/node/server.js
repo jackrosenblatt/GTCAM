@@ -39,8 +39,8 @@ connection.getConnection(function (err) {
 /////////////////
 
 /*
-*Fix the medical records endpoint to combine patient into one line
-*
+*Make allergy endpoint return id
+* /patient/allergy is gone
 *
 *
 */
@@ -664,6 +664,32 @@ app.post('/allergy', (req, res) => {
 })
 
 //creates new patient allergy
+app.post('/patient/allergy', (req, res) => {
+	if(!(req.body.patientID && req.body.allergyID)){
+		if(req.body.patientID)
+			res.status(400).send("Missing Allergy ID");
+		else
+			res.status(401).send("Missing Patient ID");
+		return;
+	}
+
+	var query = "insert into PatientAllergies(patientID, allergyID) values("+req.body.patientID+", "+req.body.allergyID+");";
+
+	connection.query(query, function(err, result, fields){
+		if(err){
+			if(err.code == "ER_DUP_ENTRY")
+				res.status(500).send("Duplicate Entry");
+			else
+				res.status(501).send("Failed to Create Patient Allergy");
+			return;
+		}
+
+		res.status(200).send(result);
+		return;
+	})
+})
+
+//creates a new prescriptions
 app.post('/prescription', (req, res) => {
 	let patientID = req.body.patientID
 	let medName = req.body.medName
