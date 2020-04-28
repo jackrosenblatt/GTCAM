@@ -14,7 +14,8 @@ export class AllergyForm extends React.Component {
           patientAllergies: [],
           allergies: [],
           addedallergy: '',
-          newAllergy: ''
+          newAllergy: '',
+          newAllId: ''
       }
    }
     
@@ -28,7 +29,7 @@ export class AllergyForm extends React.Component {
                 this.setState({ redirect: '/medicalinfo'});
             });
         
-
+        console.log(allergy);
         // this.allergyRepo.getAllergiesByPatient(localStorage.getItem('id'))
         //     .then(allergies => this.setState({ patientAllergies: allergies }));
     }
@@ -41,20 +42,20 @@ export class AllergyForm extends React.Component {
             var newAll;
             this.allergyRepo.createNewAllergy(allergy)
                 .then(resp => {
-                    console.log(resp);
-                    newAll = resp.insertId;
+                    this.setState({ newAllId: resp.insertId});
                     this.setState({ newAllergy: ''});
-                }); 
 
-                var allergyforPatient = {
-                    allergyID: newAll,
-                    patientID: localStorage.getItem('id')
-                }
+                    var allergyforPatient = {
+                        allergyID: resp.insertId,
+                        patientID: localStorage.getItem('id')
+                    }
+                    this.allergyRepo.addAllergyForPatient(allergyforPatient)
+                        .then(resp => {
+                        this.setState({ newAllId: ''});
+                        this.setState({ redirect: '/medicalinfo'});
+                    });
+                }); 
             
-            this.allergyRepo.addAllergyForPatient(allergyforPatient)
-                .then(resp => {
-                    this.setState({ redirect: '/medicalinfo'});
-                });
         }
         
     }
