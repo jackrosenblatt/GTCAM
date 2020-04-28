@@ -3,6 +3,8 @@ import { PharmacyRepository } from '../../api/pharmacyRepository';
 import { Container } from 'react-bootstrap';
 import PharmNav from '../pharmNav/pharmNav';
 import './pharmmed.css';
+import { Medications } from '../../models/medications';
+import { Router } from 'react-router-dom';
 
 export class PharmMedications extends React.Component {
 
@@ -23,7 +25,7 @@ export class PharmMedications extends React.Component {
             <div className="font-weight-bold text-center mb-3" id='med-h'>
                 <h4>Welcome to Your List of Medications!</h4>
             </div>
-            
+ 
         {
             this.state.medications.map((med) => (
                 <div key={ med.ID } className="card mb-3" id='med'>

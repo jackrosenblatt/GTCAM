@@ -2,6 +2,7 @@ import React from 'react';
 import DrNav from '../drnav/drnav';
 import { Card, Container } from 'react-bootstrap';
 import { DrPrescriptionRepository } from '../../api/drprescriptionRepository';
+import { PharmacyRepository } from '../../api/pharmacyRepository';
 import './drpres.css';
 import { Link, Redirect } from "react-router-dom";
 import { Prescription } from '../../models/prescription';
@@ -9,13 +10,13 @@ import { Prescription } from '../../models/prescription';
 export class DrPrescriptionList extends React.Component {
 
     drpresRepo = new DrPrescriptionRepository();
+    pharmRepo = new PharmacyRepository();
 
     constructor(props) {
         super(props);
           this.state = {
-                prescription: [],
+                medications: [],
                 redirect: ''
-
           }
       }
 
@@ -54,33 +55,26 @@ export class DrPrescriptionList extends React.Component {
                 <h4><span id="badge-prescrip" className="float-center badge badge-info">Current Prescriptions:</span></h4>
 
                 {
-                    this.state.prescription.length === 0 ? this.onEmpty() : ""
+                    this.state.medications.length === 0 ? this.onEmpty() : ""
                 }
             
                 {
-                    this.state.prescription.map((currentpres) => (
-                        <Card id='prescrip-card' key={ currentpres.patient } className="card mb-3" fluid style={{width: '93%'}}>
-                            <Card.Header>
-                                <b>Prescription Name:</b> {currentpres.medName}  <br/> 
-                                <b>Patient Name:</b> {currentpres.patient}
-                            </Card.Header>
-                            <Card.Body>
-                                <Card.Title style={{float: 'right'}}>
-                                <Link to={'/DrPrescriptionList/edit/' + currentpres.ID } id='edit-appt' className="btn btn-primary  mt-auto">
-                                    Edit
-                                </Link> 
-                                </Card.Title>
-                                <Card.Text>
-                                    <b>Dosage:</b> { currentpres.dosage } <br/>
-                                    <b>Quantity:</b> { currentpres.quantity } <br/>
-                                    <b>Details:</b> { currentpres.details } <br/>
-                                    <b>Directions:</b> { currentpres.directions } <br/>
-                                    <b>Refill:</b> { currentpres.refillEveryXDays } <br/>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    ))
-                }
+                this.state.medications.map((med) => (
+                    <div key={ med.ID } className="card mb-3" id='med'>
+                        <h5 className="card-header text-dark mb-3">
+                            {med.medName}
+                        </h5>
+                        <div className="card-body">                        
+                            <p className="card-text">
+                                <b>Dosage: </b> { med.dosage } <br/>
+                                <b>Quantity: </b> { med.quantity } <br/>
+                                <b>Details: </b> { med.details } <br/>
+                            </p>
+                        </div>
+                    </div>
+                            
+                ))}
+
           </Container>
           <br/>
           <a href="/DrPrescriptionList/request" id='makepres' className='btn btn-primary'>Make a New Prescription</a> <br/>
@@ -91,6 +85,9 @@ export class DrPrescriptionList extends React.Component {
     componentWillMount() {
         this.drpresRepo.getPrescriptionsForDoctor(localStorage.getItem('id'))
             .then(prescription => this.setState({ prescription }));
+
+        this.pharmRepo.getAllMedications()
+            .then(meds => this.setState({medications: meds}));
    }
 
 }
