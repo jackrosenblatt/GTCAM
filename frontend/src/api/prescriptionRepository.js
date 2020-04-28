@@ -71,6 +71,17 @@ export class PrescriptionRepository {
                 });
         });
     }
+
+    editpickupPrefTime(id, preftime) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${this.url}/prescriptions/pickup/${id}`, preftime, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
     
 
 }

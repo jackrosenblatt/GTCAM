@@ -58,8 +58,11 @@ export class PrescriptionList extends React.Component {
                         <Card.Title id='prescription-title'>
                             { prescription.directions }, total prescribed: { prescription.quantity } doses
                             <Link to={'/prescriptions/updateSub/' + prescription.ID } style={{float: 'right'}} id='edit-appt' className="btn btn-primary  mt-auto">
-                                     Edit
-                            </Link>
+                                     Change Pick Up Person!
+                            </Link> <br/>
+                            {/* <Link to={'/prescriptions/pickup/' + prescription.ID } style={{float: 'right'}} id='edit-appt' className="btn btn-primary  mt-auto">
+                                     Change Pick Up Time!
+                            </Link> */}
                         </Card.Title>
                         <Card.Text id='prescription-text'>
                             Prescribed by Dr. { prescription.doctor}. { prescription.details }.

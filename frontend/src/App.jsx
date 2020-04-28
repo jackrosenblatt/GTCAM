@@ -35,6 +35,7 @@ import PharmInventory from './components/pharminventory/pharminventory';
 import PharmMedications from './components/pharmmedications/pharmmedications';
 import PharmNewMed from './components/pharmmedications/pharmnewmed';
 import EditSub from './components/prescription/editSub';
+import EditPrefTime from './components/prescription/editPrefTime';
 
 class App extends Component {
   render() {
@@ -49,6 +50,7 @@ class App extends Component {
             <Route exact path="/medicalinfo" component={ MedicalInfo} />
             <Route exact path="/prescriptions" component={ PrescriptionList } />
             <Route exact path="/prescriptions/updateSub/:presid" component={ EditSub } />
+            <Route exact path="/prescriptions/updateSub/:timeid" component={ EditPrefTime} />
 
             <Route exact path="/pharmacies" component= { Pharmacies} />
             <Route exact path="/message" component= { Message }/>
