@@ -98,6 +98,35 @@ export class PrescriptionList extends React.Component {
                 
             ))
         }
+
+        <br/><h4><span id='badge-all' className="float-center badge badge-info">Prescription Pick Up History</span></h4><br/>
+
+        {
+            this.state.all_prescriptions.length === 0 ? this.onEmpty() : ""
+        }
+        {
+            
+            this.state.all_prescriptions.map((prescription) => (
+                <Card key={prescription.id} fluid style={{width: '90%'}} id='prescription-card'>
+                    <Card.Header id='prescription-card-header'>
+                            {prescription.medName}:  {prescription.dosage }
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Title id='prescription-title'>
+                            Pharmacy Name: { prescription.pharmName }
+                        </Card.Title>
+                        <Card.Text id='prescription-text'>
+                            Pharmacy Hours: {prescription.pharmHours} <br/>
+                            Pharmacy Address: {prescription.pharmAddress}<br/>
+                            Pharmacy PhoneNumber: {prescription.pharmPhoneNumber}<br/>
+                        </Card.Text>
+                        
+                    </Card.Body>
+                </Card>
+                
+            ))
+        }
+
         </Container>
         <br/>
         <a href="/DashBoard" id='return-dashB' className="btn btn-primary"> Back to Dashboard</a>
