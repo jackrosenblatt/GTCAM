@@ -63,7 +63,7 @@ export class PrescriptionRepository {
 
     editSubRetriever(id, name) {
         return new Promise((resolve, reject) => {
-            axios.put(`${this.url}/prescriptions/updatePickup/${id}`, name, this.config)
+            axios.put(`${this.url}/prescriptions/updateSub/${id}`, name, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);
@@ -74,7 +74,7 @@ export class PrescriptionRepository {
 
     editpickupPrefTime(id, preftime) {
         return new Promise((resolve, reject) => {
-            axios.put(`${this.url}/prescriptions/pickup/${id}`, preftime, this.config)
+            axios.put(`${this.url}/prescriptions/updatePickup/${id}`, preftime, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);

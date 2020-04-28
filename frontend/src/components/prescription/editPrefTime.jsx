@@ -13,7 +13,7 @@ export class EditPrefTime extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: +this.props.match.params.timeid,
+            id: +this.props.match.params.presid,
             date: '',
             time: '',
             redirect: ''
@@ -66,9 +66,9 @@ export class EditPrefTime extends React.Component {
         </>
     }
     componentDidMount() {
-         let timeid = +this.props.match.params.timeid;
-         if(timeid) {
-             this.prescripRepo.getPrescriptionsToPickupForPatient(timeid)
+         let presid = +this.props.match.params.presid;
+         if(presid) {
+             this.prescripRepo.getPrescriptionsToPickupForPatient(presid)
                  .then(time => this.setState({time}));
                 }
     }
