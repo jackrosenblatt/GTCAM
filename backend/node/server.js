@@ -1326,6 +1326,39 @@ app.put('/user/:id', (req, res) => {
 	})
 })
 
+//update a medication
+app.put('/medication/:id', (req, res) => {
+	var query = 'update Medications set ';
+	
+	if(req.body.medName){
+		query += 'medName=\"'+req.body.medName+'\", ';
+	}
+	
+	if(req.body.dosage){
+		query += 'dosage=\"'+req.body.dosage+'\", ';
+	}
+	
+	if(req.body.quantity){
+		query += 'quantity='+req.body.quantity+', ';
+	}
+	
+	if(req.body.details){
+		query += 'details=\"'+req.body.details+'\", ';
+	}
+	
+	query = query.slice(0, -2);
+	query += ' where ID='+req.params.id;
+	
+	connection.query(query, (err, result, field) => {
+		if(err){
+			res.status(500).send('Database Error');
+			return;
+		}
+		res.status(200).send(result);
+		return;
+	})
+})
+
 ///////////
 //DELETE///
 ///////////
