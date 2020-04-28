@@ -24,10 +24,6 @@ export class pharmHome extends React.Component {
         return <>
 
              <pharmNav></pharmNav>
-
-            <div>
-                <Calendar id='userCal'></Calendar>
-            </div>
             
             <p></p>
 
@@ -40,7 +36,7 @@ export class pharmHome extends React.Component {
                     <div class="card-body">
                         <p class="card-text" >  Here you will find all the patients picking up a medication at your pharmacy. <br/>
                                                 Click the link below to see your all of the patients!</p>
-                        <a href="#" class="btn btn-info">Click Here!</a>
+                        <a href="/PharmPatientList" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
@@ -51,9 +47,9 @@ export class pharmHome extends React.Component {
                     </div>
 
                     <div class="card-body">
-                        <p class="card-text"> Here is a list of all the medications that need to be made<br/>
+                        <p class="card-text"> Here is a list of all the medications in stock<br/>
                                             Click the link below to see all of the perscriptions</p>
-                        <a href="#" class="btn btn-info">Click Here!</a>
+                        <a href="/PharmStock" class="btn btn-info">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
