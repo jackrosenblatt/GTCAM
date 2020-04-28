@@ -347,7 +347,7 @@ app.get('/patient/:id', (req, res) => {
 	})
 })
 
-//get all patient medical records for a given doctor
+/*//get all patient medical records for a given doctor
 app.get('/patient/records/:docID', (req, res) => {
 	var query = 'select * from DoctorPatientLookup dp join Patients p on dp.patientID=p.ID join Users u on p.userID=u.ID join PrescriptionDetails pd on pd.patientID=p.ID join Medications m on pd.medId=m.ID join Directions d on pd.directions=d.ID left join PatientAllergies pa on pa.patientID=p.ID left join Allergies a on pa.allergyID=a.ID where dp.doctorID='+req.params.docID;
 
@@ -358,6 +358,72 @@ app.get('/patient/records/:docID', (req, res) => {
 		}
 		
 		res.status(200).send(result);
+	})
+})*/
+
+//get all patient medical records for a given doctor
+app.get('/patient/records/:docID', (req, res) => {
+	var query = 'select * from DoctorPatientLookup dp join Patients p on dp.patientID=p.ID join Users u on p.userID=u.ID where dp.doctorID='+req.params.docID;
+	var returnObj = [];
+	
+	connection.query(query, (err, result, fields) => {
+		if(err){
+			res.status(500).send('Database Error');
+			return;
+		}
+		
+		result.forEach((patient) => {
+			var tempObj = patient;
+			var query2 = 'select pa.allergyID, a.allergyName from Patient'+
+				'Allergies pa left join Allergies a on pa.allergyID=a.ID '+
+				'where pa.patientID='+patient.patientID;
+			
+			connection.query(query2, (err2, result2, field2) =>{
+				if(err2){
+					res.status(501).send('Failed to get Allergies');
+					return;
+				}
+				
+				var temp = [];
+				
+				result2.forEach((item) =>{
+					temp.push({allergyID: item.allergyID, allergyName: item.allergyName});
+				});
+				tempObj.allergies = temp;
+				
+				var query3 = 'select pd.medID, pd.pharmID, d.directions, pd.needRefill, pd.subRetriever, pd.readyForPickup, pd.pickupPrefTime, pd.refillEvery, m.medName, m.dosage, m.quantity, m.details from PrescriptionDetails pd join Medications m on pd.medId=m.ID join Directions d on pd.directions=d.ID where pd.patientID='+patient.patientID;
+				connection.query(query3, (err3, result3, field3) => {
+					if(err3){
+						res.status(502).send('Failed to get Prescriptions');
+						return;
+					}
+					
+					var temp2 = [];
+					
+					result3.forEach((item) =>{
+						temp2.push({
+							medID: item.medID, 
+							pharmID: item.pharmID,
+							directions: item.directions,
+							needRefill: item.needRefill,
+							subRetriever: item.subRetriever,
+							readyForPickup: item.readyForPickup,
+							pickupPrefTime: item.pickupPrefTime,
+							refillEvery: item.refillEvery,
+							medName: item.medName,
+							dosage: item.dosage,
+							quantity: item.quantity,
+							details: item.details,
+						});
+					});
+					
+					tempObj.prescriptions = temp2;
+					returnObj.push(tempObj);
+				})
+
+			})
+		})
+		setTimeout(()=>{res.status(200).send(returnObj)},50);
 	})
 })
 
