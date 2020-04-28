@@ -38,13 +38,6 @@ connection.getConnection(function (err) {
 //END POINTS/////
 /////////////////
 
-/*
-*Make allergy endpoint return id
-* /patient/allergy is gone
-*
-*
-*/
-
 ///////
 //GET//
 ///////
