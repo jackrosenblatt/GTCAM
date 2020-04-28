@@ -23,12 +23,12 @@ export class DrPrescriptionEdit extends React.Component {
 
     editMed() {
         var med = {
-            medName: localStorage.getItem('id'),
+            medName: this.state.medName,
             dosage: this.state.dosage,
             details: this.state.details,
             quantity: this.state.quantity
         }
-        this.pharmRepo.updatePrescriptionById(localStorage.getItem('id',med))
+        this.pharmRepo.updatePrescriptionById(+this.props.match.params.medit, med)
             .then(resp => {
                 this.setState(pState => {
                     pState.dosage = '';

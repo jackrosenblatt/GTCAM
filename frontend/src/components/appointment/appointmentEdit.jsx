@@ -38,7 +38,7 @@ export class AppointmentEdit extends React.Component {
             time: this.state.date +' '+ this.state.time + ':00',
             details: this.state.details,
         }
-        this.apptRepo.updateAppointmentById(localStorage.getItem('id'), appt)
+        this.apptRepo.updateAppointmentById(+this.props.match.params.apptid, appt)
         .then(resp => {
             this.setState(pState => {
                 pState.patient = '';
