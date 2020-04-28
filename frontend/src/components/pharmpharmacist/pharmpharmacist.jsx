@@ -8,6 +8,7 @@ import './pharmpharm.css';
 export class PharmPharmacist extends React.Component {
 
     pharmRepo = new PharmacyRepository();
+    
     constructor(props) {
         super(props);
         this.state = {

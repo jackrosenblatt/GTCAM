@@ -2,21 +2,50 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import PharmNav from '../pharmNav/pharmNav'; 
 import { Redirect } from 'react-router-dom';
+import { Card, Container } from 'react-bootstrap';
 import './pharmhome.css';
+import { PharmacyRepository } from '../../api/pharmacyRepository';
 
 export class PharmHome extends React.Component {
+    
+    pharmRepo = new PharmacyRepository();
+
     constructor(props) {
         super(props);
         this.state = {
             userID: '',
+            medications: [],
             name: ''
         }
         
     }
 
+    onLow() {
+        return <>
+        <Card fluid style={{width: '90%'}}>
+            <Card.Header>
+                <b>You have no medications low in stock!</b>
+            </Card.Header>
+        </Card>
+        </>;
+    }
+
+    onNoLow() {
+        return <>
+        <Card fluid style={{width: '90%'}}>
+            <Card.Header>
+                <b>Below are medications low on stock</b>
+            </Card.Header>
+        </Card>
+        </>;
+    }
+
     render() {
         if (!localStorage.getItem('id')) {
             return <Redirect to="/login" />
+        }
+        if (this.state.redirect) {
+            return <Redirect to={{ pathname: this.state.redirect }} />
         }
         return <>
             <PharmNav></PharmNav>
@@ -28,6 +57,33 @@ export class PharmHome extends React.Component {
             <p></p>
 
             <div class="container">
+
+                <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Notifications:</span></h4><br/>
+                    {
+                        this.state.medications.length === 0 ? this.onLow() : ""
+                    } 
+                    {
+                        this.state.medications.length !== 0 ? this.onNoLow() : ""
+                    } <br/>
+                {/* <br/>
+                {
+                    this.state.medications.map((med) => (
+                        <Card key={med.id} fluid style={{width: '90%'}} id='prescription-card'>
+                            <Card.Header id='prescription-card-header'>
+                                    <b>Name: </b>{med.medName}
+                            </Card.Header>
+                            <Card.Body>
+                                <Card.Text id='prescription-text'>
+                                    Quantity{ med.quantity}. <br/>
+                                </Card.Text>           
+                            </Card.Body>
+                        </Card>
+                        
+                    ))
+                }
+                <p></p> */}
+                
+                <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Resources:</span></h4><br/>
 
                 <div class="card text-center">
                     <div class="card-header font-weight-bold">
@@ -75,6 +131,11 @@ export class PharmHome extends React.Component {
             </footer>
         </>;
     }
+
+    // componentDidMount() {
+    //     this.pharmRepo.getLowMedications(localStorage.getItem('id'))
+    //         .then(prescrip => this.setState({ med: prescrip}));
+    // }
 }
 
 export default PharmHome;

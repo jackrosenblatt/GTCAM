@@ -3,6 +3,7 @@ import { PharmacyRepository } from '../../api/pharmacyRepository';
 import { Container } from 'react-bootstrap';
 import PharmNav from '../pharmNav/pharmNav';
 import './pharminv.css';
+import { Link } from "react-router-dom";
 
 export class PharmInventory extends React.Component {
     
@@ -36,6 +37,11 @@ export class PharmInventory extends React.Component {
                         { medication.medName }
                     </h5>
                     <div className="card-body">
+                        <div className="card-title" style={{float: 'right'}}>
+                            {/* <Link to={'/Pharm/pharmacies/updateStock/' + medication.ID } id='inventory-btn' className="btn btn-primary mt-auto">
+                                Update Stock
+                            </Link>                         */}
+                            </div>
                         <p className="card-text">
                             <b>Dosage: </b> { medication.dosage } <br/>
                             <b>Number of Doses: </b> { medication.pillCount } <br/>
