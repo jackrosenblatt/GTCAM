@@ -65,7 +65,7 @@ class App extends Component {
 
             <Route exact path="/DrPrescriptionList" component={ DrPrescriptionList } />
             <Route exact path="/DrPrescriptionList/request" component={ DrPrescriptionForm } />
-            <Route exact path="/DrPrescriptionList/edit/:presid" render={(props) => <DrPrescriptionEdit {...props} />} />
+            <Route exact path="/DrPrescriptionList/edit/:medid" render={(props) => <DrPrescriptionEdit {...props} />} />
 
             <Route exact path="/Pharm/pharmacies" component={ PharmPharmacist } />
             <Route exact path="/Pharm/pharmacies/:pharmid" render={(props) => <PharmInventory {...props} />} />
