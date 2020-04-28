@@ -51,6 +51,7 @@ export class PharmacyRepository {
         });
     }
 
+
     updatePrescriptionById(id, med) {
         return new Promise((resolve, reject) => {
             axios.put(`${this.url}/medication/${id}`, med, this.config)
@@ -61,5 +62,16 @@ export class PharmacyRepository {
                 });
         });
     }
+
+    addMedicineToInventory(med){
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/medication`, med, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }	    
 
 }

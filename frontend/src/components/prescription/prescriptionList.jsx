@@ -4,6 +4,8 @@ import Nav from '../nav/nav';
 import { Prescription } from '../../models/prescription';
 import './prescription.css';
 import { PrescriptionRepository } from '../../api/prescriptionRepository';
+import { Redirect , Link} from 'react-router-dom';
+
 
 export class PrescriptionList extends React.Component {
     
@@ -54,10 +56,14 @@ export class PrescriptionList extends React.Component {
                     <Card.Body>
                         <Card.Title id='prescription-title'>
                             { prescription.directions }, total prescribed: { prescription.quantity } doses
+                            <Link to={'/prescriptions/updateSub/' + prescription.ID } style={{float: 'right'}} id='edit-appt' className="btn btn-primary  mt-auto">
+                                     Edit
+                            </Link>
                         </Card.Title>
                         <Card.Text id='prescription-text'>
                             Prescribed by Dr. { prescription.doctor}. { prescription.details }.
-                            Ready for pickup at { prescription.pharmName }.
+                            Ready for pickup at { prescription.pharmName }. <br/>
+                            Subtitute Retriever: {prescription.subRetriever}
                         </Card.Text>
                         
                     </Card.Body>
