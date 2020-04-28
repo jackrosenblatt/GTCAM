@@ -51,6 +51,17 @@ export class PharmacyRepository {
         });
     }
 
+    getLowMedications(id) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}//medications/inventory/low/${id}`, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
+
 
     updatePrescriptionById(id, med) {
         return new Promise((resolve, reject) => {
@@ -73,5 +84,27 @@ export class PharmacyRepository {
                 });
         });
     }	    
+
+    editStock(pharmID, medID, quantity) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${this.url}/inventory/order/${pharmID}/${medID}`, quantity, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
+
+    getPrescriptionsToPickupForPatient(id) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/medications/inventory/low/${id}`, this.config)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+            });
+        }
 
 }
