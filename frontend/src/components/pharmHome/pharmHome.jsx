@@ -132,10 +132,10 @@ export class PharmHome extends React.Component {
         </>;
     }
 
-    componentDidMount() { 
-        this.pharmRepo.getLowMedications(localStorage.getItem('id'))
-            .then(prescrip => this.setState({ medications: prescrip}));
-    }
+    // componentDidMount() { 
+    //     this.pharmRepo.getLowMedications(localStorage.getItem('id'))
+    //         .then(prescrip => this.setState({ medications: prescrip}));
+    // }
 }
 
 export default PharmHome;
