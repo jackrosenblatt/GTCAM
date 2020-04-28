@@ -36,6 +36,8 @@ import PharmMedications from './components/pharmmedications/pharmmedications';
 import PharmNewMed from './components/pharmmedications/pharmnewmed';
 import EditSub from './components/prescription/editSub';
 import EditPrefTime from './components/prescription/editPrefTime';
+import { PharmMessage } from './components/pharmMessages/pharmMessages';
+import PharmMessageForm from './components/pharmMessages/pharmMessageForm';
 
 class App extends Component {
   render() {
@@ -50,7 +52,8 @@ class App extends Component {
             <Route exact path="/medicalinfo" component={ MedicalInfo} />
             <Route exact path="/prescriptions" component={ PrescriptionList } />
             <Route exact path="/prescriptions/updateSub/:presid" component={ EditSub } />
-            <Route exact path="/prescriptions/updatePickup/:timeid" component={ EditPrefTime} />
+            <Route exact path="/prescriptions/updateSub/:timeid" component={ EditPrefTime} />
+
 
             <Route exact path="/pharmacies" component= { Pharmacies} />
             <Route exact path="/message" component= { Message }/>
@@ -61,6 +64,8 @@ class App extends Component {
             <Route exact path="/appointment/edit/:apptid" render={(props) => <AppointmentEdit {...props} />} />
             <Route exact path="/message/new" component={ MessageForm } />
 
+            <Route exact path="/Pharmmessage" component= { PharmMessage }/>
+            <Route exact path="/Pharmmessage/new" component={ PharmMessageForm } />
 
             {/* DOCTOR ROUTING */}
             <Route exact path="/DrHome" component={ DrHome }   />

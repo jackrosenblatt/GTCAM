@@ -54,6 +54,19 @@ export class PharmHome extends React.Component {
                 </div>
                 <p></p>
 
+                <div class="card text-center">
+                    <div class="card-header font-weight-bold">
+                        Message Log
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacist.
+                                        Click the link below log any questons!</p>
+                        <a href="/Pharmmessage" id='pharm-pharm-home' class="btn btn-primary">Click Here!</a>
+                    </div>
+                </div>
+                <p></p>
+
             </div>
             <footer>
                 <nav id='main-footer'>

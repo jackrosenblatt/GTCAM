@@ -1,0 +1,25 @@
+#message:hover, #return-dash:hover {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+}
+
+#message, #return-dash {
+    background-color: rgb(25, 25, 73);
+    margin-bottom: 1rem;
+    border-style: none;
+}
+
+#message {
+    margin-left: 2.5rem;
+}
+
+div#mess-h {
+    background-color: #E1C299;
+    color: rgb(25, 25, 73);
+    border-width: 1px;
+}
+
+#mess-h1 {
+    border-style: solid;
+    border-width: 1px;
+}

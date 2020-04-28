@@ -27,4 +27,15 @@ export class MessageRepository {
                     });
             });
     }
+
+    cancelMessagetById(id) {
+        return new Promise((resolve, reject) => {
+            axios.delete(`${this.url}/notification/${id}`, this.config)
+                .then(x=> resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                });
+        });
+    }
 }
