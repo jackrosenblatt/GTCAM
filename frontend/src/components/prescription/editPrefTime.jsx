@@ -15,6 +15,7 @@ export class EditPrefTime extends React.Component {
         this.state = {
             id: +this.props.match.params.timeid,
             date: '',
+            time: '',
             redirect: ''
         }
     }
@@ -22,12 +23,13 @@ export class EditPrefTime extends React.Component {
     editAppointment() {
         var time = {
             patientID: localStorage.getItem('id'),
-            date: this.state.date
+            date: this.state.date +' '+ this.state.time + ':00',
         }
         this.prescripRepo.editpickupPrefTime(localStorage.getItem('id'), time)
         .then(resp => {
             this.setState(pState => {
                 pState.date = '';
+                pState.time = '';
                 pState.redirect = '/prescriptions';
                 return pState;
               });
@@ -51,16 +53,10 @@ export class EditPrefTime extends React.Component {
             <Card fluid style={{width: '90%'}}>
                 <Card.Body id='edit-sub-form'>
                 <form>
-                    <label htmlFor='date'>Edit Time Pickup! </label>
-                    <textarea 
-                            className="form-control" 
-                            name="date" 
-                            rows="1"
-                            value={this.state.date}
-                            onChange={ e =>  this.setState({ date: e.target.value })}
-                            placeholder={ this.state.date }
-                        ></textarea>
-                    <br/>
+                    <label htmlFor=''>Select a New Time</label> <br/>
+                    <input type='date' placeholder= { this.state.date } value={ this.state.date } onChange={e => this.setState({ date: e.target.value })}></input> <br/><br/>
+                    <label htmlFor=''>Select a New Time</label> <br/>
+                    <input type='time' placeholder= { this.state.time } value={ this.state.time } onChange={e => this.setState({ time: e.target.value })}></input> <br/><br/>
                     <button type='button' id='edit-submit' className='btn btn-primary' onClick={ () => this.editAppointment() }>Confirm</button>
                 </form>
                 </Card.Body>

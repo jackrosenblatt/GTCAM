@@ -56,18 +56,21 @@ export class PrescriptionList extends React.Component {
                     </Card.Header>
                     <Card.Body>
                         <Card.Title id='prescription-title'>
-                            { prescription.directions }, total prescribed: { prescription.quantity } doses
                             <Link to={'/prescriptions/updateSub/' + prescription.ID } style={{float: 'right'}} id='edit-appt' className="btn btn-primary  mt-auto">
                                      Change Pick Up Person!
-                            </Link> <br/>
-                            {/* <Link to={'/prescriptions/pickup/' + prescription.ID } style={{float: 'right'}} id='edit-appt' className="btn btn-primary  mt-auto">
+                            </Link>          
+                            <Link to={'/prescriptions/updatePickup/' + prescription.ID } style={{float: 'right'}} id='edit-appt' className="btn btn-primary  mt-auto">
                                      Change Pick Up Time!
-                            </Link> */}
+                            </Link>
+                            Directions: { prescription.directions }, <br/>
+                            total prescribed: { prescription.quantity } doses
                         </Card.Title>
                         <Card.Text id='prescription-text'>
-                            Prescribed by Dr. { prescription.doctor}. { prescription.details }.
+                            Prescribed by Dr. { prescription.doctor}. <br/>
+                            Details: { prescription.details }. <br/>
                             Ready for pickup at { prescription.pharmName }. <br/>
-                            Subtitute Retriever: {prescription.subRetriever}
+                            Subtitute Retriever: {prescription.subRetriever} <br/>
+                            Prefered Pick Up Time: {prescription.pickupPrefTime}
                         </Card.Text>
                         
                     </Card.Body>

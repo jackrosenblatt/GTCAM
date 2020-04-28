@@ -63,7 +63,7 @@ export class PrescriptionRepository {
 
     editSubRetriever(id, name) {
         return new Promise((resolve, reject) => {
-            axios.put(`${this.url}/user/${id}`, name, this.config)
+            axios.put(`${this.url}/prescriptions/updatePickup/${id}`, name, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);

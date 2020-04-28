@@ -50,7 +50,7 @@ class App extends Component {
             <Route exact path="/medicalinfo" component={ MedicalInfo} />
             <Route exact path="/prescriptions" component={ PrescriptionList } />
             <Route exact path="/prescriptions/updateSub/:presid" component={ EditSub } />
-            <Route exact path="/prescriptions/updateSub/:timeid" component={ EditPrefTime} />
+            <Route exact path="/prescriptions/updatePickup/:timeid" component={ EditPrefTime} />
 
             <Route exact path="/pharmacies" component= { Pharmacies} />
             <Route exact path="/message" component= { Message }/>
