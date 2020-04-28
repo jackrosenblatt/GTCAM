@@ -67,9 +67,9 @@ export class DrPrescriptionList extends React.Component {
                         <div className="card-body">                        
                             <p className="card-text">
                                 <Card.Title style={{float: 'right'}}>
-                                <Link to={'/DrPrescriptionList/edit/' + med.ID } id='edit-appt' className="btn btn-primary  mt-auto">
+                                {/* <Link to={'/DrPrescriptionList/edit/' + med.ID } id='edit-appt' className="btn btn-primary  mt-auto">
                                         Edit
-                                </Link>
+                                </Link> */}
                                 </Card.Title>
                                 <b>Dosage: </b> { med.dosage } <br/>
                                 <b>Quantity: </b> { med.quantity } <br/>

@@ -12,7 +12,7 @@ export class DrPrescriptionEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: +this.props.match.params.medit,
+            id: +this.props.match.params.presid,
             medName: '',
             dosage: '',
             quantity: '',
@@ -21,21 +21,18 @@ export class DrPrescriptionEdit extends React.Component {
         }
     }
 
-    editMed() {
-        var med = {
-            medName: this.state.medName,
-            dosage: this.state.dosage,
-            details: this.state.details,
-            quantity: this.state.quantity
+    editAppointment() {
+        var time = {
+            patientID: localStorage.getItem('id'),
+            date: this.state.date +' '+ this.state.time + ':00',
         }
-        this.pharmRepo.updatePrescriptionById(+this.props.match.params.medit, med)
-            .then(resp => {
-                this.setState(pState => {
-                    pState.dosage = '';
-                    pState.quantity = '';
-                    pState.details = '';
-                    pState.redirect = '/DrPrescriptionList';
-                    return pState;
+        this.prescripRepo.editpickupPrefTime(localStorage.getItem('id'), time)
+        .then(resp => {
+            this.setState(pState => {
+                pState.date = '';
+                pState.time = '';
+                pState.redirect = '/prescriptions';
+                return pState;
               });
           })
         .catch(resp => {
@@ -52,49 +49,29 @@ export class DrPrescriptionEdit extends React.Component {
         <DrNav></DrNav>
         <Container>
             <Row className='justify-content-md-center'>
-                <h3 id='request-header'>Edit A Prescription</h3>
+                <h3 id='edit-header'>Update Your Substitute Retriever</h3>
             </Row>
             <Card fluid style={{width: '90%'}}>
-                <Card.Body id='request-appt-form'>
+                <Card.Body id='edit-sub-form'>
                 <form>
-                    <label htmlFor='medName'>Medication Name</label> <br/>
-                    <input type='text' id='medName' 
-                    value={ this.state.medName } 
-                    onChange={e => this.setState({ medName: e.target.value })}
-                    placeholder={ this.state.medName }></input> <br/>
-                    
-                    <label htmlFor='dosage'>Enter Appropriate Dosage</label> <br/>
-                    <input type='text' id='dosage' 
-                    value={ this.state.dosage } 
-                    onChange={e => this.setState({ dosage: e.target.value })}
-                    placeholder={ this.state.dosage }></input> <br/>
-                    
-                    <label htmlFor='quantity'>Enter Quantity</label> <br/>
-                    <input type='number' id='quantity' 
-                    value={ this.state.quantity } 
-                    onChange={e => this.setState({ quantity: e.target.value })}
-                    placeholder={ this.state.quantity }></input> <br/>
-                    
-                    <label htmlFor='details'>Details</label> <br/>
-                    <input type='text' id='details' 
-                    value={ this.state.details } 
-                    onChange={e => this.setState({ details: e.target.value })}
-                    placeholder={ this.state.details }></input> <br/>
-                    
-                    <button type='button' id='edit-submit' className='btn btn-primary' onClick={ () => this.editMed() }>Confirm</button>
+                    <label htmlFor=''>Select a New Time</label> <br/>
+                    <input type='date' placeholder= { this.state.date } value={ this.state.date } onChange={e => this.setState({ date: e.target.value })}></input> <br/><br/>
+                    <label htmlFor=''>Select a New Time</label> <br/>
+                    <input type='time' placeholder= { this.state.time } value={ this.state.time } onChange={e => this.setState({ time: e.target.value })}></input> <br/><br/>
+                    <button type='button' id='edit-submit' className='btn btn-primary' onClick={ () => this.editAppointment() }>Confirm</button>
                 </form>
                 </Card.Body>
             </Card>
+
         </Container>
         </>
     }
-    
-    componentDidMount() {
-        let medit = +this.props.match.params.medit;
-         if(medit) {
-             this.pharmRepo.getMedicationsInPharmacy(medit)
-                 .then(med => this.setState({med}));
-        }
-    }
+    // componentDidMount() {
+    //      let presid = +this.props.match.params.presid;
+    //      if(presid) {
+    //          this.prescripRepo.getPrescriptionsToPickupForPatient(presid)
+    //              .then(time => this.setState({time}));
+    //         }
+    // }
 }
 export default DrPrescriptionEdit;

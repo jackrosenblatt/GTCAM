@@ -74,9 +74,9 @@ export class PharmacyRepository {
         });
     }
 
-    addMedicineToInventory(med){
+    addMedicineToInventory(medication){
         return new Promise((resolve, reject) => {
-            axios.post(`${this.url}/medication`, med, this.config)
+            axios.post(`${this.url}/medication`,medication ,this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);

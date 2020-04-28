@@ -10,12 +10,7 @@ export class PharmInventory extends React.Component {
     pharmRepo = new PharmacyRepository();
     constructor(props) {
         super(props);
-        this.state = {
-            ID: '',
-            pharmName: '',
-            pharmHours: '',
-            address: '',
-            phoneNumber: '',
+        this.state = { 
             medications: []
         }
     }
@@ -38,7 +33,7 @@ export class PharmInventory extends React.Component {
                     </h5>
                     <div className="card-body">
                         <div className="card-title" style={{float: 'right'}}>
-                            {/* <Link to={'/Pharm/pharmacies/updateStock/' + medication.ID } id='inventory-btn' className="btn btn-primary mt-auto">
+                            {/* <Link to={'/Pharm/pharmacies/' + medication.medName +'/' + medication.medName } id='inventory-btn' className="btn btn-primary mt-auto">
                                 Update Stock
                             </Link>                         */}
                             </div>
@@ -58,7 +53,6 @@ export class PharmInventory extends React.Component {
                 <a href="/PharmHome" id='return-phdash' className="btn btn-primary"> Back to Dashboard</a>
                 <br/><br/>
             </Container>
-
 
         </>;
     }

@@ -25,7 +25,7 @@ export class EditInventory extends React.Component {
             medID: localStorage.getItem('id'),
             quantity: this.state.quantity
         }
-        this.prescripRepo.editSubRetriever(localStorage.getItem('id'), pres)
+        this.pharmRepo.editStock(localStorage.getItem('id'),localStorage.getItem('id'), pres)
         .then(resp => {
             this.setState(pState => {
                 pState.quantity = '';
@@ -74,7 +74,7 @@ export class EditInventory extends React.Component {
     componentDidMount() {
          let medID = +this.props.match.params.medID;
          if(medID) {
-             this.prescripRepo.getPrescriptionsToPickupForPatient(medID)
+             this.pharmRepo.getMedicationsInPharmacy(medID)
                  .then(pres => this.setState({pres}));
                 }
     }

@@ -56,7 +56,7 @@ export class PharmHome extends React.Component {
             
             <p></p>
 
-            <div class="container">
+            <div className="container">
 
                 <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Notifications:</span></h4><br/>
                     {
@@ -85,40 +85,40 @@ export class PharmHome extends React.Component {
                 
                 <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Resouces:</span></h4><br/>
 
-                <div class="card text-center">
-                    <div class="card-header font-weight-bold">
+                <div className="card text-center">
+                    <div className="card-header font-weight-bold">
                         Medications 
                     </div>
-                    <div class="card-body">
-                        <p class="card-text" >  Here you will find all the medications available at your pharmacy. <br/>
+                    <div className="card-body">
+                        <p className="card-text" >  Here you will find all the medications available at your pharmacy. <br/>
                                                 Click the link below to see medications or enter a new one!</p>
-                        <a href="/Pharm/medications" id='pharm-med-home' class="btn btn-primary">Click Here!</a>
+                        <a href="/Pharm/medications" id='pharm-med-home' className="btn btn-primary">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
 
-                <div class="card text-center">
-                    <div class="card-header font-weight-bold">
+                <div className="card text-center">
+                    <div className="card-header font-weight-bold">
                         Pharmacies
                     </div>
 
-                    <div class="card-body">
-                        <p class="card-text"> Here is a list of all the pharmacies that you have access to.<br/>
+                    <div className="card-body">
+                        <p className="card-text"> Here is a list of all the pharmacies that you have access to.<br/>
                                             Click the link below to see more information about them as well as their inventories!</p>
-                        <a href="/Pharm/pharmacies" id='pharm-pharm-home' class="btn btn-primary">Click Here!</a>
+                        <a href="/Pharm/pharmacies" id='pharm-pharm-home' className="btn btn-primary">Click Here!</a>
                     </div>
                 </div>
                 <p></p>
 
-                <div class="card text-center">
-                    <div class="card-header font-weight-bold">
+                <div className="card text-center">
+                    <div className="card-header font-weight-bold">
                         Message Log
                     </div>
 
-                    <div class="card-body">
-                        <p class="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacist.
+                    <div className="card-body">
+                        <p className="card-text"> Here you can log any question or concerns about your prescriptions to a doctor or a pharmacist.
                                         Click the link below log any questons!</p>
-                        <a href="/Pharmmessage" id='pharm-pharm-home' class="btn btn-primary">Click Here!</a>
+                        <a href="/Pharmmessage" id='pharm-pharm-home' className="btn btn-primary">Click Here!</a>
                     </div>
                 </div>
                 <p></p>

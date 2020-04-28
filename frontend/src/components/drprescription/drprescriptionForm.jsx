@@ -8,9 +8,12 @@ import { Redirect} from 'react-router-dom';
 export class DrPrescriptionForm extends React.Component {
 
     pharmRepo = new PharmacyRepository();
+
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
+            medID: '',
             medName: '',
             dosage: '',
             quantity: '',
@@ -21,6 +24,7 @@ export class DrPrescriptionForm extends React.Component {
 
     createMed() {
         var med = {
+            medID: localStorage.getItem('id'),
             medName: this.state.medName,
             dosage: this.state.dosage,
             details: this.state.details,
@@ -81,9 +85,12 @@ export class DrPrescriptionForm extends React.Component {
         </Container>
         </>;
     }
-    
         componentDidMount() {
-            
+            var apptid = +this.props.match.params.id;
+            if(apptid) {
+            this.apptRepo.getAppointmentById(apptid)
+                .then(med => this.setState({med}))
+            }
         }
     }
     

@@ -70,7 +70,7 @@ export class EditPrefTime extends React.Component {
          if(presid) {
              this.prescripRepo.getPrescriptionsToPickupForPatient(presid)
                  .then(time => this.setState({time}));
-                }
+            }
     }
 }
 export default EditPrefTime;
