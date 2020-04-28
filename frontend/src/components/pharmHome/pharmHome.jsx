@@ -65,7 +65,7 @@ export class PharmHome extends React.Component {
                     {
                         this.state.medications.length !== 0 ? this.onNoLow() : ""
                     } <br/>
-                {/* <br/>
+                <br/>
                 {
                     this.state.medications.map((med) => (
                         <Card key={med.id} fluid style={{width: '90%'}} id='prescription-card'>
@@ -81,9 +81,9 @@ export class PharmHome extends React.Component {
                         
                     ))
                 }
-                <p></p> */}
+                <p></p>
                 
-                <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Resources:</span></h4><br/>
+                <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Resouces:</span></h4><br/>
 
                 <div class="card text-center">
                     <div class="card-header font-weight-bold">
@@ -132,9 +132,9 @@ export class PharmHome extends React.Component {
         </>;
     }
 
-    // componentDidMount() {
+    // componentDidMount() { 
     //     this.pharmRepo.getLowMedications(localStorage.getItem('id'))
-    //         .then(prescrip => this.setState({ med: prescrip}));
+    //         .then(prescrip => this.setState({ medications: prescrip}));
     // }
 }
 
