@@ -2,12 +2,15 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import Nav from '../nav/nav';
 import './home.css';
+import { Card, Container } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { UserRepository } from '../../api/userRepository';
+import { PrescriptionRepository } from '../../api/prescriptionRepository';
 
 export class Home extends React.Component {
 
     userRepo = new UserRepository();
+    prescripRepo = new PrescriptionRepository();
 
     constructor(props) {
         super(props);
@@ -22,9 +25,30 @@ export class Home extends React.Component {
             allergies: '',
             doctorname: '',
             medicalinfo: '',
+            pickup_prescriptions: [],
             redirect: ''
         }
         
+    }
+
+    onNoPickup() {
+        return <>
+        <Card fluid style={{width: '90%'}}>
+            <Card.Header>
+                You have no prescriptions to pick up!
+            </Card.Header>
+        </Card>
+        </>;
+    }
+
+    onPickup() {
+        return <>
+        <Card fluid style={{width: '90%'}}>
+            <Card.Header>
+                <b>Below are prescriptions ready for pick up!</b>
+            </Card.Header>
+        </Card>
+        </>;
     }
 
     render() {
@@ -39,7 +63,7 @@ export class Home extends React.Component {
              <Nav></Nav>
             {/* <div>
                 <h3>Welcome Back, { this.state.name }</h3>
-            </div> */}
+            </div>  */}
             <div>
                 <Calendar id='userCal'></Calendar>
             </div>
@@ -47,6 +71,34 @@ export class Home extends React.Component {
             <p></p>
 
             <div className="container">
+
+                <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Notifications:</span></h4><br/>
+                {
+                    this.state.pickup_prescriptions.length === 0 ? this.onNoPickup() : ""
+                } 
+                {
+                    this.state.pickup_prescriptions.length !== 0 ? this.onPickup() : ""
+                } 
+                <br/>
+                {
+                    this.state.pickup_prescriptions.map((prescription) => (
+                        <Card key={prescription.id} fluid style={{width: '90%'}} id='prescription-card'>
+                            <Card.Header id='prescription-card-header'>
+                                    <b>Name: </b>{prescription.medName}
+                            </Card.Header>
+                            <Card.Body>
+                                <Card.Text id='prescription-text'>
+                                    Prescribed by Dr. { prescription.doctor}. <br/>
+                                    Ready for pickup at { prescription.pharmName }. <br/>
+                                </Card.Text>           
+                            </Card.Body>
+                        </Card>
+                        
+                    ))
+                }
+                <p></p>
+                
+                <br/><h4><span id='badge-pickup' className="float-center badge badge-info">Resources!</span></h4><br/>
 
                 <div className="card text-center">
                     <div className="card-header font-weight-bold">
@@ -133,6 +185,10 @@ export class Home extends React.Component {
                 this.setState({ redirect: '/PharmHome'});
             }
         }); 
+
+        this.prescripRepo.getPrescriptionsToPickupForPatient(localStorage.getItem('id'))
+            .then(prescrip => this.setState({ pickup_prescriptions: prescrip}));
+
     }
 
 }

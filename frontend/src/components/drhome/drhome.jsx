@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import './drhome.css';
 
 export class DrHome extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +14,7 @@ export class DrHome extends React.Component {
         }
         
     }
+
 
     render() {
         if (!localStorage.getItem('id')) {
