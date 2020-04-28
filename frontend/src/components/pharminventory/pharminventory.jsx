@@ -24,6 +24,7 @@ export class PharmInventory extends React.Component {
         <PharmNav></PharmNav>
         <br/>
         <Container>
+
             <div className="font-weight-bold text-center mb-3" id='pharm-h'>
             <h4>Inventory for { this.state.pharmName } </h4>
             </div>
