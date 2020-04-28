@@ -286,6 +286,19 @@ app.get('/medications/inventory/:id', (req,  res) => {
 	})
 })
 
+//get all medications low on inventory
+app.get('/medications/inventory/low/:id', (req, res) => {
+	var query = "select m.medName, m.dosage, m.quantity as pillCount, m.details, p.pharmName, p.pharmHours, p.address as pharmAddress, p.phoneNumber as pharmPhoneNumber, i.quantity, i.physicalLocation from Inventory i join Pharmacies p on i.pharmID=p.ID join Medications m on i.medID=m.ID where i.quantity < 50 and i.pharmID="+req.params.id;
+	
+	connection.query(query, (err, result, field) => {
+		if(err){
+			res.status(500).send('Database Error');
+			return;
+		}
+		res.status(200).send(result);
+	})
+})
+
 //get specific medication in inventory for given pharmacy 
 app.get('/medications/inventory/:pharmID/:medID', (req,  res) => {
 	var query = "select m.medName, m.dosage, m.quantity as pillCount, m.details, p.pharmName, p.pharmHours, p.address as pharmAddress, p.phoneNumber as pharmPhoneNumber, i.quantity, i.physicalLocation from Inventory i join Pharmacies p on i.pharmID=p.ID join Medications m on i.medID=m.ID where i.pharmID="+req.params.pharmID+" and i.medID="+req.params.medID;
