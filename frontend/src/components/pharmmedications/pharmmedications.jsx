@@ -44,8 +44,6 @@ export class PharmMedications extends React.Component {
             ))
         }
 
-        <h4><span id="badge-lowmed" className="float-center badge badge-info">Low Medicine Quantity:</span></h4>
-
             <a href="/Pharm/medications/create" id="new-medication" className="btn btn-primary">Add a Medication</a> <br/>
             <a href="/PharmHome" id='return-pharmhome' className="btn btn-primary"> Back to Dashboard</a>
                 <br/><br/>
